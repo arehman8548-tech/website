@@ -1,0 +1,224 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BackhoeDrawing from '../components/BackhoeDrawing.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs, rentalService } from '../data/schema';
+import { tel, wa } from '../data/site';
+import { qa } from '../data/faq';
+
+const crumbs = [{ name: 'Backhoe Loader Rental', href: '/backhoe-loader-rental/' }];
+const title = 'Backhoe Loader (JCB) Rental for Projects in Kumaon | RBE Capital Equip.';
+const description =
+  'Rent a backhoe loader for road work, trenching, foundations and hill-site earthwork in Kumaon. What the machine can do, typical specification, when an excavator is better, and rental durations.';
+
+const loaderEnd = ['Loading tippers and trucks', 'Back-filling trenches and behind walls', 'Levelling and grading plots', 'Clearing debris and slips', 'Moving material around the site', 'Spreading sub-base on access roads'];
+const hoeEnd = ['Drain and utility trenches', 'Footing and column-pit excavation', 'Culvert and chamber pits', 'Cutting road edges and banks', 'Retaining-wall foundations', 'Breaking out soft and weathered rock'];
+const mobility = ['Drives between nearby work fronts on its own wheels', 'Turns and works in narrow hill-road space', 'One machine and one operator instead of two', 'Quick to re-position as work moves along a road'];
+const dig = qa('dig-depth');
+---
+<Base title={title} description={description} schema={[breadcrumbs(crumbs), rentalService()]}>
+  <PageHero crumbs={crumbs} eyebrow="Equipment · Backhoe loader">
+    <h1>Backhoe loader rental for <span class="serif">serious</span> site work in Kumaon.</h1>
+    <p class="lead">One wheeled machine that loads, digs, levels and drives itself to the next work front. The most versatile machine on a hill road or a building site — when it is the right fit for your scope.</p>
+    <div class="btn-row">
+      <a class="btn" href="/contact/">Check availability <Icon name="arrow" /></a>
+      <a class="btn btn--wa" href={wa('Hello, I need a backhoe loader on rent for a project. Can you share availability?')} rel="noopener"><Icon name="wa" />WhatsApp</a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call now</a>
+    </div>
+  </PageHero>
+
+  <!-- Anatomy -->
+  <section class="section dark" aria-labelledby="h-anatomy" id="anatomy">
+    <div class="wrap">
+      <div class="head2">
+        <p class="eyebrow"><span class="idx">01</span>The machine</p>
+        <h2 id="h-anatomy">Two working ends. <span class="serif">One operator.</span></h2>
+        <p class="muted measure">A backhoe loader — often called a “JCB” in India — is a wheeled tractor with a loader bucket at the front and a digging arm at the rear. The operator’s seat turns to face either end, so one machine handles digging and material handling on the same shift.</p>
+      </div>
+      <BackhoeDrawing />
+    </div>
+  </section>
+
+  <!-- What it does -->
+  <section class="section paper" id="what-it-does" aria-labelledby="h-does">
+    <div class="wrap">
+      <div class="head2 head2--l">
+        <p class="eyebrow"><span class="idx">02</span>What it does on site</p>
+        <h2 id="h-does">What a backhoe loader can do on a construction project.</h2>
+      </div>
+      <div class="cols3">
+        <div class="col rv"><h3><span class="mono">A</span>Loader end</h3><ul>{loaderEnd.map((x) => <li>{x}</li>)}</ul></div>
+        <div class="col rv rv-d1"><h3><span class="mono">B</span>Backhoe end</h3><ul>{hoeEnd.map((x) => <li>{x}</li>)}</ul></div>
+        <div class="col rv rv-d2"><h3><span class="mono">C</span>Mobility</h3><ul>{mobility.map((x) => <li>{x}</li>)}</ul></div>
+      </div>
+      <p class="muted measure note">“Breaking out soft and weathered rock” means with the bucket. Hard rock needs a hydraulic breaker; ask us whether one is available for your dates.</p>
+      <p class="measure" style="margin-top:20px">See these tasks organised by project: <a class="inline" href="/project-solutions/#road-construction">road construction</a>, <a class="inline" href="/project-solutions/#hill-cutting">hill cutting</a>, <a class="inline" href="/project-solutions/#site-development">site development</a>, <a class="inline" href="/project-solutions/#trenching">trenching and utilities</a>.</p>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section class="section--tight stone" id="spec" aria-labelledby="h-spec">
+    <div class="wrap spec2">
+      <div>
+        <p class="eyebrow"><span class="idx">03</span>Typical specification</p>
+        <h2 id="h-spec">What to expect from a 7–8 tonne class machine.</h2>
+        <p class="muted" style="margin-top:20px">These are typical ranges for the backhoe loaders most used on Indian construction sites, so you can plan the work. The exact specification of the machine assigned to your project is shared with your quote.</p>
+        <div class="answer" style="margin-top:28px">
+          <h3>{dig.q}</h3>
+          <p class="direct">About 4.5 to 6 metres at maximum, depending on the model and dipper.</p>
+          <p class="muted">Practical trench depth on site is usually less and depends on soil, shoring and safety.</p>
+        </div>
+      </div>
+      <dl class="spec">
+        <div><dt>Operating weight</dt><dd>≈ 7–8.5 t</dd></div>
+        <div><dt>Engine power</dt><dd>≈ 75–100 hp</dd></div>
+        <div><dt>Max. dig depth</dt><dd>≈ 4.5–6 m</dd></div>
+        <div><dt>Loader bucket</dt><dd>≈ 1.0–1.1 m³</dd></div>
+        <div><dt>Backhoe bucket</dt><dd>≈ 0.2–0.3 m³</dd></div>
+        <div><dt>Transport length</dt><dd>≈ 5.6–6.0 m</dd></div>
+        <div><dt>Overall width</dt><dd>≈ 2.2–2.4 m</dd></div>
+        <div><dt>Travel</dt><dd>On wheels, road-going</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- When not -->
+  <section class="section dark-2" id="when-not" aria-labelledby="h-not">
+    <div class="wrap whennot">
+      <div>
+        <p class="eyebrow"><span class="idx">04</span>Honest fit</p>
+        <h2 id="h-not">When a backhoe loader is <span class="serif">not</span> the right machine.</h2>
+        <p class="muted" style="margin-top:24px">Sending the wrong machine wastes your schedule and ours. If your scope looks like the right-hand column, a tracked excavator (with a breaker for rock) should be the main machine — a backhoe loader can still support it.</p>
+      </div>
+      <div class="vs">
+        <div class="vs__col">
+          <h3>Backhoe loader fits</h3>
+          <ul>
+            <li>Mixed work: dig, load, back-fill, level</li>
+            <li>Work spread along a road or across a site</li>
+            <li>Trenches, footings, drains, culvert pits</li>
+            <li>Tight hill plots and narrow roads</li>
+            <li>Moving between nearby sites on wheels</li>
+          </ul>
+        </div>
+        <div class="vs__col vs__col--x">
+          <h3>Choose an excavator</h3>
+          <ul>
+            <li>Continuous bulk excavation all day</li>
+            <li>Hard-rock cutting with a breaker</li>
+            <li>High formation cuts on hill roads</li>
+            <li>Deep, large-volume foundation pits</li>
+            <li>Heavy lifting of pipes or blocks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hill suitability -->
+  <section class="section paper" id="hill-suitability" aria-labelledby="h-hill">
+    <div class="wrap">
+      <div class="head2 head2--l">
+        <p class="eyebrow"><span class="idx">05</span>Working in the hills</p>
+        <h2 id="h-hill">What changes when the site is in the hills.</h2>
+      </div>
+      <div class="hill">
+        <div class="rv"><h3>Access</h3><p class="muted">Road width, hairpin bends and the last few hundred metres to the plot decide how the machine arrives. We ask for these before confirming a date.</p></div>
+        <div class="rv rv-d1"><h3>Ground</h3><p class="muted">Loose debris over rock and soft road shoulders mean the machine must work from stable ground, with stabilisers on firm footing.</p></div>
+        <div class="rv rv-d2"><h3>Season</h3><p class="muted">From about June to September, slips and road closures are part of the plan. Mobilise early and keep schedule buffer.</p></div>
+        <div class="rv rv-d3"><h3>Support</h3><p class="muted">At remote sites, servicing, consumables and the operator’s stay are planned before the machine leaves.</p></div>
+      </div>
+      <p class="measure" style="margin-top:40px">More on terrain by area in the <a class="inline" href="/kumaon-service-area/">Kumaon service area</a> guide, and season planning in <a class="inline" href="/knowledge/#monsoon">monsoon working</a>.</p>
+    </div>
+  </section>
+
+  <!-- Rental terms -->
+  <section class="section stone" id="rental-terms" aria-labelledby="h-terms">
+    <div class="wrap terms">
+      <div>
+        <p class="eyebrow"><span class="idx">06</span>Rental terms</p>
+        <h2 id="h-terms">Hire for a task, a month or the whole project.</h2>
+        <p class="muted" style="margin-top:20px">Tell us the scope and we will suggest the duration that matches it. Every quote states what is included, so there are no surprises on site.</p>
+      </div>
+      <div>
+        <ol class="dur">
+          <li><b>Short assignment</b><span>A defined task — a set of footings, a trench run, a clearance job — on a project site.</span></li>
+          <li><b>Monthly hire</b><span>A machine on site through a phase of work, with servicing planned around your hours.</span></li>
+          <li><b>Project duration</b><span>Allocated for the length of your contract phase, with support and breakdown handling agreed up front.</span></li>
+        </ol>
+        <h3 class="sub">What every quote confirms</h3>
+        <ul class="checks">
+          <li>Machine and its specification</li>
+          <li>Rental period and working hours per day</li>
+          <li>Operator arrangement</li>
+          <li>Diesel — included or by you</li>
+          <li>Mobilisation and return</li>
+          <li>Idle-time and breakdown terms</li>
+        </ul>
+        <a class="btn" style="margin-top:32px" href="/contact/">Request a rental quote <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'By project', t: 'Find your project type', d: 'Road, hill cutting, site development, bridges, utilities.', href: '/project-solutions/' },
+    { k: 'Deployment', t: 'Will it reach your site?', d: 'How mobilisation is planned across Kumaon.', href: '/kumaon-service-area/#deployment' },
+    { k: 'Knowledge', t: 'Backhoe or excavator?', d: 'Straight answers to common hiring questions.', href: '/knowledge/#vs-excavator' },
+  ]} />
+  <QuoteBand heading="Need a backhoe loader on site? Check availability for your dates." />
+</Base>
+
+<style>
+  .phero :global(.btn-row) { margin-top: 36px; }
+  .head2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px 56px; align-items: end; margin-bottom: clamp(40px, 6vw, 72px); }
+  .head2 .eyebrow { grid-column: 1 / -1; margin: 0; }
+  .head2 h2 { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
+  .head2--l { grid-template-columns: 1fr; max-width: 900px; }
+  .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-l); }
+  .col { padding: 28px 28px 28px 0; }
+  .col + .col { padding-left: 28px; border-left: 1px solid var(--line-l); }
+  .col h3 { display: flex; gap: 12px; align-items: baseline; margin-bottom: 18px; }
+  .col h3 .mono { color: var(--copper); font-size: .8rem; }
+  .col ul { list-style: none; margin: 0; padding: 0; }
+  .col li { padding: 10px 0; border-bottom: 1px dashed var(--line-l); }
+  .note { margin-top: 32px; font-size: .9rem; }
+  .spec2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .spec2 h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+  .spec dd { font-family: var(--f-mono); font-size: .95rem; }
+  .whennot { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .whennot h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-d); }
+  .vs__col { padding: 28px; }
+  .vs__col--x { border-left: 1px solid var(--line-d); background: rgba(238,235,229,.03); }
+  .vs h3 { font-size: 1.1rem; margin-bottom: 16px; }
+  .vs ul { list-style: none; margin: 0; padding: 0; }
+  .vs li { padding: 10px 0 10px 22px; border-top: 1px solid var(--line-d); position: relative; color: var(--on-dark-2); font-size: .95rem; }
+  .vs li::before { content: ''; position: absolute; left: 0; top: 19px; width: 10px; height: 2px; background: var(--copper-hi); }
+  .vs__col--x li::before { background: var(--steel); }
+  .hill { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line-l); }
+  .hill > div { padding: 28px 24px 0 0; }
+  .hill > div + div { padding-left: 24px; border-left: 1px solid var(--line-l); }
+  .hill h3 { margin-bottom: 12px; }
+  .terms { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); }
+  .terms h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+  .dur { list-style: none; counter-reset: d; margin: 0 0 40px; padding: 0; border-top: 1px solid var(--line-l); }
+  .dur li { counter-increment: d; display: grid; grid-template-columns: 48px 1fr; gap: 4px 12px; padding: 20px 0; border-bottom: 1px solid var(--line-l); }
+  .dur li::before { content: '0' counter(d); grid-row: span 2; font-family: var(--f-mono); color: var(--copper-lo); font-size: .8rem; padding-top: 4px; }
+  .dur b { font-family: var(--f-display); font-stretch: 110%; font-size: 1.2rem; }
+  .dur span { color: var(--on-light-2); }
+  .sub { font-size: 1.05rem; margin-bottom: 14px; }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+  .checks li { padding-left: 24px; position: relative; }
+  .checks li::before { content: ''; position: absolute; left: 0; top: 7px; width: 12px; height: 7px; border-left: 2px solid var(--copper); border-bottom: 2px solid var(--copper); transform: rotate(-45deg); }
+  @media (max-width: 960px) {
+    .head2, .spec2, .whennot, .terms { grid-template-columns: 1fr; }
+    .cols3 { grid-template-columns: 1fr; }
+    .col, .col + .col { padding: 24px 0; border-left: 0; border-bottom: 1px solid var(--line-l); }
+    .hill { grid-template-columns: 1fr 1fr; }
+    .hill > div, .hill > div + div { padding: 24px 16px 24px 0; border-left: 0; }
+  }
+  @media (max-width: 600px) { .vs { grid-template-columns: 1fr; } .vs__col--x { border-left: 0; border-top: 1px solid var(--line-d); } .hill, .checks { grid-template-columns: 1fr; } }
+</style>

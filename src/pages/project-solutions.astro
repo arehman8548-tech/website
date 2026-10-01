@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ProjectDiagram from '../components/ProjectDiagram.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { projects } from '../data/projects';
+import { places } from '../data/geo';
+import { qa } from '../data/faq';
+import { breadcrumbs } from '../data/schema';
+import { wa } from '../data/site';
+
+const crumbs = [{ name: 'Project Solutions', href: '/project-solutions/' }];
+const title = 'Backhoe Loader for Road, Hill Cutting & Site Development Projects | RBE Capital Equip.';
+const description =
+  'How a backhoe loader supports road construction and widening, hill cutting, real-estate site development, bridge and river works, trenching and infrastructure projects in Kumaon — tasks, site realities and limits.';
+const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ?? slug;
+---
+<Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Project solutions">
+    <h1>Built around the project, <span class="serif">not the machine.</span></h1>
+    <p class="lead">Six kinds of project we support across Kumaon. For each: the tasks a backhoe loader takes on, what the terrain changes, and where you need something bigger.</p>
+  </PageHero>
+
+  <div class="ps paper">
+    <div class="wrap ps__grid">
+      <nav class="ps__nav" aria-label="Project types">
+        <p class="eyebrow">Jump to</p>
+        <ol>
+          {projects.map((p, i) => <li><a href={`#${p.id}`} data-spy={p.id}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{p.title}</a></li>)}
+        </ol>
+        <a class="btn" href="/contact/" style="margin-top:28px">Discuss your project <Icon name="arrow" /></a>
+      </nav>
+
+      <div class="ps__body">
+        {projects.map((p, i) => (
+          <article class="pj" id={p.id} aria-labelledby={`${p.id}-h`}>
+            <header class="pj__head">
+              <span class="mono pj__n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h2 id={`${p.id}-h`}>{p.title}</h2>
+                <p class="pj__who mono">{p.who}</p>
+              </div>
+            </header>
+            <p class="pj__short">{p.short}</p>
+            <div class="pj__fig rv"><ProjectDiagram kind={p.kind} label={`Schematic cross-section for ${p.title}; highlighted lines show typical backhoe loader work.`} /></div>
+            <div class="pj__cols">
+              <div>
+                <h3>Typical backhoe loader tasks</h3>
+                <ul class="pj__tasks">{p.tasks.map((t) => <li>{t}</li>)}</ul>
+              </div>
+              <div>
+                <h3>Site realities in Kumaon</h3>
+                <p class="muted">{p.realities}</p>
+                <h3 class="pj__lim">Where it stops</h3>
+                <p class="muted">{p.limits}</p>
+              </div>
+            </div>
+            <div class="pj__foot">
+              <div class="pj__where">
+                <span class="mono">Common around</span>
+                {p.where.map((s) => <a href={`/kumaon-service-area/#${s}`}>{placeName(s)}</a>)}
+              </div>
+              <div class="pj__faq">
+                <span class="mono">Related questions</span>
+                <ul>{p.faq.map((id) => <li><a class="inline" href={`/knowledge/#${id}`}>{qa(id).q}</a></li>)}</ul>
+              </div>
+              <a class="btn btn--wa pj__cta" href={wa(`Hello RBE Capital Equip., I need a backhoe loader for ${p.title.toLowerCase()} work. Site location: `)} rel="noopener"><Icon name="wa" />Discuss this work on WhatsApp</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <NextSteps items={[
+    { k: 'Machine', t: 'The backhoe loader in detail', d: 'Capabilities, typical specification and rental terms.', href: '/backhoe-loader-rental/' },
+    { k: 'Process', t: 'From enquiry to machine on site', d: 'The six steps and what we need from you.', href: '/how-rental-works/' },
+    { k: 'Geography', t: 'Sites across Kumaon', d: 'Plains, mid-hills and inner hills — what changes.', href: '/kumaon-service-area/' },
+  ]} />
+  <QuoteBand heading="Tell us the scope. We’ll tell you where a backhoe loader fits." />
+</Base>
+
+<script>
+  // Highlight the current project type in the side index.
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-spy]');
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    links.forEach((l) => l.toggleAttribute('aria-current', l.dataset.spy === e.target.id));
+  }), { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('.pj').forEach((el) => io.observe(el));
+</script>
+
+<style>
+  .ps { padding-block: clamp(64px, 8vw, 120px); }
+  .ps__grid { display: grid; grid-template-columns: 300px 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .ps__nav { position: sticky; top: calc(var(--header-h) + 32px); }
+  .ps__nav ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-l); }
+  .ps__nav a:not(.btn) { display: grid; grid-template-columns: 32px 1fr; padding: 12px 0; border-bottom: 1px solid var(--line-l); text-decoration: none; font-size: .95rem; color: var(--on-light-2); transition: color .2s, padding .3s var(--ease); }
+  .ps__nav a:not(.btn) .mono { font-size: .72rem; padding-top: 3px; }
+  .ps__nav a:hover, .ps__nav a[aria-current] { color: var(--on-light); }
+  .ps__nav a[aria-current] { padding-left: 8px; }
+  .ps__nav a[aria-current] .mono { color: var(--copper); }
+  .pj { padding-bottom: clamp(64px, 8vw, 112px); margin-bottom: clamp(64px, 8vw, 112px); border-bottom: 1px solid var(--line-l); scroll-margin-top: calc(var(--header-h) + 24px); }
+  .pj:last-child { border-bottom: 0; margin-bottom: 0; }
+  .pj__head { display: grid; grid-template-columns: 64px 1fr; gap: 8px; align-items: start; }
+  .pj__n { color: var(--copper); padding-top: 12px; }
+  .pj h2 { font-size: clamp(1.8rem, 3.2vw, 2.8rem); }
+  .pj__who { margin-top: 12px; color: var(--on-light-2); font-size: .78rem; letter-spacing: .04em; }
+  .pj__short { font-size: var(--t-lead); line-height: 1.5; margin: 28px 0 0 64px; max-width: 46ch; }
+  .pj__fig { margin: 40px 0; padding: 28px; background: var(--stone); color: var(--on-light); }
+  .pj__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .pj h3 { font-size: 1.05rem; margin-bottom: 14px; }
+  .pj__lim { margin-top: 28px; }
+  .pj__tasks { list-style: none; margin: 0; padding: 0; counter-reset: t; }
+  .pj__tasks li { counter-increment: t; display: grid; grid-template-columns: 32px 1fr; padding: 10px 0; border-bottom: 1px dashed var(--line-l); }
+  .pj__tasks li::before { content: counter(t, decimal-leading-zero); font-family: var(--f-mono); font-size: .72rem; color: var(--copper-lo); padding-top: 4px; }
+  .pj__foot { margin-top: 40px; display: grid; gap: 24px; }
+  .pj__foot .mono { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-light-2); margin-bottom: 10px; }
+  .pj__where { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .pj__where .mono { flex-basis: 100%; }
+  .pj__where a { padding: 6px 12px; border: 1px solid var(--line-l); text-decoration: none; font-size: .9rem; transition: border-color .2s, background .2s; }
+  .pj__where a:hover { border-color: var(--copper); background: var(--stone); }
+  .pj__faq ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .pj__cta { justify-self: start; }
+  @media (max-width: 960px) {
+    .ps__grid { grid-template-columns: 1fr; }
+    .ps__nav { position: static; }
+    .pj__cols { grid-template-columns: 1fr; }
+    .pj__short { margin-left: 0; }
+    .pj__head { grid-template-columns: 44px 1fr; }
+    .pj__fig { padding: 16px; margin-inline: calc(var(--gutter) * -1); }
+  }
+</style>

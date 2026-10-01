@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs } from '../data/schema';
+import { tel, wa, site } from '../data/site';
+import { qa } from '../data/faq';
+
+const crumbs = [{ name: 'How Rental Works', href: '/how-rental-works/' }];
+const title = 'How Backhoe Loader Rental Works — From Enquiry to Machine on Site | RBE Capital Equip.';
+const description =
+  'The six steps of renting a backhoe loader from RBE Capital Equip. for a Kumaon project: requirement, site information, confirmation, mobilisation, deployment and support — and what to send for a fast quote.';
+
+const steps = [
+  { t: 'Requirement', who: 'You', d: 'Tell us the site, the type of work, your start date and how long you need the machine. A call or WhatsApp message is enough to begin.', out: 'We reply with availability for your dates.' },
+  { t: 'Site information', who: 'You + RBE', d: 'Share a map pin and the access route: road width, sharp bends, last-mile surface and where the machine will work and park. Photos help for hill sites.', out: 'We know how the machine will reach and work on the site.' },
+  { t: 'Machine & terms', who: 'RBE', d: 'We confirm the machine, rental period, working hours, operator arrangement, diesel, mobilisation, idle-time and breakdown terms — in writing.', out: 'A quote you can approve without surprises.' },
+  { t: 'Mobilisation', who: 'RBE', d: 'The machine is checked before dispatch. Route, travel method (own wheels or trailer) and arrival date are fixed, with season and road conditions in mind.', out: 'A firm arrival date.' },
+  { t: 'Deployment', who: 'RBE + your site team', d: 'The machine arrives and starts work. Your site contact and our operator agree the daily plan; working hours are recorded and signed off.', out: 'Work underway, hours on record.' },
+  { t: 'Support & close-out', who: 'RBE', d: 'Planned servicing through the rental, the agreed breakdown process if anything stops, and a clean extension or return at the end.', out: 'The machine stays productive until the job is done.' },
+];
+const quoteInfo = qa('quote-info');
+const quick = qa('how-quickly');
+---
+<Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Process">
+    <h1>From your first message to a <span class="serif">working machine.</span></h1>
+    <p class="lead">Six steps, each with a clear outcome. Nothing reaches your site until availability, access and terms are settled.</p>
+  </PageHero>
+
+  <section class="section paper" aria-labelledby="h-steps">
+    <div class="wrap">
+      <h2 id="h-steps" class="sr-only">The six steps</h2>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class="step rv">
+            <div class="step__n"><span>{String(i + 1).padStart(2, '0')}</span></div>
+            <div class="step__body">
+              <p class="mono step__who">{s.who}</p>
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+            </div>
+            <div class="step__out"><span class="mono">Outcome</span><p>{s.out}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section dark" id="fast-quote" aria-labelledby="h-fast">
+    <div class="wrap fast">
+      <div>
+        <p class="eyebrow"><span class="idx">→</span>For a fast quote</p>
+        <h2 id="h-fast">Send these five things. <span class="serif">That’s all.</span></h2>
+        <p class="muted" style="margin-top:20px">{quoteInfo.a}</p>
+        <div class="btn-row" style="margin-top:32px">
+          <a class="btn" href="/contact/">Use the enquiry form <Icon name="arrow" /></a>
+          <a class="btn btn--wa" href={wa('Site location:\nType of work:\nStart date:\nDuration:\nWorking hours per day:')} rel="noopener"><Icon name="wa" />WhatsApp the details</a>
+        </div>
+      </div>
+      <ol class="five">
+        <li><b>Site location</b><span>Map pin, village / town and district</span></li>
+        <li><b>Type of work</b><span>Road, drains, foundations, cutting, trenching…</span></li>
+        <li><b>Start date</b><span>When the machine must be working</span></li>
+        <li><b>Duration</b><span>Days, months, or the project phase</span></li>
+        <li><b>Working hours</b><span>Per day, and single or double shift</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section--tight stone" aria-labelledby="h-time">
+    <div class="wrap time">
+      <div>
+        <p class="eyebrow"><span class="idx">→</span>Timing</p>
+        <h2 id="h-time">{quick.q}</h2>
+      </div>
+      <div class="prose">
+        <p class="lead" style="max-width:none" set:html={quick.html ?? quick.a} />
+        <p class="muted">Speak to us directly: <a href={tel}>{site.phoneDisplay}</a> · {site.hours}</p>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Contact', t: 'Start step one', d: 'Send your requirement — it takes two minutes.', href: '/contact/' },
+    { k: 'Deployment', t: 'Mobilisation across Kumaon', d: 'What decides how fast the machine arrives.', href: '/kumaon-service-area/#deployment' },
+    { k: 'Support', t: 'How breakdowns are handled', d: 'The support plan agreed before work starts.', href: '/why-rbe/#support' },
+  ]} />
+  <QuoteBand />
+</Base>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-l); }
+  .step { display: grid; grid-template-columns: 160px 1.4fr 1fr; gap: clamp(20px, 4vw, 64px); padding: clamp(28px, 4vw, 48px) 0; border-bottom: 1px solid var(--line-l); align-items: start; }
+  .step__n span { font-family: var(--f-display); font-weight: 800; font-stretch: 125%; font-size: clamp(3rem, 6vw, 5.5rem); line-height: .8; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1px var(--copper); }
+  .step__who { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-light-2); margin-bottom: 8px; }
+  .step h3 { font-size: clamp(1.4rem, 2.4vw, 2rem); margin-bottom: 14px; }
+  .step__out { padding: 18px 20px; background: var(--stone); border-left: 2px solid var(--copper); }
+  .step__out .mono { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--copper-lo); }
+  .step__out p { margin: 6px 0 0; font-weight: 500; }
+  .fast { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .fast h2, .time h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+  .five { list-style: none; counter-reset: v; margin: 0; padding: 0; border-top: 1px solid var(--line-d); }
+  .five li { counter-increment: v; display: grid; grid-template-columns: 44px 1fr; gap: 2px 8px; padding: 18px 0; border-bottom: 1px solid var(--line-d); }
+  .five li::before { content: counter(v); grid-row: span 2; width: 28px; height: 28px; border: 1px solid var(--copper-hi); color: var(--copper-hi); display: grid; place-items: center; font-family: var(--f-mono); font-size: .8rem; }
+  .five b { font-weight: 600; font-size: 1.05rem; }
+  .five span { color: var(--on-dark-2); font-size: .92rem; }
+  .time { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); }
+  @media (max-width: 960px) {
+    .step { grid-template-columns: 1fr; gap: 16px; }
+    .fast, .time { grid-template-columns: 1fr; }
+  }
+</style>

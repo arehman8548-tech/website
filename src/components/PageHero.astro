@@ -1,0 +1,17 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+interface Props { crumbs: { name: string; href: string }[]; eyebrow: string; tone?: 'dark' }
+const { crumbs, eyebrow } = Astro.props;
+---
+<section class="phero">
+  <div class="phero__grid" aria-hidden="true"></div>
+  <div class="wrap phero__in">
+    <Breadcrumbs items={crumbs} />
+    <p class="eyebrow"><span class="idx">RBE</span>{eyebrow}</p>
+    <slot />
+  </div>
+  <slot name="art" />
+</section>
+<style>
+  .phero__in { position: relative; z-index: 1; }
+</style>

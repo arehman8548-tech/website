@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import Icon from '../components/Icon.astro';
+import { faq, allQA, glossary } from '../data/faq';
+import { breadcrumbs, faqPage } from '../data/schema';
+
+const crumbs = [{ name: 'Knowledge', href: '/knowledge/' }];
+const title = 'Backhoe Loader Rental Questions Answered — Kumaon Projects | RBE Capital Equip.';
+const description =
+  'Straight answers on hiring a backhoe loader (JCB) for projects in Kumaon: cost basis, dig depth, hill roads and hill cutting, remote-site deployment, monsoon working, breakdowns and long-term rental.';
+---
+<Base title={title} description={description} pageType="CollectionPage" schema={[breadcrumbs(crumbs), faqPage(allQA.map(({ q, a }) => ({ q, a })))]}>
+  <PageHero crumbs={crumbs} eyebrow="Knowledge · Questions & answers">
+    <h1>Straight answers <span class="serif">before you hire.</span></h1>
+    <p class="lead">The questions contractors, developers, site engineers and procurement teams actually ask about renting a backhoe loader for a Kumaon project. Direct answer first, detail after.</p>
+  </PageHero>
+
+  <div class="kb paper">
+    <div class="wrap kb__grid">
+      <nav class="kb__nav" aria-label="Topics">
+        <p class="eyebrow">Topics</p>
+        <ol>
+          {faq.map((g) => <li><a href={`#${g.id}`}>{g.title}<span class="mono">{g.items.length}</span></a></li>)}
+          <li><a href="#glossary">Glossary<span class="mono">{glossary.length}</span></a></li>
+        </ol>
+        <div class="kb__ask">
+          <p>Didn’t find your question?</p>
+          <a class="btn" href="/contact/">Ask us directly <Icon name="arrow" /></a>
+        </div>
+      </nav>
+      <div class="kb__body">
+        {faq.map((g) => (
+          <section class="kb__group" id={g.id} aria-labelledby={`${g.id}-h`}>
+            <header>
+              <h2 id={`${g.id}-h`}>{g.title}</h2>
+              <p class="muted">{g.intro}</p>
+            </header>
+            {g.items.map((x) => (
+              <article class="answer kb__qa" id={x.id} aria-labelledby={`${x.id}-q`}>
+                <h3 id={`${x.id}-q`}><a href={`#${x.id}`} class="kb__anchor">{x.q}</a></h3>
+                <div class="prose" set:html={x.html ?? x.a} />
+              </article>
+            ))}
+          </section>
+        ))}
+        <section class="kb__group" id="glossary" aria-labelledby="glossary-h">
+          <header><h2 id="glossary-h">Glossary</h2><p class="muted">Terms you will see in quotes and on site.</p></header>
+          <dl class="gl">
+            {glossary.map((g) => <div><dt>{g.t}</dt><dd>{g.d}</dd></div>)}
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+  <QuoteBand heading="Have a site and a start date? Check availability now." />
+</Base>
+
+<style>
+  .kb { padding-block: clamp(64px, 8vw, 120px); }
+  .kb__grid { display: grid; grid-template-columns: 280px 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .kb__nav { position: sticky; top: calc(var(--header-h) + 32px); }
+  .kb__nav ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-l); }
+  .kb__nav a { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-l); text-decoration: none; font-size: .95rem; }
+  .kb__nav a:hover { color: var(--copper-lo); }
+  .kb__nav .mono { color: var(--on-light-2); font-size: .72rem; }
+  .kb__ask { margin-top: 32px; padding: 20px; background: var(--stone); }
+  .kb__ask p { font-weight: 600; margin-bottom: 14px; }
+  .kb__group { margin-bottom: clamp(56px, 7vw, 96px); scroll-margin-top: calc(var(--header-h) + 24px); }
+  .kb__group header { margin-bottom: 16px; }
+  .kb__group h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin-bottom: 10px; }
+  .kb__qa { scroll-margin-top: calc(var(--header-h) + 24px); }
+  .kb__qa:target { background: var(--stone); box-shadow: -16px 0 0 var(--stone), 16px 0 0 var(--stone); }
+  .kb__anchor { text-decoration: none; }
+  .kb__anchor:hover { color: var(--copper-lo); }
+  .kb__qa .prose { color: var(--on-light-2); max-width: 70ch; }
+  .gl { margin: 0; border-top: 1px solid var(--line-l); }
+  .gl div { display: grid; grid-template-columns: 220px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line-l); }
+  .gl dt { font-weight: 600; }
+  .gl dd { margin: 0; color: var(--on-light-2); }
+  @media (max-width: 960px) {
+    .kb__grid { grid-template-columns: 1fr; }
+    .kb__nav { position: static; }
+    .gl div { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
+import { site, tel, wa, mailto } from '../data/site';
+import { places, districts } from '../data/geo';
+const year = new Date().getFullYear();
+---
+<footer class="ftr dark">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <Wordmark size="xl" href={null} />
+        <p class="ftr__entity">
+          <strong>RBE Capital Equip.</strong> rents backhoe loaders to contractors, developers and infrastructure
+          companies working on construction projects in the Kumaon region of Uttarakhand. It is an enterprise of
+          Rotoblast Engineering.
+        </p>
+      </div>
+      <div class="ftr__contact">
+        <p class="eyebrow">Talk to us about your site</p>
+        <a class="ftr__big" href={tel}>{site.phoneDisplay}</a>
+        <div class="btn-row">
+          <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp</a>
+          <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.email}</a>
+        </div>
+        <p class="mono muted ftr__hours"><Icon name="clock" />{site.hours}</p>
+      </div>
+    </div>
+
+    <div class="ftr__cols">
+      <nav aria-label="Equipment and projects">
+        <h2 class="ftr__h">Equipment</h2>
+        <ul>
+          <li><a href="/backhoe-loader-rental/">Backhoe loader rental</a></li>
+          <li><a href="/backhoe-loader-rental/#what-it-does">What the machine can do</a></li>
+          <li><a href="/backhoe-loader-rental/#when-not">When to choose an excavator</a></li>
+          <li><a href="/backhoe-loader-rental/#rental-terms">Rental durations</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Project types">
+        <h2 class="ftr__h">Projects</h2>
+        <ul>
+          <li><a href="/project-solutions/#road-construction">Road construction &amp; widening</a></li>
+          <li><a href="/project-solutions/#hill-cutting">Hill cutting &amp; slopes</a></li>
+          <li><a href="/project-solutions/#site-development">Site &amp; real-estate development</a></li>
+          <li><a href="/project-solutions/#dam-bridge">Dam, bridge &amp; river works</a></li>
+          <li><a href="/project-solutions/#trenching">Trenching &amp; utilities</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Company">
+        <h2 class="ftr__h">Company</h2>
+        <ul>
+          <li><a href="/why-rbe/">Why RBE</a></li>
+          <li><a href="/how-rental-works/">How rental works</a></li>
+          <li><a href="/knowledge/">Knowledge &amp; FAQ</a></li>
+          <li><a href="/contact/">Book equipment</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2 class="ftr__h"><a href="/kumaon-service-area/">Kumaon service area</a></h2>
+        <p class="ftr__places">{places.map((p) => p.name).join(' · ')}</p>
+        <p class="mono muted ftr__dist">Districts: {districts.join(', ')}</p>
+      </div>
+    </div>
+
+    <div class="ftr__base">
+      <span>© {year} RBE Capital Equip. — an enterprise of Rotoblast Engineering.</span>
+      <span>Backhoe loader rental · Kumaon, Uttarakhand, India</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { padding-top: clamp(72px, 9vw, 128px); padding-bottom: 32px; position: relative; overflow: hidden; }
+  .ftr__top { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); border-bottom: 1px solid var(--line-d); }
+  .ftr__entity { margin-top: 40px; max-width: 46ch; color: var(--on-dark-2); }
+  .ftr__entity strong { color: var(--on-dark); font-weight: 600; }
+  .ftr__big { display: block; font-family: var(--f-display); font-stretch: 118%; font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: -0.03em; text-decoration: none; margin-bottom: 26px; }
+  .ftr__big:hover { color: var(--copper-hi); }
+  .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+  .ftr__hours :global(svg) { width: 16px; }
+  .ftr__cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.5fr; gap: 32px; padding-block: 56px; }
+  .ftr__h { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .14em; color: var(--on-dark-2); margin-bottom: 18px; font-stretch: normal; }
+  .ftr__h a { text-decoration: none; } .ftr__h a:hover { color: var(--copper-hi); }
+  .ftr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .ftr ul a { text-decoration: none; color: var(--on-dark); font-size: .95rem; }
+  .ftr ul a:hover { color: var(--copper-hi); }
+  .ftr__places { font-size: .95rem; line-height: 1.8; }
+  .ftr__dist { margin-top: 10px; font-size: .75rem; }
+  .ftr__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line-d); font-family: var(--f-mono); font-size: .72rem; letter-spacing: .04em; color: var(--on-dark-2); }
+  @media (max-width: 960px) {
+    .ftr__top { grid-template-columns: 1fr; }
+    .ftr__cols { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) { .ftr__cols { grid-template-columns: 1fr; } .ftr :global(.wm--xl) { --s: 1.8; } }
+</style>

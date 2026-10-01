@@ -1,0 +1,247 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import KumaonMap from '../components/KumaonMap.astro';
+import ProjectDiagram from '../components/ProjectDiagram.astro';
+import { projects } from '../data/projects';
+import { belts } from '../data/geo';
+import { qa } from '../data/faq';
+
+const title = 'Backhoe Loader Rental in Kumaon, Uttarakhand | RBE Capital Equip.';
+const description =
+  'Backhoe loader (JCB) rental for road, hill-cutting, site-development and infrastructure projects across Kumaon — Haldwani, Nainital, Almora, Bageshwar, Rudrapur and beyond. Check availability today.';
+
+const concerns = [
+  { q: 'Will the machine actually reach my site?', a: 'We plan the route, the transport method and the arrival date before you commit — including narrow hill roads and remote last-mile access.', href: '/kumaon-service-area/#deployment', l: 'How deployment is planned' },
+  { q: 'What if it breaks down mid-project?', a: 'How breakdowns are reported, who attends and what happens if a repair takes longer is agreed before the machine leaves for site.', href: '/why-rbe/#support', l: 'How support works' },
+  { q: 'Can I keep it for the whole project?', a: 'Short assignments, monthly hire or the full project phase — with servicing planned around your working hours.', href: '/backhoe-loader-rental/#rental-terms', l: 'Rental durations' },
+  { q: 'Is a backhoe loader right for this job?', a: 'Often, but not always. If your scope needs an excavator or a breaker, we will say so rather than send the wrong machine.', href: '/backhoe-loader-rental/#when-not', l: 'When to choose an excavator' },
+];
+
+const audiences = [
+  { t: 'PWD & government contractors', d: 'Road, drain and building packages with fixed completion dates and inspections.' },
+  { t: 'Road & highway contractors', d: 'Widening, side drains, culverts and slip clearance spread across many kilometres.' },
+  { t: 'Real-estate developers', d: 'Hillside villas, resorts, group housing and plotted development from access road to foundations.' },
+  { t: 'Infrastructure & EPC companies', d: 'Bridges, water supply, power and institutional works on a long programme.' },
+  { t: 'Contractors new to Kumaon', d: 'Companies from outside Uttarakhand who need local equipment and local route knowledge.' },
+];
+
+const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
+---
+<Base title={title} description={description}>
+  <Hero />
+
+  <!-- Problem → answer -->
+  <section class="section paper" aria-labelledby="h-concerns">
+    <div class="wrap">
+      <div class="split">
+        <div class="split__l">
+          <p class="eyebrow rv"><span class="idx">01</span>The real questions</p>
+          <h2 id="h-concerns" class="rv">Your project can’t stop because a machine <span class="serif">didn’t turn up.</span></h2>
+          <p class="lead muted rv rv-d1" style="margin-top:28px">Finding a backhoe loader is easy. Finding one that reaches a hill site on the day you planned, keeps working through the project, and is backed by someone who picks up the phone — that is the actual requirement.</p>
+        </div>
+        <ol class="concerns">
+          {concerns.map((c, i) => (
+            <li class="rv">
+              <span class="mono concerns__n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{c.q}</h3>
+                <p class="muted">{c.a}</p>
+                <a class="inline" href={c.href}>{c.l} →</a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="section--tight dark-2 aud" aria-labelledby="h-aud">
+    <div class="wrap">
+      <div class="aud__head">
+        <p class="eyebrow"><span class="idx">02</span>Who we work with</p>
+        <h2 id="h-aud" class="rv">Equipment for project teams, <span class="serif">not one-off jobs.</span></h2>
+      </div>
+      <ul class="aud__list">
+        {audiences.map((a) => <li class="rv"><h3>{a.t}</h3><p class="muted">{a.d}</p></li>)}
+      </ul>
+      <p class="aud__roles mono">Project managers · Site engineers · Construction managers · Procurement · Equipment coordinators</p>
+    </div>
+  </section>
+
+  <!-- Project types: horizontal track -->
+  <section class="section paper proj" aria-labelledby="h-proj">
+    <div class="wrap proj__head">
+      <div>
+        <p class="eyebrow"><span class="idx">03</span>Project solutions</p>
+        <h2 id="h-proj" class="rv">Organised around <span class="serif">your</span> project type.</h2>
+      </div>
+      <p class="muted proj__intro rv">Each project type has its own site realities in Kumaon. Here is where a backhoe loader earns its place — and where it doesn’t.</p>
+    </div>
+    <div class="proj__track" tabindex="0" aria-label="Project types, scroll horizontally">
+      {projects.map((p, i) => (
+        <a class="proj__card" href={`/project-solutions/#${p.id}`}>
+          <span class="mono proj__i">{String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+          <div class="proj__fig"><ProjectDiagram kind={p.kind} label={`Cross-section: ${p.title}`} /></div>
+          <h3>{p.title}</h3>
+          <p class="muted">{p.short}</p>
+          <span class="proj__go">See tasks and limits <Icon name="arrow" /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Kumaon -->
+  <section class="section dark geo" aria-labelledby="h-geo">
+    <div class="wrap geo__grid">
+      <div class="geo__copy">
+        <p class="eyebrow"><span class="idx">04</span>Kumaon service area</p>
+        <h2 id="h-geo" class="rv">From 200 m in the Terai to 2,300 m on the ridges. <span class="serif">One region, three kinds of site.</span></h2>
+        <p class="muted rv" style="margin-top:24px">A site in Pantnagar and a site above Mukteshwar need different planning, even with the same machine. We plan mobilisation around the belt your project sits in.</p>
+        <dl class="geo__belts">
+          {Object.values(belts).map((b) => (
+            <div class="rv"><dt>{b.title}</dt><dd><span class="mono">{b.short}</span>{b.realities[0]}</dd></div>
+          ))}
+        </dl>
+        <a class="btn btn--ghost" href="/kumaon-service-area/">Locations and deployment planning <Icon name="arrow" /></a>
+      </div>
+      <div class="geo__map rv"><KumaonMap /></div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section stone" aria-labelledby="h-proc">
+    <div class="wrap">
+      <div class="proc__head">
+        <p class="eyebrow"><span class="idx">05</span>How rental works</p>
+        <h2 id="h-proc" class="rv">From your first message to a working machine.</h2>
+      </div>
+      <ol class="proc">
+        <li class="rv"><b>Requirement</b><span>Call, WhatsApp or send the form — site, work, dates.</span></li>
+        <li class="rv rv-d1"><b>Site check</b><span>Location, access road and working conditions.</span></li>
+        <li class="rv rv-d2"><b>Confirmation</b><span>Machine, duration and terms agreed in writing.</span></li>
+        <li class="rv rv-d3"><b>Mobilisation</b><span>Route and arrival date planned, machine checked.</span></li>
+        <li class="rv"><b>On site</b><span>Work starts; daily hours recorded.</span></li>
+        <li class="rv rv-d1"><b>Support</b><span>Servicing, breakdowns, extension or return.</span></li>
+      </ol>
+      <div class="btn-row" style="margin-top:48px">
+        <a class="btn" href="/contact/">Start with your requirement <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href="/how-rental-works/">The full process</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rotoblast -->
+  <section class="section paper roto" aria-labelledby="h-roto">
+    <div class="wrap roto__grid">
+      <p class="roto__big rv" aria-hidden="true">RBE</p>
+      <div>
+        <p class="eyebrow"><span class="idx">06</span>The organisation behind the machine</p>
+        <h2 id="h-roto" class="rv">An enterprise of <span class="serif">Rotoblast Engineering.</span></h2>
+        <div class="prose measure rv" style="margin-top:28px">
+          <p>RBE Capital Equip. is not an individual putting a machine on hire. It is an enterprise of Rotoblast Engineering, which means an engineering organisation stands behind the equipment, its maintenance and the commitments made to your project.</p>
+          <p>For a project team, that changes the conversation: availability is confirmed rather than hoped for, the machine is checked before it is dispatched, and support has a name and a phone number. <a href="/why-rbe/">What you can expect from us</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Direct answers -->
+  <section class="section--tight paper" aria-labelledby="h-ans">
+    <div class="wrap ans">
+      <div>
+        <p class="eyebrow"><span class="idx">07</span>Straight answers</p>
+        <h2 id="h-ans">Questions contractors ask before they hire.</h2>
+        <a class="btn btn--ghost" style="margin-top:32px" href="/knowledge/">All questions and answers <Icon name="arrow" /></a>
+      </div>
+      <div>
+        {answers.map((x) => (
+          <div class="answer">
+            <h3>{x.q}</h3>
+            <div class="prose muted" set:html={x.html ?? x.a} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <QuoteBand waText="Hello RBE Capital Equip., I want to discuss backhoe loader availability for a project in Kumaon." />
+</Base>
+
+<style>
+  .split { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(40px, 7vw, 120px); align-items: start; }
+  .split__l { position: sticky; top: calc(var(--header-h) + 40px); }
+  .concerns { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-l); }
+  .concerns li { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 32px 0; border-bottom: 1px solid var(--line-l); }
+  .concerns__n { color: var(--copper); padding-top: 6px; }
+  .concerns h3 { margin-bottom: 12px; }
+  .concerns p { margin-bottom: 12px; }
+
+  .aud__head { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: end; margin-bottom: 56px; }
+  .aud__head h2 { font-size: clamp(1.8rem, 3.6vw, 3.2rem); }
+  .aud__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line-d); }
+  .aud__list li { padding: 28px 24px 28px 0; border-right: 1px solid var(--line-d); }
+  .aud__list li + li { padding-left: 24px; }
+  .aud__list li:last-child { border-right: 0; }
+  .aud__list h3 { font-size: 1.08rem; margin-bottom: 12px; }
+  .aud__list p { font-size: .92rem; }
+  .aud__roles { margin-top: 40px; color: var(--on-dark-2); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
+
+  .proj__head { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: end; margin-bottom: 48px; }
+  .proj__intro { max-width: 42ch; }
+  .proj__track { display: grid; grid-auto-flow: column; grid-auto-columns: min(400px, 82vw); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px var(--gutter) 24px; scroll-padding-inline: var(--gutter); scrollbar-width: thin; scrollbar-color: var(--copper) transparent; }
+  .proj__card { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; padding: 24px; background: var(--stone); text-decoration: none; border: 1px solid transparent; transition: border-color .3s var(--ease), background .3s var(--ease); }
+  .proj__card:hover { border-color: var(--copper); background: var(--stone-2); }
+  .proj__i { color: var(--on-light-2); font-size: .7rem; }
+  .proj__fig { color: var(--on-light); padding: 8px 0 12px; border-bottom: 1px solid var(--line-l); }
+  .proj__card h3 { font-size: 1.3rem; }
+  .proj__card p { font-size: .95rem; flex: 1; }
+  .proj__go { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: .92rem; }
+  .proj__go :global(svg) { width: 18px; color: var(--copper); transition: transform .3s var(--ease); }
+  .proj__card:hover .proj__go :global(svg) { transform: translateX(4px); }
+
+  .geo__grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .geo__copy h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+  .geo__belts { margin: 36px 0 40px; border-top: 1px solid var(--line-d); }
+  .geo__belts div { padding: 18px 0; border-bottom: 1px solid var(--line-d); display: grid; gap: 6px; }
+  .geo__belts dt { font-weight: 600; }
+  .geo__belts dd { margin: 0; color: var(--on-dark-2); font-size: .95rem; display: grid; gap: 4px; }
+  .geo__belts .mono { font-size: .72rem; color: var(--copper-hi); letter-spacing: .04em; }
+
+  .proc__head { display: grid; grid-template-columns: 1fr 1.6fr; gap: 32px; align-items: end; margin-bottom: 56px; }
+  .proc__head h2 { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
+  .proc { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); position: relative; }
+  .proc::before { content: ''; position: absolute; left: 0; right: 0; top: 11px; height: 1px; background: var(--line-l); }
+  .proc li { counter-increment: s; position: relative; padding: 40px 18px 0 0; display: grid; gap: 8px; }
+  .proc li::before { content: '0' counter(s); position: absolute; top: 0; left: 0; background: var(--stone); padding-right: 10px; font-family: var(--f-mono); font-size: .75rem; color: var(--copper-lo); }
+  .proc li::after { content: ''; position: absolute; top: 8px; left: 30px; width: 7px; height: 7px; background: var(--copper); }
+  .proc b { font-family: var(--f-display); font-stretch: 110%; font-size: 1.15rem; font-weight: 650; }
+  .proc span { color: var(--on-light-2); font-size: .92rem; }
+
+  .roto__grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .roto__big { margin: 0; font-family: var(--f-display); font-weight: 800; font-stretch: 125%; font-size: clamp(6rem, 18vw, 17rem); letter-spacing: -0.06em; line-height: .8; color: transparent; -webkit-text-stroke: 1px var(--on-light-2); opacity: .5; }
+
+  .ans { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(32px, 6vw, 96px); }
+  .ans h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+
+  @media (max-width: 1100px) {
+    .aud__list { grid-template-columns: 1fr 1fr; }
+    .aud__list li, .aud__list li + li { padding: 24px 20px 24px 0; border-right: 0; border-bottom: 1px solid var(--line-d); }
+    .proc { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
+  }
+  @media (max-width: 860px) {
+    .split, .aud__head, .proj__head, .geo__grid, .proc__head, .roto__grid, .ans { grid-template-columns: 1fr; }
+    .split__l { position: static; }
+    .concerns li { grid-template-columns: 40px 1fr; }
+    .aud__list { grid-template-columns: 1fr; }
+    .proc { grid-template-columns: 1fr; row-gap: 0; }
+    .proc::before { left: 11px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
+    .proc li { padding: 0 0 28px 48px; }
+    .proc li::before { top: 0; left: 0; padding: 0 0 6px; }
+    .proc li::after { left: 8px; top: 24px; }
+    .roto__big { font-size: 7rem; }
+  }
+</style>

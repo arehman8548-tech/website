@@ -1,0 +1,13 @@
+---
+/** Contextual "where to go next" links — each one written for the page it sits on. */
+interface Props { items: { k: string; t: string; d: string; href: string }[]; title?: string }
+const { items, title = 'Where to go next' } = Astro.props;
+---
+<section class="section--tight paper" aria-labelledby="next-h">
+  <div class="wrap">
+    <h2 id="next-h" class="eyebrow" style="font-stretch:normal">{title}</h2>
+    <div class="next">
+      {items.map((x) => <a href={x.href}><span class="k">{x.k}</span><span class="t">{x.t}</span><span class="d">{x.d}</span></a>)}
+    </div>
+  </div>
+</section>

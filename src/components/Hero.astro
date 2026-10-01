@@ -1,0 +1,163 @@
+---
+import Icon from './Icon.astro';
+import { site, tel, wa } from '../data/site';
+
+const chapters = [
+  {
+    k: '01 — Loader end',
+    h: 'Load, level and clear with the front bucket.',
+    p: 'Shifting spoil, back-filling, levelling a plot, loading tippers. The loader end moves material so your site does not wait for a second machine.',
+    link: { href: '/backhoe-loader-rental/#what-it-does', t: 'What a backhoe loader can do on site' },
+  },
+  {
+    k: '02 — Mobilisation',
+    h: 'From the plains to your hill site.',
+    p: 'A backhoe loader runs on wheels, so it can usually travel by road between nearby sites. For longer moves into the hills we plan the route and transport before the start date — not on the day.',
+    link: { href: '/kumaon-service-area/', t: 'How we deploy across Kumaon' },
+  },
+  {
+    k: '03 — Backhoe end',
+    h: 'Stabilisers down. Trench, footing, side drain.',
+    p: 'Drainage and utility trenches, foundation pits, culvert seats and controlled cutting on narrow hill roads, where a larger excavator cannot easily turn or park.',
+    link: { href: '/project-solutions/', t: 'See it by project type' },
+  },
+];
+---
+<section class="hero dark" data-hero aria-labelledby="hero-h1">
+  <div class="hero__stage">
+    <div class="hero__poster" aria-hidden="true">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="hsky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0e1114" /><stop offset="1" stop-color="#1b2023" /></linearGradient>
+          <radialGradient id="hglow" cx="0.68" cy="0.62" r="0.45"><stop offset="0" stop-color="#c4692c" stop-opacity=".16" /><stop offset="1" stop-color="#c4692c" stop-opacity="0" /></radialGradient>
+        </defs>
+        <rect width="1600" height="900" fill="url(#hsky)" />
+        <rect width="1600" height="900" fill="url(#hglow)" />
+        <path d="M0 640 L180 600 L320 622 L470 575 L640 610 L800 560 L960 598 L1120 552 L1290 590 L1440 560 L1600 585 V900 H0Z" fill="#171b1e" />
+        <path d="M0 700 H1600 V900 H0Z" fill="#121517" />
+      </svg>
+    </div>
+    <canvas class="hero__canvas" data-canvas aria-hidden="true"></canvas>
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <div class="hero__hud" aria-hidden="true" data-hud>
+      <div><span>Travel</span><b data-r="x">0.0 m</b></div>
+      <div><span>Boom</span><b data-r="boom">—</b></div>
+      <div><span>Dipper</span><b data-r="dipper">—</b></div>
+      <div><span>Stabilisers</span><b data-r="stab">Stowed</b></div>
+    </div>
+
+    <ol class="hero__rail" aria-hidden="true" data-rail>
+      <li>Load</li><li>Mobilise</li><li>Dig</li><li>Your site</li>
+      <span class="hero__rail-bar"><i data-bar></i></span>
+    </ol>
+
+  <div class="hero__copy">
+    <div class="hero__chap hero__chap--0 is-on wrap" data-chap="0">
+      <p class="eyebrow"><span class="idx">RBE</span> Backhoe loader rental · Kumaon, Uttarakhand</p>
+      <h1 id="hero-h1">Backhoe loaders for projects that <span class="serif">can’t&nbsp;wait</span> — across Kumaon.</h1>
+      <p class="lead">For contractors, developers and infrastructure companies building from Rudrapur and Haldwani up to Nainital, Almora, Bageshwar and Berinag. Machine availability, mobilisation and site support planned around your schedule.</p>
+      <div class="btn-row">
+        <a class="btn" href="/contact/">Check availability <Icon name="arrow" /></a>
+        <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp</a>
+        <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call now</a>
+      </div>
+      <p class="hero__scroll mono" aria-hidden="true"><span></span>Scroll to see the machine work</p>
+    </div>
+    {chapters.map((c, i) => (
+      <div class={`hero__chap wrap`} data-chap={i + 1}>
+        <div class="hero__card">
+          <p class="eyebrow"><span class="idx">{c.k.slice(0, 2)}</span>{c.k.slice(5)}</p>
+          <h2>{c.h}</h2>
+          <p>{c.p}</p>
+          <a class="inline" href={c.link.href}>{c.link.t} →</a>
+        </div>
+      </div>
+    ))}
+    <div class="hero__chap hero__chap--end wrap" data-chap="4">
+      <div class="hero__card">
+        <p class="eyebrow"><span class="idx">04</span>Your site</p>
+        <h2>Tell us the site. We’ll tell you how the machine gets there.</h2>
+        <div class="btn-row">
+          <a class="btn" href="/contact/">Discuss your project <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href={tel}><Icon name="phone" />{site.phoneDisplay}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script>
+  import { initHero } from '../scripts/hero';
+  initHero();
+</script>
+
+<style>
+  .hero { --len: 560vh; position: relative; height: var(--len); background: var(--ink); color: var(--on-dark); }
+  .hero__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  .hero__poster, .hero__canvas, .hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__poster svg { width: 100%; height: 100%; }
+  .hero__canvas { opacity: 0; transition: opacity 1.2s var(--ease); }
+  :global(.hero-ready) .hero__canvas { opacity: 1; }
+  .hero__shade { pointer-events: none; background:
+    linear-gradient(90deg, rgba(14,16,18,.86) 0%, rgba(14,16,18,.55) 34%, rgba(14,16,18,0) 60%),
+    linear-gradient(0deg, rgba(14,16,18,.7) 0%, rgba(14,16,18,0) 26%); }
+
+  .hero__copy { position: absolute; inset: 0; pointer-events: none; }
+  .hero__chap { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center;
+    opacity: 0; visibility: hidden; transform: translateY(28px); transition: opacity .7s var(--ease), transform .9s var(--ease), visibility 0s .7s; }
+  .hero__chap.is-on { opacity: 1; visibility: visible; transform: none; transition: opacity .7s var(--ease), transform .9s var(--ease), visibility 0s; pointer-events: auto; }
+  .hero__chap > * { pointer-events: auto; }
+  .hero__chap--0 { padding-top: var(--header-h); padding-bottom: 40px; }
+  .hero__chap--0 h1 { max-width: 13ch; font-size: clamp(2.6rem, 5.4vw, 4.9rem); }
+  .hero__chap--0 .lead { color: var(--on-dark-2); margin-top: 28px; max-width: 46ch; }
+  .hero__chap--0 .btn-row { margin-top: 36px; }
+  .hero__scroll { display: flex; align-items: center; gap: 12px; margin-top: 48px; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-2); }
+  .hero__scroll span { width: 1px; height: 36px; background: linear-gradient(var(--copper-hi), transparent); animation: drip 2.2s var(--ease) infinite; transform-origin: top; }
+  @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+  .hero__card { max-width: 440px; padding: 32px 0 32px 28px; border-left: 1px solid var(--copper); }
+  .hero__card h2 { font-size: clamp(1.8rem, 3.2vw, 2.8rem); margin-bottom: 18px; }
+  .hero__card p:not(.eyebrow) { color: var(--on-dark-2); }
+  .hero__card .inline { display: inline-block; margin-top: 8px; font-weight: 500; }
+  .hero__chap--end .btn-row { margin-top: 28px; }
+
+  .hero__hud { position: absolute; right: var(--gutter); bottom: 96px; display: grid; grid-template-columns: repeat(2, auto); gap: 14px 28px; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--on-dark-2); }
+  .hero__hud div { display: grid; gap: 4px; min-width: 110px; }
+  .hero__hud b { font-weight: 500; color: var(--on-dark); font-size: .82rem; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+  .hero__rail { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 36px; display: flex; gap: 0; list-style: none; margin: 0; padding: 0 0 14px; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-2); }
+  .hero__rail li { flex: 1; counter-increment: r; }
+  .hero__rail li::before { content: '0' counter(r) '  '; color: var(--copper-hi); white-space: pre; }
+  .hero__rail-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line-d); }
+  .hero__rail-bar i { position: absolute; inset: 0; background: var(--copper); transform-origin: left; transform: scaleX(0); }
+
+  /* Static mode: reduced motion / no WebGL — no pinning, chapters flow as content */
+  :global(.hero-static) .hero { height: auto; }
+  :global(.hero-static) .hero__stage { position: relative; height: auto; }
+  :global(.hero-static) .hero__poster, :global(.hero-static) .hero__canvas, :global(.hero-static) .hero__shade { height: 100svh; }
+  :global(.hero-static) .hero__copy { position: relative; }
+  :global(.hero-static) .hero__chap { position: relative; height: auto; margin: 0; opacity: 1; visibility: visible; transform: none; padding-block: 48px; }
+  :global(.hero-static) .hero__chap--0 { min-height: 100svh; padding-top: calc(var(--header-h) + 48px); }
+  :global(.hero-static) .hero__hud, :global(.hero-static) .hero__rail, :global(.hero-static) .hero__scroll { display: none; }
+  :global(.hero-static) .hero__chap:not(.hero__chap--0) { background: rgba(14,16,18,.82); }
+
+  @media (max-width: 860px) {
+    .hero { --len: 470vh; }
+    .hero__shade { background: linear-gradient(0deg, rgba(14,16,18,.95) 0%, rgba(14,16,18,.78) 40%, rgba(14,16,18,.1) 70%, rgba(14,16,18,.35) 100%); }
+    .hero__chap { justify-content: flex-end; padding-bottom: 72px; }
+    .hero__chap--0 { padding-bottom: 40px; }
+    .hero__chap--0 .eyebrow { display: none; }
+    .hero__chap--0 h1 { font-size: clamp(2rem, 9vw, 2.7rem); }
+    .hero__chap--0 .lead { font-size: .95rem; margin-top: 14px; }
+    .hero__chap--0 .btn-row { margin-top: 20px; }
+    .hero__chap--0 .btn-row .btn { flex: 1 1 auto; justify-content: center; }
+    .hero__chap--0 .btn-row .btn--ghost, .hero__chap--0 .btn-row .btn--wa { display: none; }
+    .hero__scroll { display: none; }
+    .hero__card { padding: 0 0 0 18px; }
+    .hero__card h2 { font-size: 1.7rem; }
+    .hero__hud { display: none; }
+    .hero__rail { bottom: 20px; font-size: .58rem; }
+  }
+  @media (max-height: 760px) and (min-width: 861px) { .hero__chap--0 h1 { font-size: clamp(2.4rem, 5.6vw, 4.6rem); } .hero__scroll { display: none; } }
+</style>

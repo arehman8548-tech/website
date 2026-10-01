@@ -1,0 +1,44 @@
+---
+/** Approximate altitude of supported locations, ordered as a climb from the plains into the hills. */
+import { places } from '../data/geo';
+const seq = ['rudrapur', 'haldwani', 'kathgodam', 'bhimtal', 'bhowali', 'nainital', 'mukteshwar', 'almora', 'ranikhet', 'bageshwar', 'berinag'];
+const pts = seq.map((s) => places.find((p) => p.slug === s)!);
+const W = 1000, H = 300, PADL = 52, PADR = 20, TOP = 36, BOT = 54, MAX = 2500;
+const x = (i: number) => PADL + (i * (W - PADL - PADR)) / (pts.length - 1);
+const y = (m: number) => TOP + (1 - m / MAX) * (H - TOP - BOT);
+const line = pts.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(p.altM).toFixed(1)}`).join(' ');
+const area = `${line} L${x(pts.length - 1)} ${H - BOT} L${x(0)} ${H - BOT} Z`;
+const grid = [0, 500, 1000, 1500, 2000, 2500];
+---
+<figure class="elev">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="elev-t elev-d">
+    <title id="elev-t">Approximate altitude of Kumaon locations</title>
+    <desc id="elev-d">{pts.map((p) => `${p.name} about ${p.altM.toLocaleString('en-IN')} metres`).join('; ')}.</desc>
+    <defs><linearGradient id="elev-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4692c" stop-opacity=".35" /><stop offset="1" stop-color="#c4692c" stop-opacity="0" /></linearGradient></defs>
+    {grid.map((g) => <g><line x1={PADL} x2={W - PADR} y1={y(g)} y2={y(g)} class="gl" /><text x={PADL - 10} y={y(g) + 4} text-anchor="end" class="ax">{g === 0 ? '0' : `${g / 1000}k m`}</text></g>)}
+    <path d={area} fill="url(#elev-g)" />
+    <path d={line} class="pl" />
+    {pts.map((p, i) => (
+      <g class="pt" data-place={p.slug}>
+        <line x1={x(i)} x2={x(i)} y1={y(p.altM)} y2={H - BOT} class="dl" />
+        <circle cx={x(i)} cy={y(p.altM)} r="4" />
+        <text x={x(i)} y={y(p.altM) - 12} text-anchor="middle" class="alt">{p.altM.toLocaleString('en-IN')}</text>
+        <text x={x(i)} y={H - BOT + 22} text-anchor="middle" class="nm">{p.name}</text>
+      </g>
+    ))}
+  </svg>
+  <figcaption class="mono">Approximate altitude in metres above sea level. Order follows a typical climb from the plains, not a single road.</figcaption>
+</figure>
+<style>
+  .elev { margin: 0; color: var(--on-light); }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .gl { stroke: var(--line-l); stroke-width: 1; }
+  .ax { fill: var(--on-light-2); font-family: var(--f-mono); font-size: 11px; }
+  .pl { fill: none; stroke: var(--copper); stroke-width: 2; stroke-linejoin: round; }
+  .dl { stroke: var(--copper); stroke-width: .8; stroke-dasharray: 2 3; opacity: .5; }
+  circle { fill: var(--paper); stroke: var(--copper); stroke-width: 2; }
+  .alt { fill: var(--on-light); font-family: var(--f-mono); font-size: 11px; font-weight: 500; }
+  .nm { fill: var(--on-light-2); font-family: var(--f-ui); font-size: 12.5px; font-weight: 500; }
+  figcaption { margin-top: 14px; font-size: .72rem; color: var(--on-light-2); }
+  @media (max-width: 700px) { .nm { font-size: 18px; } .alt { font-size: 15px; } svg { min-width: 720px; } .elev { overflow-x: auto; } }
+</style>

@@ -1,0 +1,232 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs } from '../data/schema';
+import { site, tel, wa, mailto } from '../data/site';
+import { projects } from '../data/projects';
+
+const crumbs = [{ name: 'Book Equipment', href: '/contact/' }];
+const title = 'Book a Backhoe Loader — Check Availability for Your Kumaon Project | RBE Capital Equip.';
+const description =
+  'Check backhoe loader availability and request a rental quote for your project in Kumaon. Call, WhatsApp or send the two-minute project form to RBE Capital Equip.';
+---
+<Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]}>
+  <section class="ct dark">
+    <div class="wrap ct__grid">
+      <div class="ct__side">
+        <Breadcrumbs items={crumbs} />
+        <p class="eyebrow"><span class="idx">RBE</span>Book equipment</p>
+        <h1>Check availability <span class="serif">for your dates.</span></h1>
+        <p class="lead muted">Two minutes on a phone. We reply with availability, how the machine reaches your site and what the rental involves.</p>
+
+        <div class="ct__direct">
+          <a class="ct__ch" href={tel}>
+            <Icon name="phone" />
+            <span><b>Call</b><span class="mono">{site.phoneDisplay}</span></span>
+          </a>
+          <a class="ct__ch ct__ch--wa" href={wa()} rel="noopener">
+            <Icon name="wa" />
+            <span><b>WhatsApp</b><span class="mono">Send a map pin or site photos</span></span>
+          </a>
+          <a class="ct__ch" href={mailto}>
+            <Icon name="mail" />
+            <span><b>Email</b><span class="mono">{site.email}</span></span>
+          </a>
+          <p class="mono ct__hours"><Icon name="clock" />{site.hours}</p>
+        </div>
+
+        <div class="ct__next">
+          <h2>What happens next</h2>
+          <ol>
+            <li>We confirm whether a machine is available for your start date.</li>
+            <li>We check the site location and access, and ask anything missing.</li>
+            <li>You receive the terms in writing — machine, duration, operator, diesel, mobilisation.</li>
+          </ol>
+          <a class="inline" href="/how-rental-works/">The full rental process →</a>
+        </div>
+      </div>
+
+      <div class="ct__formwrap">
+        <form class="fm" data-form data-endpoint={site.formEndpoint} data-wa={site.whatsappE164} data-email={site.email} novalidate>
+          <div class="fm__head">
+            <h2>Project enquiry</h2>
+            <p class="mono">Fields marked * are required</p>
+          </div>
+          <div class="fm__grid">
+            <div class="f">
+              <label for="f-name">Name *</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="f">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" />
+            </div>
+            <div class="f">
+              <label for="f-phone">Phone / WhatsApp *</label>
+              <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="^[+]?[0-9 \-]{10,15}$" aria-describedby="f-phone-h" />
+              <p class="f__h" id="f-phone-h">10-digit mobile number</p>
+            </div>
+            <div class="f">
+              <label for="f-loc">Project location *</label>
+              <input id="f-loc" name="location" type="text" required placeholder="e.g. near Bhowali, Nainital district" aria-describedby="f-loc-h" />
+              <p class="f__h" id="f-loc-h">Town, village or a map link</p>
+            </div>
+            <div class="f">
+              <label for="f-type">Project type</label>
+              <select id="f-type" name="type">
+                <option value="">Select…</option>
+                {projects.map((p) => <option value={p.title}>{p.title}</option>)}
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="f">
+              <label for="f-eq">Required equipment</label>
+              <select id="f-eq" name="equipment">
+                <option>Backhoe loader</option>
+                <option>Backhoe loader with rock breaker (ask availability)</option>
+                <option>Not sure — please advise</option>
+              </select>
+            </div>
+            <div class="f">
+              <label for="f-dur">Rental duration</label>
+              <select id="f-dur" name="duration">
+                <option value="">Select…</option>
+                <option>A few days</option>
+                <option>1–4 weeks</option>
+                <option>1–3 months</option>
+                <option>3+ months / project duration</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="f">
+              <label for="f-start">Expected start date</label>
+              <input id="f-start" name="start" type="date" />
+            </div>
+            <div class="f f--full">
+              <label for="f-det">Additional details</label>
+              <textarea id="f-det" name="details" rows="4" placeholder="Scope of work, working hours, access road, anything we should know"></textarea>
+            </div>
+          </div>
+          <div class="fm__foot">
+            <button class="btn" type="submit" data-submit>
+              {site.formEndpoint ? 'Send enquiry' : 'Send enquiry on WhatsApp'} <Icon name="arrow" />
+            </button>
+            <p class="mono fm__alt">or <a href={mailto} data-mail>send by email</a></p>
+          </div>
+          <p class="fm__status" role="status" aria-live="polite" data-status></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form]')!;
+  const status = form.querySelector<HTMLElement>('[data-status]')!;
+  const endpoint = form.dataset.endpoint ?? '';
+
+  // Pre-select project type from ?type= (used by project-page links)
+  const t = new URLSearchParams(location.search).get('type');
+  if (t) {
+    const sel = form.querySelector<HTMLSelectElement>('#f-type')!;
+    const opt = [...sel.options].find((o) => o.value.toLowerCase().startsWith(t.toLowerCase()));
+    if (opt) sel.value = opt.value;
+  }
+
+  const labels: Record<string, string> = { name: 'Name', company: 'Company', phone: 'Phone', location: 'Project location', type: 'Project type', equipment: 'Equipment', duration: 'Duration', start: 'Start date', details: 'Details' };
+  const summary = (fd: FormData) =>
+    ['Backhoe loader enquiry — RBE Capital Equip.', ...[...fd.entries()].filter(([, v]) => String(v).trim()).map(([k, v]) => `${labels[k] ?? k}: ${v}`)].join('\n');
+
+  const validate = () => {
+    let ok = true;
+    form.querySelectorAll<HTMLInputElement>('input[required], input[pattern]').forEach((el) => {
+      const valid = el.checkValidity();
+      el.setAttribute('aria-invalid', String(!valid));
+      if (!valid && ok) { el.focus(); ok = false; }
+    });
+    if (!ok) status.textContent = 'Please fill in your name, a valid phone number and the project location.';
+    return ok;
+  };
+
+  form.querySelector<HTMLAnchorElement>('[data-mail]')!.addEventListener('click', (e) => {
+    if (!validate()) { e.preventDefault(); return; }
+    const body = summary(new FormData(form));
+    (e.currentTarget as HTMLAnchorElement).href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Backhoe loader enquiry')}&body=${encodeURIComponent(body)}`;
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = '';
+    if (!validate()) return;
+    const fd = new FormData(form);
+    if (endpoint) {
+      const btn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+      btn.disabled = true;
+      try {
+        const r = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: fd });
+        if (!r.ok) throw new Error(String(r.status));
+        form.reset();
+        status.textContent = 'Thank you — your enquiry has been sent. We will contact you shortly.';
+      } catch {
+        status.textContent = 'Sending failed. Please call us or use WhatsApp instead.';
+      } finally {
+        btn.disabled = false;
+      }
+      return;
+    }
+    window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(summary(fd))}`, '_blank', 'noopener');
+    status.textContent = 'WhatsApp has opened with your enquiry filled in — press send there.';
+  });
+</script>
+
+<style>
+  .ct { padding-top: calc(var(--header-h) + clamp(40px, 6vw, 88px)); padding-bottom: clamp(64px, 8vw, 120px); min-height: 100vh; }
+  .ct__grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .ct h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); }
+  .ct .lead { margin-top: 24px; }
+  .ct__direct { margin-top: 40px; display: grid; gap: 10px; }
+  .ct__ch { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border: 1px solid var(--line-d); text-decoration: none; transition: border-color .2s, background .2s; }
+  .ct__ch:hover { border-color: var(--copper-hi); background: rgba(238,235,229,.03); }
+  .ct__ch :global(svg) { width: 22px; height: 22px; color: var(--copper-hi); flex: none; }
+  .ct__ch--wa :global(svg) { color: #3fbf7f; }
+  .ct__ch > span { display: grid; gap: 2px; }
+  .ct__ch b { font-weight: 600; }
+  .ct__ch .mono { font-size: .8rem; color: var(--on-dark-2); }
+  .ct__hours { display: flex; align-items: center; gap: 8px; color: var(--on-dark-2); font-size: .78rem; margin-top: 6px; }
+  .ct__hours :global(svg) { width: 16px; }
+  .ct__next { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line-d); }
+  .ct__next h2 { font-size: 1.3rem; margin-bottom: 16px; }
+  .ct__next ol { padding-left: 1.2em; margin: 0 0 16px; color: var(--on-dark-2); }
+  .ct__next li { margin-bottom: 8px; }
+  .ct__next li::marker { color: var(--copper-hi); font-family: var(--f-mono); }
+
+  .ct__formwrap { position: sticky; top: calc(var(--header-h) + 24px); }
+  .fm { background: var(--paper); color: var(--on-light); padding: clamp(24px, 3.5vw, 44px); }
+  .fm__head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--line-l); }
+  .fm__head h2 { font-size: 1.6rem; }
+  .fm__head .mono { font-size: .72rem; color: var(--on-light-2); }
+  .fm__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+  .f { display: grid; gap: 6px; }
+  .f--full { grid-column: 1 / -1; }
+  .f label { font-size: .85rem; font-weight: 600; }
+  .f input, .f select, .f textarea { width: 100%; min-height: 50px; padding: 12px 14px; border: 1px solid var(--line-l); border-radius: var(--radius); background: #fff; font-size: 1rem; transition: border-color .2s, box-shadow .2s; }
+  .f textarea { resize: vertical; min-height: 110px; }
+  .f select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--on-light-2) 50%), linear-gradient(135deg, var(--on-light-2) 50%, transparent 50%); background-position: calc(100% - 20px) 22px, calc(100% - 15px) 22px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+  .f input:focus, .f select:focus, .f textarea:focus { outline: none; border-color: var(--copper); box-shadow: 0 0 0 3px rgba(196,105,44,.18); }
+  .f [aria-invalid='true'] { border-color: #b3261e; }
+  .f__h { margin: 0; font-size: .78rem; color: var(--on-light-2); }
+  .fm__foot { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; }
+  .fm__alt { font-size: .82rem; color: var(--on-light-2); }
+  .fm__alt a { color: inherit; }
+  .fm__status { margin: 16px 0 0; font-weight: 500; min-height: 1.5em; }
+  @media (max-width: 960px) {
+    .ct__grid { grid-template-columns: 1fr; }
+    .ct__formwrap { position: static; }
+  }
+  @media (max-width: 600px) {
+    .fm { margin-inline: calc(var(--gutter) * -1); }
+    .fm__grid { grid-template-columns: 1fr; }
+    .fm__foot .btn { width: 100%; justify-content: center; }
+  }
+</style>

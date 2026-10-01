@@ -1,0 +1,211 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import KumaonMap from '../components/KumaonMap.astro';
+import ElevationProfile from '../components/ElevationProfile.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { belts, places, districts, type Belt } from '../data/geo';
+import { projects } from '../data/projects';
+import { qa } from '../data/faq';
+import { breadcrumbs } from '../data/schema';
+import { wa } from '../data/site';
+
+const crumbs = [{ name: 'Kumaon Service Area', href: '/kumaon-service-area/' }];
+const title = 'Backhoe Loader Rental Across Kumaon — Haldwani, Nainital, Almora, Bageshwar | RBE Capital Equip.';
+const description =
+  'Backhoe loader deployment across Kumaon: Rudrapur, Pantnagar, Haldwani, Bhimtal, Nainital, Ramgarh, Mukteshwar, Ranikhet, Almora, Bageshwar and Berinag. How terrain, access and season change mobilisation.';
+const order: Belt[] = ['plains', 'midhills', 'innerhills'];
+const projFor = (slug: string) => projects.filter((p) => p.where.includes(slug)).slice(0, 2);
+const remote = qa('remote');
+const selfDrive = qa('self-drive');
+---
+<Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Service area · Kumaon, Uttarakhand">
+    <h1>Across Kumaon — from the Terai <span class="serif">to the high ridges.</span></h1>
+    <p class="lead">Rudrapur and Haldwani sit a few hundred metres above sea level. Mukteshwar is over 2,000 m. The same machine works in both — but getting it there, and keeping it working, is planned differently.</p>
+  </PageHero>
+
+  <section class="section dark" aria-labelledby="h-map">
+    <div class="wrap mapgrid">
+      <div>
+        <p class="eyebrow"><span class="idx">01</span>Where we deploy</p>
+        <h2 id="h-map">Fourteen anchor locations. <span class="serif">Sites around all of them.</span></h2>
+        <div class="prose muted" style="margin-top:24px">
+          <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. Our service area is built around the towns where most project work happens, and the project sites around them.</p>
+          <p>A site does not need to be <em>in</em> one of these towns. If it is a village road above Bageshwar or a resort plot beyond Ramgarh, <a href="/contact/">send the location</a> and we will plan from there.</p>
+        </div>
+        <ul class="plist" data-plist>
+          {places.map((p) => <li><a href={`#${p.slug}`} data-place={p.slug}>{p.name}</a></li>)}
+        </ul>
+      </div>
+      <KumaonMap />
+    </div>
+  </section>
+
+  <section class="section--tight paper" aria-labelledby="h-elev">
+    <div class="wrap">
+      <div class="elevhead">
+        <p class="eyebrow"><span class="idx">02</span>Altitude</p>
+        <h2 id="h-elev">Two thousand metres of difference inside one region.</h2>
+        <p class="muted">Altitude brings narrower roads, steeper plots, colder mornings and longer travel time. It is the single best predictor of how much planning a mobilisation needs.</p>
+      </div>
+      <ElevationProfile />
+    </div>
+  </section>
+
+  {order.map((b, bi) => {
+    const B = belts[b];
+    const ps = places.filter((p) => p.belt === b);
+    return (
+      <section class={`section belt ${bi % 2 ? 'stone' : 'paper'}`} id={`belt-${b}`} aria-labelledby={`h-${b}`}>
+        <div class="wrap">
+          <div class="belt__head">
+            <p class="eyebrow"><span class="idx">0{bi + 3}</span>{B.short}</p>
+            <h2 id={`h-${b}`}>{B.title}</h2>
+          </div>
+          <div class="belt__grid">
+            <div>
+              <h3>Site realities</h3>
+              <ul class="belt__list">{B.realities.map((r) => <li>{r}</li>)}</ul>
+            </div>
+            <div>
+              <h3>Typical work here</h3>
+              <ul class="belt__list belt__list--w">{B.work.map((r) => <li>{r}</li>)}</ul>
+            </div>
+          </div>
+          <div class="pcards">
+            {ps.map((p) => (
+              <article class="pcard" id={p.slug} aria-labelledby={`${p.slug}-h`}>
+                <div class="pcard__top">
+                  <h3 id={`${p.slug}-h`}>{p.name}</h3>
+                  <span class="mono">{p.altM.toLocaleString('en-IN')} m</span>
+                </div>
+                <p class="mono pcard__d">{p.district} district</p>
+                <p>{p.note}</p>
+                <p class="pcard__links">
+                  {projFor(p.slug).map((pr) => <a class="inline" href={`/project-solutions/#${pr.id}`}>{pr.title.split(' &')[0].split(',')[0]}</a>)}
+                </p>
+                <a class="pcard__wa" href={wa(`Hello RBE Capital Equip., I need a backhoe loader near ${p.name}. Project: `)} rel="noopener"><Icon name="wa" />Backhoe loader near {p.name}</a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <section class="section dark" id="deployment" aria-labelledby="h-dep">
+    <div class="wrap dep">
+      <div>
+        <p class="eyebrow"><span class="idx">06</span>Deployment planning</p>
+        <h2 id="h-dep">What decides how fast a machine <span class="serif">reaches your site.</span></h2>
+        <div class="answer" style="margin-top:32px">
+          <h3>{remote.q}</h3>
+          <p class="muted">{remote.a}</p>
+        </div>
+        <div class="answer">
+          <h3>{selfDrive.q}</h3>
+          <p class="muted">{selfDrive.a}</p>
+        </div>
+      </div>
+      <div>
+        <ol class="factors">
+          <li><b>Availability on your date</b><span>Confirmed first — before anything else is planned.</span></li>
+          <li><b>Distance and route</b><span>Plains, mid-hill or inner-hill; which road and how long it takes.</span></li>
+          <li><b>Access road condition</b><span>Width, hairpin bends, gradient and the last-mile surface to the plot.</span></li>
+          <li><b>Travel method</b><span>On its own wheels or on a trailer, depending on distance and route.</span></li>
+          <li><b>Season</b><span>Monsoon slips and closures mean earlier mobilisation and buffer.</span></li>
+          <li><b>Stay and supplies</b><span>Overnight parking, diesel and operator accommodation at remote sites.</span></li>
+        </ol>
+        <div class="btn-row" style="margin-top:36px">
+          <a class="btn" href="/contact/">Send your site location <Icon name="arrow" /></a>
+          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., sharing my site location for backhoe loader mobilisation: ')} rel="noopener"><Icon name="wa" />Share a map pin</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper" id="outside" aria-labelledby="h-out">
+    <div class="wrap out">
+      <div>
+        <p class="eyebrow"><span class="idx">07</span>New to Kumaon?</p>
+        <h2 id="h-out">Executing a project here from outside the state.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead" style="max-width:none">Many contracts in Kumaon are won by companies based elsewhere. The work is familiar; the terrain, routes and seasons often are not.</p>
+        <ul>
+          <li><strong>The plains are the gateway.</strong> Haldwani and Kathgodam are where the hill roads begin. Plan site visits and mobilisation through them.</li>
+          <li><strong>Hill distances are measured in hours, not kilometres.</strong> A move that looks short on a map can take a full day on mountain roads.</li>
+          <li><strong>The monsoon reshapes the programme.</strong> From about June to September, slips and closures are normal. Front-load earthwork and drainage before the rains where you can.</li>
+          <li><strong>Arrange equipment before you need it.</strong> Machines available at short notice are rarely available at short notice at a remote site.</li>
+        </ul>
+        <p>Share your work-order scope, site locations and programme, and we will plan machine availability and mobilisation around it. See <a href="/how-rental-works/">how rental works</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Project types', t: 'What the work looks like', d: 'Roads, slopes, plots, bridges and utilities.', href: '/project-solutions/' },
+    { k: 'Machine', t: 'Is a backhoe loader enough?', d: 'Capabilities, limits and when to choose an excavator.', href: '/backhoe-loader-rental/#when-not' },
+    { k: 'Support', t: 'What if it breaks down?', d: 'How support is agreed before work starts.', href: '/why-rbe/#support' },
+  ]} />
+  <QuoteBand heading="Send the site location. We’ll plan how the machine gets there." />
+</Base>
+
+<script>
+  // Link the location list and the map: hovering or focusing a name lights its point.
+  const pts = document.querySelectorAll<SVGGElement>('.kmap .pt');
+  document.querySelectorAll<HTMLAnchorElement>('[data-plist] a').forEach((a) => {
+    const on = (v: boolean) => pts.forEach((p) => p.classList.toggle('is-hot', v && p.dataset.place === a.dataset.place));
+    a.addEventListener('mouseenter', () => on(true));
+    a.addEventListener('mouseleave', () => on(false));
+    a.addEventListener('focus', () => on(true));
+    a.addEventListener('blur', () => on(false));
+  });
+</script>
+
+<style>
+  .mapgrid { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .mapgrid h2 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); }
+  .plist { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .plist a { display: inline-block; padding: 6px 12px; border: 1px solid var(--line-d); text-decoration: none; font-size: .9rem; transition: border-color .2s, color .2s; }
+  .plist a:hover, .plist a:focus-visible { border-color: var(--copper-hi); color: var(--copper-hi); }
+  .elevhead { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 56px; align-items: end; margin-bottom: 40px; }
+  .elevhead .eyebrow { grid-column: 1 / -1; margin: 0; }
+  .elevhead h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); }
+  .belt__head { margin-bottom: 40px; }
+  .belt__head h2 { font-size: clamp(2rem, 4vw, 3.4rem); }
+  .belt__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .belt h3 { font-size: 1.05rem; margin-bottom: 12px; }
+  .belt__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-l); }
+  .belt__list li { padding: 12px 0 12px 22px; border-bottom: 1px solid var(--line-l); position: relative; }
+  .belt__list li::before { content: ''; position: absolute; left: 0; top: 22px; width: 10px; height: 2px; background: var(--steel); }
+  .belt__list--w li::before { background: var(--copper); }
+  .pcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+  .pcard { background: var(--paper); border: 1px solid var(--line-l); padding: 22px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .stone .pcard { background: var(--paper); }
+  .paper .pcard { background: var(--stone); border-color: transparent; }
+  .pcard:target { outline: 2px solid var(--copper); }
+  .pcard__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .pcard__top h3 { font-size: 1.35rem; margin: 0; }
+  .pcard__top .mono { color: var(--copper-lo); font-size: .78rem; }
+  .pcard__d { font-size: .72rem; color: var(--on-light-2); text-transform: uppercase; letter-spacing: .08em; margin: 0; }
+  .pcard p { margin: 0; font-size: .95rem; }
+  .pcard__links { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .88rem !important; }
+  .pcard__wa { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-l); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: .88rem; font-weight: 600; color: #1f7a4d; }
+  .pcard__wa :global(svg) { width: 16px; }
+  .pcard__wa:hover { color: #23905a; }
+  .dep { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 6vw, 96px); }
+  .dep h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+  .factors { list-style: none; counter-reset: f; margin: 0; padding: 0; border-top: 1px solid var(--line-d); }
+  .factors li { counter-increment: f; display: grid; grid-template-columns: 44px 1fr; gap: 4px 8px; padding: 18px 0; border-bottom: 1px solid var(--line-d); }
+  .factors li::before { content: '0' counter(f); grid-row: span 2; font-family: var(--f-mono); font-size: .75rem; color: var(--copper-hi); padding-top: 4px; }
+  .factors b { font-weight: 600; }
+  .factors span { color: var(--on-dark-2); font-size: .95rem; }
+  .out { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(32px, 6vw, 96px); }
+  .out h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+  .out li { margin-bottom: 14px; }
+  @media (max-width: 960px) { .mapgrid, .elevhead, .belt__grid, .dep, .out { grid-template-columns: 1fr; } }
+</style>

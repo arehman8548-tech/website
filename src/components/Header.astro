@@ -1,0 +1,104 @@
+---
+import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
+import { nav, site, tel, wa } from '../data/site';
+const path = Astro.url.pathname;
+---
+<header class="hdr" data-hdr>
+  <div class="hdr__in wrap">
+    <Wordmark size="sm" />
+    <nav class="hdr__nav" aria-label="Main">
+      <ul>
+        {nav.map((n) => <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="hdr__act">
+      <a class="hdr__tel" href={tel}><Icon name="phone" /><span>{site.phoneDisplay}</span></a>
+      <a class="btn hdr__cta" href="/contact/">Check availability</a>
+      <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="mnav" data-menu-btn>
+        <span class="sr-only">Menu</span><i></i><i></i>
+      </button>
+    </div>
+  </div>
+  <div class="mnav" id="mnav" data-menu hidden>
+    <nav aria-label="Mobile">
+      <ul>
+        {nav.map((n, i) => <li><a href={n.href}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{n.label}</a></li>)}
+        <li><a href="/contact/"><span class="mono">07</span>Book equipment</a></li>
+      </ul>
+    </nav>
+    <div class="mnav__foot">
+      <a class="btn" href={tel}><Icon name="phone" />Call {site.phoneDisplay}</a>
+      <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp us</a>
+    </div>
+  </div>
+</header>
+
+<nav class="abar" aria-label="Quick contact">
+  <a href={tel}><Icon name="phone" /><span>Call</span></a>
+  <a href={wa()} rel="noopener"><Icon name="wa" /><span>WhatsApp</span></a>
+  <a href="/contact/" class="abar__q"><span>Get a quote</span><Icon name="arrow" /></a>
+</nav>
+
+<script>
+  const hdr = document.querySelector<HTMLElement>('[data-hdr]')!;
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]')!;
+  const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+  const onScroll = () => hdr.classList.toggle('is-solid', window.scrollY > 24);
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+  const setOpen = (open: boolean) => {
+    btn.setAttribute('aria-expanded', String(open));
+    menu.hidden = !open;
+    document.documentElement.classList.toggle('menu-open', open);
+    if (open) menu.querySelector<HTMLElement>('a')?.focus();
+  };
+  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setOpen(false); btn.focus(); } });
+</script>
+
+<style>
+  .hdr { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--header-h); color: var(--on-dark); transition: background .35s var(--ease), border-color .35s; border-bottom: 1px solid transparent; }
+  .hdr.is-solid, :global(.menu-open) .hdr { background: rgba(14, 16, 18, .86); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border-color: var(--line-d); }
+  .hdr__in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .hdr__nav ul { display: flex; gap: clamp(14px, 1.7vw, 30px); list-style: none; margin: 0; padding: 0; }
+  .hdr__nav a { white-space: nowrap; position: relative; text-decoration: none; font-size: .9rem; font-weight: 500; color: var(--on-dark-2); transition: color .2s; padding-block: 8px; }
+  .hdr__nav a:hover, .hdr__nav a[aria-current] { color: var(--on-dark); }
+  .hdr__nav a[aria-current]::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--copper); }
+  .hdr__act { display: flex; align-items: center; gap: 18px; }
+  .hdr__tel { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--f-mono); font-size: .82rem; color: var(--on-dark); white-space: nowrap; }
+  .hdr__tel :global(svg) { width: 16px; height: 16px; color: var(--copper-hi); }
+  .hdr__cta { white-space: nowrap; min-height: 42px; padding: 0 16px; font-size: .88rem; }
+  .hdr__menu { display: none; width: 44px; height: 44px; border: 1px solid var(--line-d); background: transparent; cursor: pointer; position: relative; border-radius: var(--radius); }
+  .hdr__menu i { position: absolute; left: 12px; right: 12px; height: 1.5px; background: var(--on-dark); transition: transform .3s var(--ease), top .3s var(--ease); }
+  .hdr__menu i:first-of-type { top: 17px; } .hdr__menu i:last-of-type { top: 25px; }
+  .hdr__menu[aria-expanded='true'] i:first-of-type { top: 21px; transform: rotate(45deg); }
+  .hdr__menu[aria-expanded='true'] i:last-of-type { top: 21px; transform: rotate(-45deg); }
+
+  .mnav { position: fixed; inset: var(--header-h) 0 0; background: var(--ink); display: flex; flex-direction: column; justify-content: space-between; padding: 24px var(--gutter) calc(24px + env(safe-area-inset-bottom)); overflow-y: auto; }
+  .mnav[hidden] { display: none; }
+  .mnav ul { list-style: none; margin: 0; padding: 0; }
+  .mnav li { border-bottom: 1px solid var(--line-d); }
+  .mnav li a { display: flex; align-items: baseline; gap: 16px; padding: 16px 0; text-decoration: none; font-family: var(--f-display); font-stretch: 112%; font-weight: 650; font-size: 1.45rem; letter-spacing: -0.01em; }
+  .mnav li .mono { font-size: .7rem; color: var(--copper-hi); }
+  .mnav__foot { display: grid; gap: 10px; margin-top: 28px; }
+  .mnav__foot .btn { justify-content: center; }
+
+  .abar { display: none; }
+
+  @media (max-width: 1380px) { .hdr__tel span { display: none; } }
+  @media (max-width: 1240px) { .hdr__nav ul { gap: 16px; } .hdr__nav a { font-size: .85rem; } }
+  @media (max-width: 1040px) {
+    .hdr__nav, .hdr__cta { display: none; }
+    .hdr__menu { display: block; }
+    .hdr__tel { width: 44px; height: 44px; justify-content: center; border: 1px solid var(--line-d); border-radius: var(--radius); }
+  }
+  @media (max-width: 860px) {
+    .abar { display: grid; grid-template-columns: 1fr 1fr 1.4fr; position: fixed; z-index: 49; inset: auto 0 0; background: var(--ink); border-top: 1px solid var(--line-d); padding-bottom: env(safe-area-inset-bottom); }
+    .abar a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 60px; text-decoration: none; color: var(--on-dark); font-weight: 600; font-size: .92rem; border-right: 1px solid var(--line-d); }
+    .abar a :global(svg) { width: 18px; height: 18px; }
+    .abar a:nth-child(2) :global(svg) { color: #3fbf7f; }
+    .abar__q { background: var(--copper); color: var(--ink) !important; border: 0 !important; }
+    :global(.menu-open) .abar { display: none; }
+  }
+</style>

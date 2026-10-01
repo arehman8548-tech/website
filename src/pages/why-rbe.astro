@@ -1,0 +1,155 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Wordmark from '../components/Wordmark.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs } from '../data/schema';
+import { qa } from '../data/faq';
+
+const crumbs = [{ name: 'Why RBE', href: '/why-rbe/' }];
+const title = 'Why Contractors Choose RBE Capital Equip. — An Enterprise of Rotoblast Engineering';
+const description =
+  'What you can expect when you rent a backhoe loader from RBE Capital Equip.: confirmed availability, machines checked before dispatch, planned mobilisation and breakdown support agreed before work starts.';
+
+const rows = [
+  ['Availability', '“Should be free” on the phone.', 'Confirmed for your dates, in writing, before you commit.'],
+  ['Machine condition', 'Arrives as it is.', 'Checked before it is dispatched to your site.'],
+  ['Getting to site', 'Route worked out on the day.', 'Route, travel method and arrival planned in advance.'],
+  ['Breakdowns', 'You chase the owner.', 'Reporting, attendance and next steps agreed up front.'],
+  ['Communication', 'Whoever answers.', 'One point of contact for your project.'],
+  ['Machine fit', 'Whatever is available.', 'An honest view on whether a backhoe loader is right.'],
+];
+const breakdown = qa('breakdown');
+---
+<Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Why RBE">
+    <h1>An equipment partner, <span class="serif">not a machine on hire.</span></h1>
+    <p class="lead">On a serious project, the rental is the easy part. What matters is whether the machine arrives when planned, keeps working, and whether someone responsible answers when it doesn’t.</p>
+  </PageHero>
+
+  <section class="section paper" aria-labelledby="h-diff">
+    <div class="wrap">
+      <div class="dhead">
+        <p class="eyebrow"><span class="idx">01</span>The difference</p>
+        <h2 id="h-diff">The same machine. A very different rental.</h2>
+      </div>
+      <div class="cmp" role="table" aria-label="Comparison: a machine on hire versus an equipment partner">
+        <div class="cmp__row cmp__row--h" role="row">
+          <span role="columnheader"></span>
+          <span role="columnheader">A machine on hire</span>
+          <span role="columnheader">RBE Capital Equip.</span>
+        </div>
+        {rows.map(([k, a, b]) => (
+          <div class="cmp__row rv" role="row">
+            <span role="rowheader" class="mono">{k}</span>
+            <span role="cell" class="cmp__a">{a}</span>
+            <span role="cell" class="cmp__b">{b}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="support" aria-labelledby="h-sup">
+    <div class="wrap sup">
+      <div>
+        <p class="eyebrow"><span class="idx">02</span>Support</p>
+        <h2 id="h-sup">Downtime is decided <span class="serif">before</span> the machine arrives.</h2>
+        <div class="answer" style="margin-top:32px">
+          <h3>{breakdown.q}</h3>
+          <p class="muted">{breakdown.a}</p>
+        </div>
+      </div>
+      <ol class="phase">
+        <li><span class="mono">Before work</span><b>Agree the support plan</b><p>Who you call, who attends, expected repair times, servicing schedule and what happens if a repair runs long.</p></li>
+        <li><span class="mono">Dispatch</span><b>Check the machine</b><p>Inspected before it leaves for your site, so problems are found in the yard, not on your project.</p></li>
+        <li><span class="mono">On site</span><b>Planned servicing</b><p>Routine servicing timed around your working hours. Consumables planned in advance for remote sites.</p></li>
+        <li><span class="mono">If it stops</span><b>Follow the agreed plan</b><p>No renegotiating while your site waits — the steps were settled at the start.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section stone" id="rotoblast" aria-labelledby="h-roto">
+    <div class="wrap roto">
+      <div class="roto__mark"><Wordmark size="xl" href={null} tone="dark" /></div>
+      <div>
+        <p class="eyebrow"><span class="idx">03</span>Heritage</p>
+        <h2 id="h-roto">Backed by Rotoblast Engineering.</h2>
+        <div class="prose" style="margin-top:24px">
+          <p>RBE Capital Equip. is an enterprise of Rotoblast Engineering, created to bring an engineering organisation’s way of working to equipment rental.</p>
+          <p>For you, it means the business renting you a machine is part of an engineering organisation rather than an individual owner — with the accountability, maintenance discipline and continuity a project needs from a supplier over months, not days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper" aria-labelledby="h-wont">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow"><span class="idx">04</span>Straight dealing</p>
+        <h2 id="h-wont">What we won’t do.</h2>
+        <ul class="xlist">
+          <li>Promise a date we can’t meet to win the order.</li>
+          <li>Send a backhoe loader to a job that needs an excavator.</li>
+          <li>Leave idle-time, diesel or mobilisation terms vague.</li>
+          <li>Disappear after the machine is delivered.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow"><span class="idx">05</span>Working together</p>
+        <h2>What we’ll ask of you.</h2>
+        <ul class="xlist xlist--ok">
+          <li>An accurate site location and honest access details.</li>
+          <li>A safe, stable working area for the machine.</li>
+          <li>A site contact for daily coordination and hours sign-off.</li>
+          <li>Early notice if your schedule moves.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Process', t: 'How a rental runs', d: 'Requirement to return, step by step.', href: '/how-rental-works/' },
+    { k: 'Machine', t: 'What the backhoe loader can do', d: 'Capabilities and typical specification.', href: '/backhoe-loader-rental/' },
+    { k: 'Contact', t: 'Check availability now', d: 'Call, WhatsApp or send the project form.', href: '/contact/' },
+  ]} />
+  <QuoteBand heading="Talk to the people who will actually support your site." />
+</Base>
+
+<style>
+  .dhead { margin-bottom: 48px; max-width: 900px; }
+  .dhead h2, .sup h2, .roto h2, .two h2 { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
+  .cmp { border-top: 1px solid var(--line-l); }
+  .cmp__row { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line-l); align-items: baseline; }
+  .cmp__row--h { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-light-2); padding: 14px 0; }
+  .cmp__row--h span:last-child { color: var(--copper-lo); }
+  .cmp__row .mono { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--on-light-2); }
+  .cmp__a { color: var(--on-light-2); text-decoration: line-through; text-decoration-color: rgba(84,91,98,.4); }
+  .cmp__b { font-weight: 500; font-size: 1.05rem; padding-left: 20px; border-left: 2px solid var(--copper); }
+  .sup { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 96px); }
+  .phase { list-style: none; margin: 0; padding: 0; position: relative; }
+  .phase::before { content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px; background: var(--line-d); }
+  .phase li { position: relative; padding: 0 0 36px 40px; display: grid; gap: 6px; }
+  .phase li::before { content: ''; position: absolute; left: 0; top: 6px; width: 11px; height: 11px; background: var(--copper); }
+  .phase .mono { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--copper-hi); }
+  .phase b { font-family: var(--f-display); font-stretch: 110%; font-size: 1.3rem; font-weight: 650; }
+  .phase p { color: var(--on-dark-2); margin: 0; }
+  .roto { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .roto__mark { padding: clamp(32px, 5vw, 72px); border: 1px solid var(--line-l); display: grid; place-items: center; background: var(--paper); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); }
+  .xlist { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--line-l); }
+  .xlist li { padding: 16px 0 16px 34px; border-bottom: 1px solid var(--line-l); position: relative; font-size: 1.05rem; }
+  .xlist li::before, .xlist li::after { content: ''; position: absolute; left: 4px; top: 27px; width: 14px; height: 2px; background: var(--on-light-2); transform: rotate(45deg); }
+  .xlist li::after { transform: rotate(-45deg); }
+  .xlist--ok li::before { width: 12px; height: 7px; background: none; border-left: 2px solid var(--copper); border-bottom: 2px solid var(--copper); transform: rotate(-45deg); top: 21px; }
+  .xlist--ok li::after { display: none; }
+  @media (max-width: 960px) {
+    .sup, .roto, .two { grid-template-columns: 1fr; }
+    .cmp__row { grid-template-columns: 1fr 1fr; }
+    .cmp__row > :first-child { grid-column: 1 / -1; }
+    .cmp__row--h > :first-child { display: none; }
+    .roto__mark :global(.wm--xl) { --s: 1.6; }
+  }
+</style>

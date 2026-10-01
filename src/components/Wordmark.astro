@@ -1,0 +1,34 @@
+---
+/**
+ * The company name is the logo. "RBE" is set extra-wide and heavy; "Capital
+ * Equip." stacks beside it in tracked capitals, separated by a hairline, and the
+ * full stop becomes a solid copper square — a single engineered detail.
+ */
+interface Props { size?: 'sm' | 'md' | 'xl'; sub?: boolean; href?: string | null; tone?: 'light' | 'dark' }
+const { size = 'md', sub = true, href = '/', tone = 'light' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+<Tag class={`wm wm--${size} wm--${tone}`} href={href ?? undefined} aria-label={href ? 'RBE Capital Equip. — home' : undefined}>
+  <span class="wm__row" aria-hidden={href ? 'true' : undefined}>
+    <span class="wm__rbe">RBE</span>
+    <span class="wm__bar"></span>
+    <span class="wm__name"><span>Capital</span><span>Equip<span class="wm__dot"></span></span></span>
+  </span>
+  {sub && <span class="wm__sub">An enterprise of Rotoblast Engineering</span>}
+</Tag>
+
+<style>
+  .wm { --s: 1; display: inline-grid; gap: calc(7px * var(--s)); text-decoration: none; color: var(--on-dark); line-height: 1; }
+  .wm--dark { color: var(--on-light); }
+  .wm--sm { --s: 0.78; }
+  .wm--xl { --s: 2.6; }
+  .wm__row { display: inline-flex; align-items: stretch; gap: calc(11px * var(--s)); }
+  .wm__rbe { font-family: var(--f-display); font-weight: 800; font-stretch: 125%; font-size: calc(30px * var(--s)); letter-spacing: -0.045em; line-height: .78; padding-top: calc(1px * var(--s)); }
+  .wm__bar { width: 1px; background: currentColor; opacity: .35; margin-block: calc(1px * var(--s)); }
+  .wm__name { display: grid; align-content: space-between; font-family: var(--f-display); font-weight: 600; font-stretch: 112%; font-size: calc(10.5px * var(--s)); letter-spacing: .2em; text-transform: uppercase; line-height: 1; padding-block: calc(.5px * var(--s)); }
+  .wm__name > span { display: flex; align-items: flex-end; }
+  .wm__dot { display: inline-block; width: calc(4px * var(--s)); height: calc(4px * var(--s)); background: var(--copper); margin-left: calc(2px * var(--s)); transform: translateY(calc(-.5px * var(--s))); }
+  .wm__sub { font-family: var(--f-mono); font-size: calc(8.6px * max(var(--s), 1.1)); letter-spacing: .14em; text-transform: uppercase; opacity: .62; white-space: nowrap; }
+  .wm--xl .wm__sub { font-size: clamp(10px, 1vw, 13px); letter-spacing: .18em; }
+  a.wm:hover .wm__dot { background: var(--copper-hi); }
+</style>
