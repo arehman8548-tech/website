@@ -8,8 +8,9 @@ interface Props { compact?: boolean }
 const { compact = false } = Astro.props;
 
 const LON0 = 78.82, LAT0 = 30.0, K = 520, COS = Math.cos((29.5 * Math.PI) / 180);
-const px = (lon: number) => (lon - LON0) * K * COS + 40;
-const py = (lat: number) => (LAT0 - lat) * K + 30;
+const r1 = (v: number) => Math.round(v * 10) / 10;
+const px = (lon: number) => r1((lon - LON0) * K * COS + 40);
+const py = (lat: number) => r1((LAT0 - lat) * K + 30);
 const P = Object.fromEntries(places.map((p) => [p.slug, { ...p, x: px(p.lon), y: py(p.lat) }]));
 const links: [string, string][] = [
   ['kashipur', 'rudrapur'], ['rudrapur', 'pantnagar'], ['pantnagar', 'haldwani'], ['rudrapur', 'haldwani'], ['haldwani', 'kathgodam'],

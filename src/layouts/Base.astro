@@ -17,7 +17,12 @@ interface Props {
 const { title, description, schema = [], pageType = 'WebPage', ogImage = '/og/rbe-capital-equip.png', noindex = false } = Astro.props;
 const path = Astro.url.pathname;
 const canonical = new URL(path, site.url).href;
-const ld = graph(organization(), website(), webpage(path, title, description, pageType), ...schema);
+const ogImageUrl = new URL(ogImage, site.url).href;
+// Nodes that extend this page (same @id, e.g. FAQPage Q&A) are merged into the page node itself.
+const page: Record<string, unknown> = webpage(path, title, description, pageType);
+const isPage = (n: object) => (n as { '@id'?: string })['@id'] === page['@id'];
+schema.filter(isPage).forEach((n) => Object.assign(page, n));
+const ld = graph(organization(), website(), page, ...schema.filter((n) => !isPage(n)));
 ---
 <!doctype html>
 <html lang="en-IN">
@@ -26,23 +31,27 @@ const ld = graph(organization(), website(), webpage(path, title, description, pa
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
-  {noindex && <meta name="robots" content="noindex" />}
+  {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
   <meta name="theme-color" content="#0e1012" />
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
   <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
   <link rel="preload" href="/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={site.name} />
   <meta property="og:locale" content="en_IN" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
-  <meta property="og:image" content={new URL(ogImage, site.url).href} />
+  <meta property="og:image" content={ogImageUrl} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="RBE Capital Equip. — backhoe loader rental across Kumaon, Uttarakhand" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
   <meta name="geo.region" content="IN-UT" />
   <script is:inline>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json" set:html={JSON.stringify(ld)} />

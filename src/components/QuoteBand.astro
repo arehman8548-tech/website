@@ -1,17 +1,17 @@
 ---
 import Icon from './Icon.astro';
-import { site, tel, wa } from '../data/site';
+import { site, wa, mailtoWith } from '../data/site';
 interface Props { heading?: string; text?: string; waText?: string }
 const {
   heading = 'Tell us where the site is and when you need to start.',
-  text = 'Send the project location, the type of work and your start date. We will tell you what machine is available, how it reaches your site and what the rental involves.',
+  text = 'Send the project location, the type of work, your start date and how long you need the machine. We reply with availability, how the machine reaches your site and what the rental involves.',
   waText,
 } = Astro.props;
 ---
 <section class="qb dark" aria-label="Request a quote">
   <div class="wrap qb__in">
     <div>
-      <p class="eyebrow"><span class="idx">→</span> Check availability</p>
+      <p class="eyebrow"><span class="idx">→</span> Discuss your project</p>
       <h2 class="qb__h">{heading}</h2>
     </div>
     <div class="qb__r">
@@ -19,7 +19,7 @@ const {
       <div class="btn-row">
         <a class="btn" href="/contact/">Request a rental quote <Icon name="arrow" /></a>
         <a class="btn btn--wa" href={wa(waText)} rel="noopener"><Icon name="wa" />WhatsApp</a>
-        <a class="btn btn--ghost" href={tel}><Icon name="phone" />{site.phoneDisplay}</a>
+        <a class="btn btn--ghost" href={mailtoWith('Backhoe loader rental enquiry')}><Icon name="mail" />Email sales</a>
       </div>
     </div>
   </div>

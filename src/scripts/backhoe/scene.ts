@@ -398,7 +398,14 @@ export interface HeroScene {
   onFrame?: (p: number, pose: Pose) => void;
 }
 
-export function createScene(canvas: HTMLCanvasElement, opts: { mobile: boolean; reduced: boolean }): HeroScene {
+/** Hand the main thread back between build phases so input and paint are never blocked for long. */
+function yieldToMain(): Promise<void> {
+  const sch = (globalThis as { scheduler?: { yield?: () => Promise<void> } }).scheduler;
+  if (sch?.yield) return sch.yield();
+  return new Promise((r) => setTimeout(r, 0));
+}
+
+export async function createScene(canvas: HTMLCanvasElement, opts: { mobile: boolean; reduced: boolean }): Promise<HeroScene> {
   const { mobile, reduced } = opts;
   const quality = mobile ? 0.5 : 1;
   const instant = /[?&]instant\b/.test(location.search); // for automated visual checks
@@ -419,6 +426,7 @@ export function createScene(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environment = env;
   (scene as unknown as { environmentIntensity: number }).environmentIntensity = 0.32;
+  await yieldToMain();
 
   const camera = new PerspectiveCamera(mobile ? 44 : 36, 1, 0.1, 2000);
 
@@ -440,10 +448,13 @@ export function createScene(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   scene.add(sky.mesh);
   const ridges = makeRidges();
   scene.add(ridges.grp);
+  await yieldToMain();
   scene.add(makeGround(quality));
   scene.add(makeRoad());
+  await yieldToMain();
   scene.add(makeTrees(mobile ? 320 : 900));
   scene.add(makeSiteProps());
+  await yieldToMain();
 
   // Trench + spoil pile grow as the backhoe works
   const trench = new Mesh(new PlaneGeometry(1, 0.8), new MeshStandardMaterial({ color: '#1c1712', roughness: 1 }));
@@ -469,6 +480,7 @@ export function createScene(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   const mats = makeMaterials();
   const machine = buildBackhoe(mats);
   scene.add(machine.root);
+  await yieldToMain();
 
   const hazeCol = new Color('#46505a');
   let target = 0;
@@ -565,6 +577,13 @@ export function createScene(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   }
 
   resize();
+  // Compile shaders off the main thread where the driver supports it (KHR_parallel_shader_compile),
+  // so the first rendered frame does not stall the page.
+  try {
+    await renderer.compileAsync(scene, camera);
+  } catch {
+    /* fall back to compiling on first render */
+  }
   if (reduced) frame(performance.now());
   return api;
 }

@@ -5,21 +5,21 @@ import QuoteBand from '../components/QuoteBand.astro';
 import NextSteps from '../components/NextSteps.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
-import { tel, wa, site } from '../data/site';
+import { wa, site, mailtoWith } from '../data/site';
 import { qa } from '../data/faq';
 
 const crumbs = [{ name: 'How Rental Works', href: '/how-rental-works/' }];
-const title = 'How Backhoe Loader Rental Works — From Enquiry to Machine on Site | RBE Capital Equip.';
+const title = 'How Backhoe Loader Rental Works | RBE Capital Equip.';
 const description =
-  'The six steps of renting a backhoe loader from RBE Capital Equip. for a Kumaon project: requirement, site information, confirmation, mobilisation, deployment and support — and what to send for a fast quote.';
+  'Six steps from enquiry to a backhoe loader working on your Kumaon site, and the five details to send for a fast rental quote.';
 
 const steps = [
-  { t: 'Requirement', who: 'You', d: 'Tell us the site, the type of work, your start date and how long you need the machine. A call or WhatsApp message is enough to begin.', out: 'We reply with availability for your dates.' },
+  { t: 'Requirement', who: 'You', d: 'Tell us the site, the type of work, your start date and how long you need the machine. A WhatsApp message or email is enough to begin.', out: 'We reply with availability for your dates.' },
   { t: 'Site information', who: 'You + RBE', d: 'Share a map pin and the access route: road width, sharp bends, last-mile surface and where the machine will work and park. Photos help for hill sites.', out: 'We know how the machine will reach and work on the site.' },
-  { t: 'Machine & terms', who: 'RBE', d: 'We confirm the machine, rental period, working hours, operator arrangement, diesel, mobilisation, idle-time and breakdown terms — in writing.', out: 'A quote you can approve without surprises.' },
-  { t: 'Mobilisation', who: 'RBE', d: 'The machine is checked before dispatch. Route, travel method (own wheels or trailer) and arrival date are fixed, with season and road conditions in mind.', out: 'A firm arrival date.' },
+  { t: 'Machine & terms', who: 'RBE', d: 'The quote sets out the machine, rental period, working hours, operator arrangement, diesel, mobilisation, idle-time and breakdown terms.', out: 'A quote you can review and approve.' },
+  { t: 'Mobilisation', who: 'RBE', d: 'The machine moves out from Haldwani. Route, travel method (own wheels or trailer) and arrival date are fixed with season and road conditions in mind.', out: 'An agreed arrival date.' },
   { t: 'Deployment', who: 'RBE + your site team', d: 'The machine arrives and starts work. Your site contact and our operator agree the daily plan; working hours are recorded and signed off.', out: 'Work underway, hours on record.' },
-  { t: 'Support & close-out', who: 'RBE', d: 'Planned servicing through the rental, the agreed breakdown process if anything stops, and a clean extension or return at the end.', out: 'The machine stays productive until the job is done.' },
+  { t: 'Support & close-out', who: 'RBE + you', d: 'Servicing and breakdowns handled as set out in the terms, then an extension or return at the end of the rental.', out: 'Extension or return on the agreed terms.' },
 ];
 const quoteInfo = qa('quote-info');
 const quick = qa('how-quickly');
@@ -57,7 +57,7 @@ const quick = qa('how-quickly');
         <p class="muted" style="margin-top:20px">{quoteInfo.a}</p>
         <div class="btn-row" style="margin-top:32px">
           <a class="btn" href="/contact/">Use the enquiry form <Icon name="arrow" /></a>
-          <a class="btn btn--wa" href={wa('Site location:\nType of work:\nStart date:\nDuration:\nWorking hours per day:')} rel="noopener"><Icon name="wa" />WhatsApp the details</a>
+          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., details for a backhoe loader quote:\nSite location:\nType of work:\nStart date:\nDuration:\nWorking hours per day:')} rel="noopener"><Icon name="wa" />WhatsApp the details</a>
         </div>
       </div>
       <ol class="five">
@@ -78,7 +78,7 @@ const quick = qa('how-quickly');
       </div>
       <div class="prose">
         <p class="lead" style="max-width:none" set:html={quick.html ?? quick.a} />
-        <p class="muted">Speak to us directly: <a href={tel}>{site.phoneDisplay}</a> · {site.hours}</p>
+        <p class="muted">Fastest route: WhatsApp <a href={wa()} rel="noopener">{site.whatsappDisplay}</a> · or email <a href={mailtoWith('Backhoe loader rental enquiry')}>{site.salesEmail}</a></p>
       </div>
     </div>
   </section>

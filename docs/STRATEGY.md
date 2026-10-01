@@ -8,24 +8,19 @@ How the site was planned: the business, the research, the structure, and what st
 
 The site has to answer one buyer question: *"Can these people actually support my project in difficult terrain?"* It does that by covering, in order: **recognition → problem → capability → suitability → trust → availability → contact**.
 
-### Facts still needed from the business (nothing below has been invented)
+### Business facts (verified, supplied by the business)
 
-All of these live in `src/data/site.ts` and are marked `CONFIRM`:
-
-| Item | Status on the site |
+| Item | On the site |
 |---|---|
-| Phone / WhatsApp number | Placeholder `+91 00000 00000` — **must replace before launch** |
-| Email | Placeholder `enquiry@rbecapitalequip.com` |
-| Domain | `src/data/site-url.mjs` — assumed `www.rbecapitalequip.com` |
-| Office / yard address | Not shown. Add it to turn on `LocalBusiness` schema and a map |
-| Enquiry hours | Placeholder `Mon–Sat, 8 am – 8 pm` |
-| Form endpoint | Empty → form hands off to WhatsApp / email. Add a Formspree/CRM URL to post directly |
-| Rotoblast Engineering website URL | Empty → omitted from schema |
-| Fleet (models, count, attachments e.g. rock breaker) | Not stated. Specs shown as **typical 7–8 t class ranges** with a note |
-| Operator included as standard | FAQ "Does the rental include an operator?" assumes yes — confirm |
-| Service commitments | "Machine checked before dispatch", "breakdown process agreed up front", "servicing planned around your hours", "one point of contact" — these are written as how RBE works. The owner must be willing to honour every one |
-| Years in business, clients, projects, certifications, testimonials | **Deliberately absent.** Add only real, verifiable ones |
-| Real photographs | None used (no stock). Add real photos of your own machines and sites when available |
+| WhatsApp | +91 78277 28607 (`wa.me/917827728607`) — the primary fast-response route |
+| Email | sales@rotoblasteng.com (sales/quotes) · arehman@rotoblasteng.com (direct) |
+| Machine deployment base | Haldwani, Uttarakhand (not an office address) |
+| Head office | Sector 27C, Faridabad, Haryana, India (no street/PIN supplied — none invented) |
+| Phone line | None supplied → no Call buttons, no `telephone` in schema |
+| Domain | Not supplied → set `SITE_URL` at build time (see `src/data/site-url.mjs`) |
+| Fleet, years, clients, certifications, operator policy, service commitments | Not supplied → not claimed. Specs shown only as labelled general industry ranges |
+
+See `docs/SEO-CONVERSION-AUDIT.md` for the October 2026 audit that replaced the earlier placeholder values.
 
 Research note: public listings show a *Rotoblast Engineering* in Delhi/Faridabad (shot-blasting machinery, operating since ~2000). That was **not** confirmed as the same organisation, so the site states only the relationship ("an enterprise of Rotoblast Engineering"), with no heritage details.
 
@@ -64,8 +59,8 @@ Deliberately **not** targeted: home/garden digging, agricultural, one-off reside
 4. **Kumaon Service Area** `/kumaon-service-area/` — map, altitude profile, 3 belts, 14 location cards, deployment factors, guidance for outside contractors.
 5. **Why RBE** `/why-rbe/` — partner vs machine-on-hire, support plan, Rotoblast relationship, what we won't do.
 6. **How Rental Works** `/how-rental-works/` — 6 steps with outcomes; 5 things needed for a fast quote.
-7. **Knowledge** `/knowledge/` — 18 real buyer questions in 5 groups + glossary. The only page with `FAQPage` schema.
-8. **Contact / Book Equipment** `/contact/` — 9-field project form, Call / WhatsApp / Email.
+7. **Knowledge** `/knowledge/` — 21 buyer questions in 5 groups + glossary. The only page with `FAQPage` schema.
+8. **Contact / Book Equipment** `/contact/` — 9-field project form, WhatsApp / Email (no phone line supplied).
 
 Interlinking is contextual: every answer, project and location links onward to the next logical step (question → machine → application → area → trust → enquiry), plus a page-specific "Where to go next" block.
 
@@ -86,15 +81,15 @@ Performance: Three.js loads lazily after first paint (≈150 KB gzip, separate c
 
 ## 7. Technical SEO / AEO / GEO
 
-Static HTML (Astro), clean trailing-slash URLs, one H1 per page, canonical, Open Graph image, sitemap, robots.txt, breadcrumbs (visible + `BreadcrumbList`), `Organization` (with `parentOrganization: Rotoblast Engineering`, `areaServed` for Kumaon + 14 towns), `WebSite`, `WebPage`, `Service`, `FAQPage` (knowledge page only). Entity statement repeated consistently in the footer for AI systems. Answer blocks lead with the direct answer.
+Static HTML (Astro), clean trailing-slash URLs, one H1 per page, canonical, Open Graph image, sitemap, robots.txt, breadcrumbs (visible + `BreadcrumbList`), `Organization` (with `parentOrganization: Rotoblast Engineering`, head-office address, `areaServed` for Kumaon + 14 towns), `WebSite`, `WebPage`, `Service`, `FAQPage` (knowledge page only). Entity statement repeated consistently in the footer for AI systems. Answer blocks lead with the direct answer.
 
 ## 8. Before launch — checklist
 
-- [ ] Replace phone, WhatsApp, email, hours in `src/data/site.ts`
-- [ ] Set the real domain in `src/data/site-url.mjs`
+- [x] WhatsApp and email set in `src/data/site.ts`
+- [ ] Build with `SITE_URL=https://<verified-domain>`
 - [ ] Add form endpoint (or keep WhatsApp handoff)
-- [ ] Add address → enables `LocalBusiness` schema
-- [ ] Confirm operator policy and the service commitments on `/why-rbe/`
+- [ ] Only if a genuine public premises exists: consider `LocalBusiness`
+- [ ] If the business confirms an operator policy or service commitments, they can be stated (currently not claimed)
 - [ ] Add real machine/site photos (optional but strongly recommended)
-- [ ] Create a Google Business Profile with the same name, phone and category
+- [ ] Google Business Profile: only as a service-area business with a genuine address, using the same name and contacts
 - [ ] Submit `sitemap-index.xml` in Google Search Console

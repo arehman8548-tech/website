@@ -1,7 +1,7 @@
 ---
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { nav, site, tel, wa } from '../data/site';
+import { nav, site, wa, mailto } from '../data/site';
 const path = Astro.url.pathname;
 ---
 <header class="hdr" data-hdr>
@@ -13,8 +13,8 @@ const path = Astro.url.pathname;
       </ul>
     </nav>
     <div class="hdr__act">
-      <a class="hdr__tel" href={tel}><Icon name="phone" /><span>{site.phoneDisplay}</span></a>
-      <a class="btn hdr__cta" href="/contact/">Check availability</a>
+      <a class="hdr__tel" href={wa()} rel="noopener" aria-label={`${site.whatsappDisplay} — WhatsApp RBE Capital Equip.`}><Icon name="wa" /><span>{site.whatsappDisplay}</span></a>
+      <a class="btn hdr__cta" href="/contact/">Request a quote</a>
       <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="mnav" data-menu-btn>
         <span class="sr-only">Menu</span><i></i><i></i>
       </button>
@@ -28,15 +28,15 @@ const path = Astro.url.pathname;
       </ul>
     </nav>
     <div class="mnav__foot">
-      <a class="btn" href={tel}><Icon name="phone" />Call {site.phoneDisplay}</a>
-      <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp us</a>
+      <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp {site.whatsappDisplay}</a>
+      <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.salesEmail}</a>
     </div>
   </div>
 </header>
 
 <nav class="abar" aria-label="Quick contact">
-  <a href={tel}><Icon name="phone" /><span>Call</span></a>
   <a href={wa()} rel="noopener"><Icon name="wa" /><span>WhatsApp</span></a>
+  <a href={mailto}><Icon name="mail" /><span>Email</span></a>
   <a href="/contact/" class="abar__q"><span>Get a quote</span><Icon name="arrow" /></a>
 </nav>
 
@@ -67,7 +67,7 @@ const path = Astro.url.pathname;
   .hdr__nav a[aria-current]::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--copper); }
   .hdr__act { display: flex; align-items: center; gap: 18px; }
   .hdr__tel { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--f-mono); font-size: .82rem; color: var(--on-dark); white-space: nowrap; }
-  .hdr__tel :global(svg) { width: 16px; height: 16px; color: var(--copper-hi); }
+  .hdr__tel :global(svg) { width: 16px; height: 16px; color: #3fbf7f; }
   .hdr__cta { white-space: nowrap; min-height: 42px; padding: 0 16px; font-size: .88rem; }
   .hdr__menu { display: none; width: 44px; height: 44px; border: 1px solid var(--line-d); background: transparent; cursor: pointer; position: relative; border-radius: var(--radius); }
   .hdr__menu i { position: absolute; left: 12px; right: 12px; height: 1.5px; background: var(--on-dark); transition: transform .3s var(--ease), top .3s var(--ease); }
@@ -93,11 +93,13 @@ const path = Astro.url.pathname;
     .hdr__menu { display: block; }
     .hdr__tel { width: 44px; height: 44px; justify-content: center; border: 1px solid var(--line-d); border-radius: var(--radius); }
   }
+  @media (max-width: 440px) { .hdr__in { gap: 10px; } .hdr__act { gap: 8px; } }
+  @media (max-width: 400px) { .hdr__tel { display: none; } }
   @media (max-width: 860px) {
     .abar { display: grid; grid-template-columns: 1fr 1fr 1.4fr; position: fixed; z-index: 49; inset: auto 0 0; background: var(--ink); border-top: 1px solid var(--line-d); padding-bottom: env(safe-area-inset-bottom); }
     .abar a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 60px; text-decoration: none; color: var(--on-dark); font-weight: 600; font-size: .92rem; border-right: 1px solid var(--line-d); }
     .abar a :global(svg) { width: 18px; height: 18px; }
-    .abar a:nth-child(2) :global(svg) { color: #3fbf7f; }
+    .abar a:first-child :global(svg) { color: #3fbf7f; }
     .abar__q { background: var(--copper); color: var(--ink) !important; border: 0 !important; }
     :global(.menu-open) .abar { display: none; }
   }

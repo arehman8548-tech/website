@@ -7,11 +7,11 @@ import { faq, allQA, glossary } from '../data/faq';
 import { breadcrumbs, faqPage } from '../data/schema';
 
 const crumbs = [{ name: 'Knowledge', href: '/knowledge/' }];
-const title = 'Backhoe Loader Rental Questions Answered — Kumaon Projects | RBE Capital Equip.';
+const title = 'Backhoe Loader Rental FAQs for Kumaon Projects | RBE Capital Equip.';
 const description =
-  'Straight answers on hiring a backhoe loader (JCB) for projects in Kumaon: cost basis, dig depth, hill roads and hill cutting, remote-site deployment, monsoon working, breakdowns and long-term rental.';
+  'Direct answers on renting a backhoe loader (JCB) in Kumaon: price factors, duration, mobilisation, hill roads, remote sites, excavator vs backhoe.';
 ---
-<Base title={title} description={description} pageType="CollectionPage" schema={[breadcrumbs(crumbs), faqPage(allQA.map(({ q, a }) => ({ q, a })))]}>
+<Base title={title} description={description} pageType="FAQPage" schema={[breadcrumbs(crumbs), faqPage('/knowledge/', allQA.map(({ q, a }) => ({ q, a })))]}>
   <PageHero crumbs={crumbs} eyebrow="Knowledge · Questions & answers">
     <h1>Straight answers <span class="serif">before you hire.</span></h1>
     <p class="lead">The questions contractors, developers, site engineers and procurement teams actually ask about renting a backhoe loader for a Kumaon project. Direct answer first, detail after.</p>

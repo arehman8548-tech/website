@@ -1,55 +1,53 @@
-import { site, wa } from './site';
+import { site, waBase } from './site';
 import { places, districts } from './geo';
 
 const ORG_ID = `${site.url}/#org`;
 const SITE_ID = `${site.url}/#website`;
 
-const hasAddress = Boolean(site.address.street && site.address.locality);
-
-/** Organization entity — referenced by @id from every other node. */
+/**
+ * Organization entity — referenced by @id from every other node.
+ *
+ * Deliberately NOT LocalBusiness: there is no verified walk-in premises.
+ * Haldwani is where machines are deployed from (stated in the description
+ * and areaServed), not an office, so it is not given a PostalAddress. The
+ * head office address is limited to what was supplied (no street/PIN).
+ * No telephone property: the only verified number is a WhatsApp contact.
+ */
 export function organization() {
-  const org: Record<string, unknown> = {
-    '@type': hasAddress ? ['Organization', 'LocalBusiness'] : 'Organization',
+  return {
+    '@type': 'Organization',
     '@id': ORG_ID,
     name: site.name,
+    alternateName: 'RBE',
     url: `${site.url}/`,
-    logo: `${site.url}/brand/rbe-mark.png`,
+    logo: { '@type': 'ImageObject', url: `${site.url}/brand/rbe-mark.png` },
     description:
-      'RBE Capital Equip. rents backhoe loaders for construction and infrastructure projects across the Kumaon region of Uttarakhand, India. It is an enterprise of Rotoblast Engineering.',
-    telephone: site.phoneE164,
-    email: site.email,
+      'RBE Capital Equip. rents backhoe loaders for construction and infrastructure projects across the Kumaon region of Uttarakhand, India. Machines are deployed from Haldwani, Uttarakhand; the head office is in Sector 27C, Faridabad, Haryana. It is an enterprise of Rotoblast Engineering.',
+    email: site.salesEmail,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: site.headOffice.area,
+      addressLocality: site.headOffice.locality,
+      addressRegion: site.headOffice.region,
+      addressCountry: site.headOffice.country,
+    },
     parentOrganization: { '@type': 'Organization', name: site.parent.name, ...(site.parent.url ? { url: site.parent.url } : {}) },
     areaServed: [
       { '@type': 'AdministrativeArea', name: 'Kumaon division, Uttarakhand, India' },
-      ...places.map((p) => ({ '@type': 'City', name: `${p.name}, Uttarakhand` })),
+      ...places.map((p) => ({ '@type': 'Place', name: `${p.name}, ${p.district} district, Uttarakhand` })),
     ],
     knowsAbout: [
       'Backhoe loader rental',
-      'Road construction equipment',
-      'Hill road excavation',
+      'Construction equipment deployment in hill terrain',
+      'Road construction and widening',
+      'Hill cutting and slope works',
       'Site development and earthworks',
-      'Construction equipment for hilly terrain',
     ],
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: site.phoneE164,
-      contactType: 'sales',
-      areaServed: 'IN',
-      availableLanguage: ['English', 'Hindi'],
-    },
-    sameAs: [wa().split('?')[0]],
+    contactPoint: [
+      { '@type': 'ContactPoint', contactType: 'sales', email: site.salesEmail, url: waBase, areaServed: 'IN', availableLanguage: ['English', 'Hindi'] },
+      { '@type': 'ContactPoint', contactType: 'customer support', email: site.email, areaServed: 'IN', availableLanguage: ['English', 'Hindi'] },
+    ],
   };
-  if (hasAddress) {
-    org.address = {
-      '@type': 'PostalAddress',
-      streetAddress: site.address.street,
-      addressLocality: site.address.locality,
-      addressRegion: site.address.region,
-      postalCode: site.address.postalCode,
-      addressCountry: site.address.country,
-    };
-  }
-  return org;
 }
 
 export function website() {
@@ -72,18 +70,20 @@ export function rentalService() {
     '@type': 'Service',
     '@id': `${site.url}/backhoe-loader-rental/#service`,
     name: 'Backhoe loader rental',
-    serviceType: 'Construction equipment rental — backhoe loader with operator',
+    serviceType: 'Construction equipment rental — backhoe loader',
     provider: { '@id': ORG_ID },
     areaServed: { '@type': 'AdministrativeArea', name: 'Kumaon division, Uttarakhand, India', containsPlace: districts.map((d) => ({ '@type': 'AdministrativeArea', name: `${d} district` })) },
-    audience: { '@type': 'BusinessAudience', audienceType: 'Contractors, real-estate developers, infrastructure and EPC companies' },
+    audience: { '@type': 'BusinessAudience', audienceType: 'Contractors, real-estate developers, infrastructure and EPC companies, project and procurement teams' },
     description:
-      'Backhoe loaders rented for road construction and widening, hill cutting, site development, trenching and infrastructure works in Kumaon, for durations from short assignments to full project periods.',
+      'Backhoe loaders rented for road construction and widening, hill cutting, site development, trenching and infrastructure works in Kumaon, deployed from Haldwani, for durations from a few weeks to a full project phase. Terms, including the operator arrangement, are confirmed in each quote.',
   };
 }
 
-export function faqPage(qas: { q: string; a: string }[]) {
+/** Adds the Q&A to the page's own WebPage node (same @id), so the page is one FAQPage entity. */
+export function faqPage(path: string, qas: { q: string; a: string }[]) {
   return {
     '@type': 'FAQPage',
+    '@id': `${site.url}${path}#page`,
     mainEntity: qas.map((x) => ({ '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: x.a } })),
   };
 }

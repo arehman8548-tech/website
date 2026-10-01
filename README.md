@@ -2,14 +2,14 @@
 
 Backhoe loader rental for construction and infrastructure projects across Kumaon, Uttarakhand. An enterprise of Rotoblast Engineering.
 
-Static site built with **Astro** and a lazily-loaded **Three.js** hero. See [`docs/STRATEGY.md`](docs/STRATEGY.md) for research, information architecture, search-intent map and the pre-launch checklist.
+Static site built with **Astro** and a lazily-loaded **Three.js** hero. See [`docs/STRATEGY.md`](docs/STRATEGY.md) for the original plan and [`docs/SEO-CONVERSION-AUDIT.md`](docs/SEO-CONVERSION-AUDIT.md) for the search research, intent map, schema, conversion, performance measurements and remaining dependencies.
 
 ## Develop
 
 ```bash
 npm install
 npm run dev       # http://localhost:4321
-npm run build     # static output in dist/
+SITE_URL=https://<verified-domain> npm run build   # static output in dist/
 npm run preview
 ```
 
@@ -19,8 +19,8 @@ Deploy `dist/` to any static host (Netlify, Cloudflare Pages, Vercel, S3). `publ
 
 | Path | What |
 |---|---|
-| `src/data/site.ts` | **Business facts** — phone, WhatsApp, email, hours, address, form endpoint. Values marked `CONFIRM` must be set before launch |
-| `src/data/site-url.mjs` | Production domain (canonical URLs, sitemap, schema) |
+| `src/data/site.ts` | **Business facts** — WhatsApp, emails, deployment base (Haldwani), head office (Sector 27C, Faridabad), optional form endpoint |
+| `src/data/site-url.mjs` | Reads `SITE_URL` at build time for canonical URLs, sitemap, robots.txt and schema. No domain is hard-coded |
 | `src/data/geo.ts` | Kumaon locations, districts, terrain belts |
 | `src/data/projects.ts` | Project types (Project Solutions page, home cards) |
 | `src/data/faq.ts` | Knowledge base Q&A + glossary (also feeds FAQPage schema) |
@@ -32,7 +32,9 @@ Deploy `dist/` to any static host (Netlify, Cloudflare Pages, Vercel, S3). `publ
 
 ## Enquiry form
 
-With `formEndpoint` empty, the contact form validates and opens WhatsApp with the enquiry pre-filled (email fallback). Set `formEndpoint` to a Formspree or CRM webhook URL to POST submissions instead.
+With `formEndpoint` empty (current), the form does **not** send anything itself: it validates, then opens WhatsApp (+91 78277 28607) with the enquiry written out, or builds an email to sales@rotoblasteng.com. Set `formEndpoint` to a CRM/form webhook to POST submissions instead.
+
+There is no separately verified phone line, so the site has no Call buttons — only WhatsApp and email.
 
 ## Debug
 

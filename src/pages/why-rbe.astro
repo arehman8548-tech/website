@@ -9,17 +9,17 @@ import { breadcrumbs } from '../data/schema';
 import { qa } from '../data/faq';
 
 const crumbs = [{ name: 'Why RBE', href: '/why-rbe/' }];
-const title = 'Why Contractors Choose RBE Capital Equip. — An Enterprise of Rotoblast Engineering';
+const title = 'Why RBE Capital Equip. — Rental for Project Teams';
 const description =
-  'What you can expect when you rent a backhoe loader from RBE Capital Equip.: confirmed availability, machines checked before dispatch, planned mobilisation and breakdown support agreed before work starts.';
+  'RBE Capital Equip., an enterprise of Rotoblast Engineering, rents backhoe loaders to project teams in Kumaon from Haldwani. What to settle before work starts.';
 
 const rows = [
-  ['Availability', '“Should be free” on the phone.', 'Confirmed for your dates, in writing, before you commit.'],
-  ['Machine condition', 'Arrives as it is.', 'Checked before it is dispatched to your site.'],
-  ['Getting to site', 'Route worked out on the day.', 'Route, travel method and arrival planned in advance.'],
-  ['Breakdowns', 'You chase the owner.', 'Reporting, attendance and next steps agreed up front.'],
-  ['Communication', 'Whoever answers.', 'One point of contact for your project.'],
-  ['Machine fit', 'Whatever is available.', 'An honest view on whether a backhoe loader is right.'],
+  ['Availability', '“Should be free” on the phone.', 'Checked against your start date and duration before you commit.'],
+  ['The machine', 'Whatever turns up.', 'Make, model and specification stated in the quote.'],
+  ['Getting to site', 'Route worked out on the day.', 'Route, travel method and arrival date worked out with the quote.'],
+  ['Breakdowns', 'You chase the owner.', 'Reporting, attendance and downtime terms settled at quote stage.'],
+  ['Who you deal with', 'An individual owner.', 'An enterprise of Rotoblast Engineering, deploying from Haldwani.'],
+  ['Machine fit', 'Whatever is available.', 'A straight view on whether a backhoe loader is right — or an excavator is.'],
 ];
 const breakdown = qa('breakdown');
 ---
@@ -56,17 +56,17 @@ const breakdown = qa('breakdown');
     <div class="wrap sup">
       <div>
         <p class="eyebrow"><span class="idx">02</span>Support</p>
-        <h2 id="h-sup">Downtime is decided <span class="serif">before</span> the machine arrives.</h2>
+        <h2 id="h-sup">Downtime terms are settled <span class="serif">before</span> the machine arrives.</h2>
         <div class="answer" style="margin-top:32px">
           <h3>{breakdown.q}</h3>
           <p class="muted">{breakdown.a}</p>
         </div>
       </div>
       <ol class="phase">
-        <li><span class="mono">Before work</span><b>Agree the support plan</b><p>Who you call, who attends, expected repair times, servicing schedule and what happens if a repair runs long.</p></li>
-        <li><span class="mono">Dispatch</span><b>Check the machine</b><p>Inspected before it leaves for your site, so problems are found in the yard, not on your project.</p></li>
-        <li><span class="mono">On site</span><b>Planned servicing</b><p>Routine servicing timed around your working hours. Consumables planned in advance for remote sites.</p></li>
-        <li><span class="mono">If it stops</span><b>Follow the agreed plan</b><p>No renegotiating while your site waits — the steps were settled at the start.</p></li>
+        <li><span class="mono">Before work</span><b>Settle the support terms</b><p>Who you contact, who attends, expected repair times, the servicing schedule and what happens if a repair runs long.</p></li>
+        <li><span class="mono">Before dispatch</span><b>Confirm the machine</b><p>Make, model and specification, what travels with it, and the operator arrangement — as stated in the quote.</p></li>
+        <li><span class="mono">On site</span><b>Servicing and supplies</b><p>When routine servicing happens and how it affects your hours; how diesel and consumables reach a remote site.</p></li>
+        <li><span class="mono">If it stops</span><b>Follow the agreed terms</b><p>No renegotiating while your site waits — the steps were settled at the start.</p></li>
       </ol>
     </div>
   </section>
@@ -75,11 +75,11 @@ const breakdown = qa('breakdown');
     <div class="wrap roto">
       <div class="roto__mark"><Wordmark size="xl" href={null} tone="dark" /></div>
       <div>
-        <p class="eyebrow"><span class="idx">03</span>Heritage</p>
-        <h2 id="h-roto">Backed by Rotoblast Engineering.</h2>
+        <p class="eyebrow"><span class="idx">03</span>The organisation</p>
+        <h2 id="h-roto">An enterprise of Rotoblast Engineering.</h2>
         <div class="prose" style="margin-top:24px">
-          <p>RBE Capital Equip. is an enterprise of Rotoblast Engineering, created to bring an engineering organisation’s way of working to equipment rental.</p>
-          <p>For you, it means the business renting you a machine is part of an engineering organisation rather than an individual owner — with the accountability, maintenance discipline and continuity a project needs from a supplier over months, not days.</p>
+          <p>RBE Capital Equip. is an enterprise of Rotoblast Engineering. Its head office is in Sector 27C, Faridabad, Haryana, and its machines are deployed from Haldwani, Uttarakhand, to project sites across Kumaon.</p>
+          <p>For a procurement team, that means contracting with an organisation — with a head office and a sales desk at <a href="mailto:sales@rotoblasteng.com">sales@rotoblasteng.com</a> — rather than with an individual machine owner.</p>
         </div>
       </div>
     </div>
@@ -89,12 +89,12 @@ const breakdown = qa('breakdown');
     <div class="wrap two">
       <div>
         <p class="eyebrow"><span class="idx">04</span>Straight dealing</p>
-        <h2 id="h-wont">What we won’t do.</h2>
+        <h2 id="h-wont">What to avoid in any rental.</h2>
         <ul class="xlist">
-          <li>Promise a date we can’t meet to win the order.</li>
-          <li>Send a backhoe loader to a job that needs an excavator.</li>
-          <li>Leave idle-time, diesel or mobilisation terms vague.</li>
-          <li>Disappear after the machine is delivered.</li>
+          <li>A start date nobody has checked against the access road.</li>
+          <li>A backhoe loader sent to a job that needs an excavator.</li>
+          <li>Vague idle-time, diesel or mobilisation terms.</li>
+          <li>No agreed process for breakdowns.</li>
         </ul>
       </div>
       <div>
@@ -113,9 +113,9 @@ const breakdown = qa('breakdown');
   <NextSteps items={[
     { k: 'Process', t: 'How a rental runs', d: 'Requirement to return, step by step.', href: '/how-rental-works/' },
     { k: 'Machine', t: 'What the backhoe loader can do', d: 'Capabilities and typical specification.', href: '/backhoe-loader-rental/' },
-    { k: 'Contact', t: 'Check availability now', d: 'Call, WhatsApp or send the project form.', href: '/contact/' },
+    { k: 'Contact', t: 'Request a rental quote', d: 'WhatsApp, email or send the project form.', href: '/contact/' },
   ]} />
-  <QuoteBand heading="Talk to the people who will actually support your site." />
+  <QuoteBand heading="Discuss your project and the terms before anything moves." />
 </Base>
 
 <style>

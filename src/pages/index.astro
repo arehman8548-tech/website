@@ -9,14 +9,14 @@ import { projects } from '../data/projects';
 import { belts } from '../data/geo';
 import { qa } from '../data/faq';
 
-const title = 'Backhoe Loader Rental in Kumaon, Uttarakhand | RBE Capital Equip.';
+const title = 'Backhoe Loader Rental in Haldwani & Kumaon | RBE Capital Equip.';
 const description =
-  'Backhoe loader (JCB) rental for road, hill-cutting, site-development and infrastructure projects across Kumaon — Haldwani, Nainital, Almora, Bageshwar, Rudrapur and beyond. Check availability today.';
+  'Backhoe loader rental for road, hill-cutting, site-development and infrastructure projects across Kumaon. Deployed from Haldwani. WhatsApp for a quote.';
 
 const concerns = [
-  { q: 'Will the machine actually reach my site?', a: 'We plan the route, the transport method and the arrival date before you commit — including narrow hill roads and remote last-mile access.', href: '/kumaon-service-area/#deployment', l: 'How deployment is planned' },
-  { q: 'What if it breaks down mid-project?', a: 'How breakdowns are reported, who attends and what happens if a repair takes longer is agreed before the machine leaves for site.', href: '/why-rbe/#support', l: 'How support works' },
-  { q: 'Can I keep it for the whole project?', a: 'Short assignments, monthly hire or the full project phase — with servicing planned around your working hours.', href: '/backhoe-loader-rental/#rental-terms', l: 'Rental durations' },
+  { q: 'Will the machine actually reach my site?', a: 'Machines are deployed from Haldwani. The route, transport method and arrival date are worked out with your quote, before you commit — including narrow hill roads and remote last-mile access.', href: '/kumaon-service-area/#deployment', l: 'How deployment is planned' },
+  { q: 'What if it breaks down mid-project?', a: 'How a breakdown is reported, who attends and how downtime is treated belong in the rental terms — settle them at quote stage, not while your site waits.', href: '/why-rbe/#support', l: 'What to settle before work starts' },
+  { q: 'Can I keep it for the whole project?', a: 'Monthly hire or the full project phase. On long rentals, servicing, idle days and breakdown handling are part of the terms you agree up front.', href: '/backhoe-loader-rental/#rental-terms', l: 'Rental durations' },
   { q: 'Is a backhoe loader right for this job?', a: 'Often, but not always. If your scope needs an excavator or a breaker, we will say so rather than send the wrong machine.', href: '/backhoe-loader-rental/#when-not', l: 'When to choose an excavator' },
 ];
 
@@ -28,7 +28,7 @@ const audiences = [
   { t: 'Contractors new to Kumaon', d: 'Companies from outside Uttarakhand who need local equipment and local route knowledge.' },
 ];
 
-const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
+const answers = ['hill-roads', 'how-quickly', 'remote', 'cost', 'based'].map(qa);
 ---
 <Base title={title} description={description}>
   <Hero />
@@ -40,7 +40,7 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
         <div class="split__l">
           <p class="eyebrow rv"><span class="idx">01</span>The real questions</p>
           <h2 id="h-concerns" class="rv">Your project can’t stop because a machine <span class="serif">didn’t turn up.</span></h2>
-          <p class="lead muted rv rv-d1" style="margin-top:28px">Finding a backhoe loader is easy. Finding one that reaches a hill site on the day you planned, keeps working through the project, and is backed by someone who picks up the phone — that is the actual requirement.</p>
+          <p class="lead muted rv rv-d1" style="margin-top:28px">Finding a backhoe loader is easy. Finding one that reaches a hill site on the day you planned, keeps working through the project, and comes with clear terms if something goes wrong — that is the actual requirement.</p>
         </div>
         <ol class="concerns">
           {concerns.map((c, i) => (
@@ -99,8 +99,8 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
     <div class="wrap geo__grid">
       <div class="geo__copy">
         <p class="eyebrow"><span class="idx">04</span>Kumaon service area</p>
-        <h2 id="h-geo" class="rv">From 200 m in the Terai to 2,300 m on the ridges. <span class="serif">One region, three kinds of site.</span></h2>
-        <p class="muted rv" style="margin-top:24px">A site in Pantnagar and a site above Mukteshwar need different planning, even with the same machine. We plan mobilisation around the belt your project sits in.</p>
+        <h2 id="h-geo" class="rv">From about 200 m in the Terai to over 2,000 m on the ridges. <span class="serif">One region, three kinds of site.</span></h2>
+        <p class="muted rv" style="margin-top:24px">Machines are deployed from Haldwani, where the plains meet the hills. A site in Pantnagar and a site above Mukteshwar need different planning, even with the same machine, so mobilisation is planned around the belt your project sits in.</p>
         <dl class="geo__belts">
           {Object.values(belts).map((b) => (
             <div class="rv"><dt>{b.title}</dt><dd><span class="mono">{b.short}</span>{b.realities[0]}</dd></div>
@@ -120,12 +120,12 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
         <h2 id="h-proc" class="rv">From your first message to a working machine.</h2>
       </div>
       <ol class="proc">
-        <li class="rv"><b>Requirement</b><span>Call, WhatsApp or send the form — site, work, dates.</span></li>
+        <li class="rv"><b>Requirement</b><span>WhatsApp, email or the form — site, work, dates.</span></li>
         <li class="rv rv-d1"><b>Site check</b><span>Location, access road and working conditions.</span></li>
-        <li class="rv rv-d2"><b>Confirmation</b><span>Machine, duration and terms agreed in writing.</span></li>
-        <li class="rv rv-d3"><b>Mobilisation</b><span>Route and arrival date planned, machine checked.</span></li>
+        <li class="rv rv-d2"><b>Confirmation</b><span>Machine, duration and terms set out for you to approve.</span></li>
+        <li class="rv rv-d3"><b>Mobilisation</b><span>Route, travel method and arrival date planned.</span></li>
         <li class="rv"><b>On site</b><span>Work starts; daily hours recorded.</span></li>
-        <li class="rv rv-d1"><b>Support</b><span>Servicing, breakdowns, extension or return.</span></li>
+        <li class="rv rv-d1"><b>Support</b><span>Servicing, breakdowns, extension or return — as agreed.</span></li>
       </ol>
       <div class="btn-row" style="margin-top:48px">
         <a class="btn" href="/contact/">Start with your requirement <Icon name="arrow" /></a>
@@ -142,8 +142,8 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
         <p class="eyebrow"><span class="idx">06</span>The organisation behind the machine</p>
         <h2 id="h-roto" class="rv">An enterprise of <span class="serif">Rotoblast Engineering.</span></h2>
         <div class="prose measure rv" style="margin-top:28px">
-          <p>RBE Capital Equip. is not an individual putting a machine on hire. It is an enterprise of Rotoblast Engineering, which means an engineering organisation stands behind the equipment, its maintenance and the commitments made to your project.</p>
-          <p>For a project team, that changes the conversation: availability is confirmed rather than hoped for, the machine is checked before it is dispatched, and support has a name and a phone number. <a href="/why-rbe/">What you can expect from us</a>.</p>
+          <p>RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents backhoe loaders to construction and infrastructure projects in Kumaon, deploying machines from Haldwani, with its head office in Sector 27C, Faridabad, Haryana.</p>
+          <p>It is set up for project teams rather than one-off jobs: the conversation starts with your site, scope and programme, and the terms — machine, duration, operator, diesel, mobilisation, idle time and breakdowns — are set out before anything moves. <a href="/why-rbe/">How we work with project teams</a>.</p>
         </div>
       </div>
     </div>
@@ -168,7 +168,7 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
     </div>
   </section>
 
-  <QuoteBand waText="Hello RBE Capital Equip., I want to discuss backhoe loader availability for a project in Kumaon." />
+  <QuoteBand />
 </Base>
 
 <style>

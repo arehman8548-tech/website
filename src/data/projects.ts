@@ -26,7 +26,7 @@ export const projects: Project[] = [
       'Sub-grade preparation and back-filling behind walls',
     ],
     realities:
-      'Hill roads give you one lane of working space, live traffic and long distances between work fronts. A wheeled machine that can drive itself between fronts and do both loading and digging keeps a small crew productive without waiting on a second machine.',
+      'Hill roads give you one lane of working space, live traffic and long distances between work fronts. A wheeled machine that can drive itself between fronts and do both loading and digging lets a small crew keep working without waiting on a second machine.',
     limits:
       'Hard-rock cutting and large-volume formation cutting are excavator and breaker work. On those packages the backhoe loader is the support machine — drains, loading, clearing — not the main cutter.',
     where: ['haldwani', 'bhowali', 'almora', 'bageshwar', 'berinag'],
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     limits:
       'For very large cut-and-fill volumes on township-scale sites, an excavator and tippers should carry the bulk work; the backhoe loader handles footings, services and finishing.',
     where: ['bhimtal', 'ramgarh', 'mukteshwar', 'haldwani', 'rudrapur'],
-    faq: ['quote-info', 'long-term', 'dig-depth'],
+    faq: ['quote-info', 'site-conditions', 'long-term'],
   },
   {
     id: 'dam-bridge',
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     limits:
       'Deep foundation work, cofferdams and large-volume river-bed excavation need bigger equipment. Tell us the scope and we will tell you honestly where a backhoe loader fits.',
     where: ['bageshwar', 'almora', 'berinag', 'kathgodam'],
-    faq: ['remote', 'monsoon', 'vs-excavator'],
+    faq: ['remote', 'difficult-access', 'monsoon'],
   },
   {
     id: 'trenching',
@@ -130,6 +130,6 @@ export const projects: Project[] = [
     limits:
       'Large-area mass grading is faster with dozers, graders and excavators. A backhoe loader is the flexible machine that stays on site for foundations, services and everything in between.',
     where: ['rudrapur', 'pantnagar', 'kashipur', 'haldwani'],
-    faq: ['long-term', 'breakdown', 'servicing'],
+    faq: ['long-term', 'duration', 'breakdown'],
   },
 ];

@@ -1,7 +1,7 @@
 ---
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { site, tel, wa, mailto } from '../data/site';
+import { site, wa, mailto, mailtoDirect, headOfficeText, deploymentText } from '../data/site';
 import { places, districts } from '../data/geo';
 const year = new Date().getFullYear();
 ---
@@ -15,15 +15,20 @@ const year = new Date().getFullYear();
           companies working on construction projects in the Kumaon region of Uttarakhand. It is an enterprise of
           Rotoblast Engineering.
         </p>
+        <dl class="ftr__facts">
+          <div><dt>Machine deployment</dt><dd>{deploymentText}</dd></div>
+          <div><dt>Head office</dt><dd>{headOfficeText}</dd></div>
+        </dl>
       </div>
       <div class="ftr__contact">
         <p class="eyebrow">Talk to us about your site</p>
-        <a class="ftr__big" href={tel}>{site.phoneDisplay}</a>
+        <a class="ftr__big" href={wa()} rel="noopener" aria-label={`${site.whatsappDisplay} — WhatsApp`}>{site.whatsappDisplay}</a>
+        <p class="mono muted ftr__hours"><Icon name="wa" />WhatsApp — the fastest way to reach us</p>
         <div class="btn-row">
           <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp</a>
-          <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.email}</a>
+          <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.salesEmail}</a>
         </div>
-        <p class="mono muted ftr__hours"><Icon name="clock" />{site.hours}</p>
+        <p class="mono muted ftr__hours"><Icon name="mail" /><span>Direct: <a href={mailtoDirect}>{site.email}</a></span></p>
       </div>
     </div>
 
@@ -65,7 +70,7 @@ const year = new Date().getFullYear();
 
     <div class="ftr__base">
       <span>© {year} RBE Capital Equip. — an enterprise of Rotoblast Engineering.</span>
-      <span>Backhoe loader rental · Kumaon, Uttarakhand, India</span>
+      <span>Backhoe loader rental · Machines deployed from Haldwani across Kumaon · Head office Faridabad, Haryana</span>
     </div>
   </div>
 </footer>
@@ -75,10 +80,16 @@ const year = new Date().getFullYear();
   .ftr__top { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); border-bottom: 1px solid var(--line-d); }
   .ftr__entity { margin-top: 40px; max-width: 46ch; color: var(--on-dark-2); }
   .ftr__entity strong { color: var(--on-dark); font-weight: 600; }
-  .ftr__big { display: block; font-family: var(--f-display); font-stretch: 118%; font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: -0.03em; text-decoration: none; margin-bottom: 26px; }
+  .ftr__facts { margin: 28px 0 0; display: grid; gap: 10px; max-width: 46ch; }
+  .ftr__facts div { display: grid; grid-template-columns: 160px 1fr; gap: 12px; padding-top: 10px; border-top: 1px solid var(--line-d); }
+  .ftr__facts dt { font-family: var(--f-mono); font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .12em; color: var(--on-dark-2); padding-top: 3px; }
+  .ftr__facts dd { margin: 0; }
+  .ftr__big { display: block; font-family: var(--f-display); font-stretch: 118%; font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: -0.03em; text-decoration: none; margin-bottom: 6px; }
   .ftr__big:hover { color: var(--copper-hi); }
   .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
-  .ftr__hours :global(svg) { width: 16px; }
+  .ftr__hours :global(svg) { width: 16px; flex: none; }
+  .ftr__hours a { color: var(--on-dark); }
+  .ftr__hours + .btn-row { margin-top: 18px; }
   .ftr__cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.5fr; gap: 32px; padding-block: 56px; }
   .ftr__h { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .14em; color: var(--on-dark-2); margin-bottom: 18px; font-stretch: normal; }
   .ftr__h a { text-decoration: none; } .ftr__h a:hover { color: var(--copper-hi); }
@@ -92,5 +103,5 @@ const year = new Date().getFullYear();
     .ftr__top { grid-template-columns: 1fr; }
     .ftr__cols { grid-template-columns: 1fr 1fr; }
   }
-  @media (max-width: 520px) { .ftr__cols { grid-template-columns: 1fr; } .ftr :global(.wm--xl) { --s: 1.8; } }
+  @media (max-width: 520px) { .ftr__facts div { grid-template-columns: 1fr; gap: 2px; } .ftr__cols { grid-template-columns: 1fr; } .ftr :global(.wm--xl) { --s: 1.8; } }
 </style>

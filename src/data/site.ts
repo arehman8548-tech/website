@@ -3,45 +3,50 @@ import { SITE_URL } from './site-url.mjs';
 /**
  * Single source of truth for business facts.
  *
- * Every value marked CONFIRM must be supplied/verified by RBE Capital Equip.
- * before launch. Nothing here is invented: where a fact was not provided
- * (phone, address, fleet size, years) it is either a placeholder that the
- * site renders neutrally, or it is simply not shown.
+ * Only details supplied and confirmed by RBE Capital Equip. belong here.
+ * There is no separately confirmed phone line: the verified immediate
+ * contact is WhatsApp, so the site offers WhatsApp and email, never a
+ * "Call" number. Do not add a street, PIN code or office for Haldwani —
+ * Haldwani is the machine deployment base, not an office address.
  */
 export const site = {
   url: SITE_URL,
   name: 'RBE Capital Equip.',
-  legalName: 'RBE Capital Equip.',
   parent: {
     name: 'Rotoblast Engineering',
-    // CONFIRM: official Rotoblast Engineering website (leave '' to omit from schema).
+    // Official Rotoblast Engineering website, if one is confirmed ('' = omitted from schema).
     url: '',
   },
   tagline: 'Backhoe loader rental for construction and infrastructure projects across Kumaon',
 
-  // CONFIRM: all contact details below.
-  phoneDisplay: '+91 00000 00000',
-  phoneE164: '+910000000000',
-  whatsappE164: '910000000000', // digits only, no "+", for wa.me links
-  email: 'enquiry@rbecapitalequip.com',
-  // CONFIRM: optional form endpoint (e.g. Formspree / your CRM webhook). Empty = WhatsApp + email handoff only.
+  whatsappDisplay: '+91 78277 28607',
+  whatsappDigits: '917827728607', // for wa.me links: country code + number, no "+" or spaces
+  email: 'arehman@rotoblasteng.com', // direct contact
+  salesEmail: 'sales@rotoblasteng.com', // rental enquiries and quotes
+
+  deploymentBase: { locality: 'Haldwani', region: 'Uttarakhand', country: 'IN' },
+  headOffice: { area: 'Sector 27C', locality: 'Faridabad', region: 'Haryana', country: 'IN' },
+
+  // Optional form endpoint (e.g. a CRM webhook). Empty = the form hands the enquiry to WhatsApp / email.
   formEndpoint: '',
-  // CONFIRM: office / yard address. Left empty, it is not rendered or put in schema.
-  address: {
-    street: '',
-    locality: '',
-    region: 'Uttarakhand',
-    postalCode: '',
-    country: 'IN',
-  },
-  // CONFIRM: enquiry hours as you actually staff them.
-  hours: 'Mon–Sat, 8:00 am – 8:00 pm',
 } as const;
 
-export const tel = `tel:${site.phoneE164}`;
-export const mailto = `mailto:${site.email}`;
-export function wa(text = 'Hello RBE Capital Equip., I want to check backhoe loader availability for a project.') {
-  return `https://wa.me/${site.whatsappE164}?text=${encodeURIComponent(text)}`;
+export const headOfficeText = `${site.headOffice.area}, ${site.headOffice.locality}, ${site.headOffice.region}, India`;
+export const deploymentText = `${site.deploymentBase.locality}, ${site.deploymentBase.region}`;
+
+export const waBase = `https://wa.me/${site.whatsappDigits}`;
+export const mailto = `mailto:${site.salesEmail}`;
+export const mailtoDirect = `mailto:${site.email}`;
+
+export const defaultWaText =
+  'Hello RBE Capital Equip., I would like to check backhoe loader availability for a project in Kumaon.\nSite location:\nType of work:\nStart date / duration:';
+
+export function wa(text: string = defaultWaText) {
+  return `${waBase}?text=${encodeURIComponent(text)}`;
+}
+
+export function mailtoWith(subject: string, body = '') {
+  return `${mailto}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
 }
 
 export const nav = [

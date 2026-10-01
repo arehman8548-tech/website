@@ -3,13 +3,13 @@ import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
-import { site, tel, wa, mailto } from '../data/site';
+import { site, wa, mailtoWith, mailtoDirect, headOfficeText, deploymentText } from '../data/site';
 import { projects } from '../data/projects';
 
 const crumbs = [{ name: 'Book Equipment', href: '/contact/' }];
-const title = 'Book a Backhoe Loader — Check Availability for Your Kumaon Project | RBE Capital Equip.';
+const title = 'Request a Backhoe Loader Rental Quote | RBE Capital Equip.';
 const description =
-  'Check backhoe loader availability and request a rental quote for your project in Kumaon. Call, WhatsApp or send the two-minute project form to RBE Capital Equip.';
+  'Get a backhoe loader rental quote for your Kumaon project. WhatsApp +91 78277 28607, email sales@rotoblasteng.com or send the project form.';
 ---
 <Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]}>
   <section class="ct dark">
@@ -17,38 +17,43 @@ const description =
       <div class="ct__side">
         <Breadcrumbs items={crumbs} />
         <p class="eyebrow"><span class="idx">RBE</span>Book equipment</p>
-        <h1>Check availability <span class="serif">for your dates.</span></h1>
-        <p class="lead muted">Two minutes on a phone. We reply with availability, how the machine reaches your site and what the rental involves.</p>
+        <h1>Request a rental quote <span class="serif">for your dates.</span></h1>
+        <p class="lead muted">Two minutes on a phone. Tell us the site, the work and the dates — we reply with availability, how the machine reaches your site and what the rental involves.</p>
 
         <div class="ct__direct">
-          <a class="ct__ch" href={tel}>
-            <Icon name="phone" />
-            <span><b>Call</b><span class="mono">{site.phoneDisplay}</span></span>
-          </a>
           <a class="ct__ch ct__ch--wa" href={wa()} rel="noopener">
             <Icon name="wa" />
-            <span><b>WhatsApp</b><span class="mono">Send a map pin or site photos</span></span>
+            <span><b>WhatsApp {site.whatsappDisplay}</b><span class="mono">Fastest route — send a map pin or site photos</span></span>
           </a>
-          <a class="ct__ch" href={mailto}>
+          <a class="ct__ch" href={mailtoWith('Backhoe loader rental enquiry')}>
             <Icon name="mail" />
-            <span><b>Email</b><span class="mono">{site.email}</span></span>
+            <span><b>Sales &amp; quotes</b><span class="mono">{site.salesEmail}</span></span>
           </a>
-          <p class="mono ct__hours"><Icon name="clock" />{site.hours}</p>
+          <a class="ct__ch" href={mailtoDirect}>
+            <Icon name="mail" />
+            <span><b>Direct contact</b><span class="mono">{site.email}</span></span>
+          </a>
         </div>
+
+        <dl class="ct__facts">
+          <div><dt>Machine deployment</dt><dd>{deploymentText} — machines go out to project sites across Kumaon</dd></div>
+          <div><dt>Head office</dt><dd>{headOfficeText}</dd></div>
+          <div><dt>Organisation</dt><dd>RBE Capital Equip. is an enterprise of Rotoblast Engineering</dd></div>
+        </dl>
 
         <div class="ct__next">
           <h2>What happens next</h2>
           <ol>
-            <li>We confirm whether a machine is available for your start date.</li>
-            <li>We check the site location and access, and ask anything missing.</li>
-            <li>You receive the terms in writing — machine, duration, operator, diesel, mobilisation.</li>
+            <li>We check whether a machine is free for your start date and duration.</li>
+            <li>We look at the site location and access, and ask for anything missing.</li>
+            <li>We send the proposed terms — machine, duration, operator, diesel, mobilisation — for you to review before anything is confirmed.</li>
           </ol>
           <a class="inline" href="/how-rental-works/">The full rental process →</a>
         </div>
       </div>
 
       <div class="ct__formwrap">
-        <form class="fm" data-form data-endpoint={site.formEndpoint} data-wa={site.whatsappE164} data-email={site.email} novalidate>
+        <form class="fm" data-form data-endpoint={site.formEndpoint} data-wa={site.whatsappDigits} data-wa-display={site.whatsappDisplay} data-email={site.salesEmail} novalidate>
           <div class="fm__head">
             <h2>Project enquiry</h2>
             <p class="mono">Fields marked * are required</p>
@@ -69,7 +74,7 @@ const description =
             </div>
             <div class="f">
               <label for="f-loc">Project location *</label>
-              <input id="f-loc" name="location" type="text" required placeholder="e.g. near Bhowali, Nainital district" aria-describedby="f-loc-h" />
+              <input id="f-loc" name="location" type="text" required placeholder="e.g. Bhowali, Nainital district" aria-describedby="f-loc-h" />
               <p class="f__h" id="f-loc-h">Town, village or a map link</p>
             </div>
             <div class="f">
@@ -84,19 +89,20 @@ const description =
               <label for="f-eq">Required equipment</label>
               <select id="f-eq" name="equipment">
                 <option>Backhoe loader</option>
-                <option>Backhoe loader with rock breaker (ask availability)</option>
-                <option>Not sure — please advise</option>
+                <option>Backhoe loader — rock expected, breaker may be needed</option>
+                <option>Not sure — please advise on the right machine</option>
               </select>
             </div>
             <div class="f">
               <label for="f-dur">Rental duration</label>
               <select id="f-dur" name="duration">
                 <option value="">Select…</option>
-                <option>A few days</option>
                 <option>1–4 weeks</option>
                 <option>1–3 months</option>
-                <option>3+ months / project duration</option>
-                <option>Not sure yet</option>
+                <option>3+ months</option>
+                <option>Full project / contract phase</option>
+                <option>Short assignment (days)</option>
+                <option>Not decided yet</option>
               </select>
             </div>
             <div class="f">
@@ -105,15 +111,16 @@ const description =
             </div>
             <div class="f f--full">
               <label for="f-det">Additional details</label>
-              <textarea id="f-det" name="details" rows="4" placeholder="Scope of work, working hours, access road, anything we should know"></textarea>
+              <textarea id="f-det" name="details" rows="4" placeholder="Scope of work, hours per day, access road to site, client / department if relevant"></textarea>
             </div>
           </div>
           <div class="fm__foot">
             <button class="btn" type="submit" data-submit>
-              {site.formEndpoint ? 'Send enquiry' : 'Send enquiry on WhatsApp'} <Icon name="arrow" />
+              {site.formEndpoint ? 'Send enquiry' : 'Continue on WhatsApp'} <Icon name="arrow" />
             </button>
-            <p class="mono fm__alt">or <a href={mailto} data-mail>send by email</a></p>
+            <p class="mono fm__alt">or <a href={mailtoWith('Backhoe loader rental enquiry')} data-mail>send the same details by email</a></p>
           </div>
+          {!site.formEndpoint && <p class="fm__how">This form does not send anything by itself. It writes your enquiry into a WhatsApp message (or an email) for you to send.</p>}
           <p class="fm__status" role="status" aria-live="polite" data-status></p>
         </form>
       </div>
@@ -134,9 +141,23 @@ const description =
     if (opt) sel.value = opt.value;
   }
 
-  const labels: Record<string, string> = { name: 'Name', company: 'Company', phone: 'Phone', location: 'Project location', type: 'Project type', equipment: 'Equipment', duration: 'Duration', start: 'Start date', details: 'Details' };
-  const summary = (fd: FormData) =>
-    ['Backhoe loader enquiry — RBE Capital Equip.', ...[...fd.entries()].filter(([, v]) => String(v).trim()).map(([k, v]) => `${labels[k] ?? k}: ${v}`)].join('\n');
+  // Compose the enquiry the way a site engineer would write it, not as a form dump.
+  const summary = (fd: FormData, channel: 'wa' | 'mail') => {
+    const g = (k: string) => String(fd.get(k) ?? '').trim();
+    const work = g('type') && g('type') !== 'Other' ? g('type').toLowerCase() : 'a construction project';
+    const lines = [
+      channel === 'wa' ? 'Hello RBE Capital Equip.,' : 'Hello,',
+      `I would like a rental quote for a backhoe loader for ${work} at ${g('location').replace(/^(near|at|in|around)\s+/i, '')}.`,
+      g('equipment') && g('equipment') !== 'Backhoe loader' ? `Equipment: ${g('equipment')}` : '',
+      g('duration') ? `Duration: ${g('duration')}` : '',
+      g('start') ? `Expected start: ${new Date(g('start') + 'T00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}` : '',
+      g('details') ? `Details: ${g('details')}` : '',
+      '',
+      [g('name'), g('company')].filter(Boolean).join(', '),
+      g('phone'),
+    ];
+    return lines.filter((l, i) => l !== '' || i === 6).join('\n');
+  };
 
   const validate = () => {
     let ok = true;
@@ -151,8 +172,10 @@ const description =
 
   form.querySelector<HTMLAnchorElement>('[data-mail]')!.addEventListener('click', (e) => {
     if (!validate()) { e.preventDefault(); return; }
-    const body = summary(new FormData(form));
-    (e.currentTarget as HTMLAnchorElement).href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Backhoe loader enquiry')}&body=${encodeURIComponent(body)}`;
+    const fd = new FormData(form);
+    const body = summary(fd, 'mail');
+    const subject = `Backhoe loader rental enquiry — ${String(fd.get('location') ?? '').trim()}`;
+    (e.currentTarget as HTMLAnchorElement).href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 
   form.addEventListener('submit', async (e) => {
@@ -169,14 +192,19 @@ const description =
         form.reset();
         status.textContent = 'Thank you — your enquiry has been sent. We will contact you shortly.';
       } catch {
-        status.textContent = 'Sending failed. Please call us or use WhatsApp instead.';
+        status.textContent = `Sending failed. Please WhatsApp ${form.dataset.waDisplay} or email ${form.dataset.email} instead.`;
       } finally {
         btn.disabled = false;
       }
       return;
     }
-    window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(summary(fd))}`, '_blank', 'noopener');
-    status.textContent = 'WhatsApp has opened with your enquiry filled in — press send there.';
+    const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(summary(fd, 'wa'))}`;
+    // Show a tappable link first, so the hand-off still works if a pop-up blocker stops the new tab.
+    status.innerHTML = '';
+    status.append('WhatsApp should open with your enquiry written out — press send there to deliver it. ');
+    const link = Object.assign(document.createElement('a'), { href: url, target: '_blank', rel: 'noopener', textContent: 'Open WhatsApp again' });
+    status.append(link);
+    window.open(url, '_blank', 'noopener');
   });
 </script>
 
@@ -193,8 +221,11 @@ const description =
   .ct__ch > span { display: grid; gap: 2px; }
   .ct__ch b { font-weight: 600; }
   .ct__ch .mono { font-size: .8rem; color: var(--on-dark-2); }
-  .ct__hours { display: flex; align-items: center; gap: 8px; color: var(--on-dark-2); font-size: .78rem; margin-top: 6px; }
-  .ct__hours :global(svg) { width: 16px; }
+  .ct__facts { margin: 28px 0 0; display: grid; gap: 0; border-top: 1px solid var(--line-d); }
+  .ct__facts div { display: grid; grid-template-columns: 150px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-d); font-size: .95rem; }
+  .ct__facts dt { font-family: var(--f-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-dark-2); padding-top: 4px; }
+  .ct__facts dd { margin: 0; }
+  @media (max-width: 520px) { .ct__facts div { grid-template-columns: 1fr; gap: 2px; } }
   .ct__next { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line-d); }
   .ct__next h2 { font-size: 1.3rem; margin-bottom: 16px; }
   .ct__next ol { padding-left: 1.2em; margin: 0 0 16px; color: var(--on-dark-2); }
@@ -219,6 +250,8 @@ const description =
   .fm__foot { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; }
   .fm__alt { font-size: .82rem; color: var(--on-light-2); }
   .fm__alt a { color: inherit; }
+  .fm__how { margin: 14px 0 0; font-size: .82rem; color: var(--on-light-2); }
+  .fm__status a { color: var(--copper-lo); }
   .fm__status { margin: 16px 0 0; font-weight: 500; min-height: 1.5em; }
   @media (max-width: 960px) {
     .ct__grid { grid-template-columns: 1fr; }

@@ -13,9 +13,9 @@ import { breadcrumbs } from '../data/schema';
 import { wa } from '../data/site';
 
 const crumbs = [{ name: 'Kumaon Service Area', href: '/kumaon-service-area/' }];
-const title = 'Backhoe Loader Rental Across Kumaon — Haldwani, Nainital, Almora, Bageshwar | RBE Capital Equip.';
+const title = 'Backhoe Loader Rental Across Kumaon, from Haldwani | RBE Capital Equip.';
 const description =
-  'Backhoe loader deployment across Kumaon: Rudrapur, Pantnagar, Haldwani, Bhimtal, Nainital, Ramgarh, Mukteshwar, Ranikhet, Almora, Bageshwar and Berinag. How terrain, access and season change mobilisation.';
+  'Backhoe loaders deployed from Haldwani to sites across Kumaon: Rudrapur, Nainital, Bhimtal, Mukteshwar, Ranikhet, Almora, Bageshwar and Berinag.';
 const order: Belt[] = ['plains', 'midhills', 'innerhills'];
 const projFor = (slug: string) => projects.filter((p) => p.where.includes(slug)).slice(0, 2);
 const remote = qa('remote');
@@ -24,7 +24,7 @@ const selfDrive = qa('self-drive');
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Service area · Kumaon, Uttarakhand">
     <h1>Across Kumaon — from the Terai <span class="serif">to the high ridges.</span></h1>
-    <p class="lead">Rudrapur and Haldwani sit a few hundred metres above sea level. Mukteshwar is over 2,000 m. The same machine works in both — but getting it there, and keeping it working, is planned differently.</p>
+    <p class="lead">Machines are deployed from Haldwani. Rudrapur and Haldwani sit a few hundred metres above sea level; Mukteshwar is over 2,000 m. The same machine works in both — but getting it there, and keeping it working, is planned differently.</p>
   </PageHero>
 
   <section class="section dark" aria-labelledby="h-map">
@@ -33,7 +33,7 @@ const selfDrive = qa('self-drive');
         <p class="eyebrow"><span class="idx">01</span>Where we deploy</p>
         <h2 id="h-map">Fourteen anchor locations. <span class="serif">Sites around all of them.</span></h2>
         <div class="prose muted" style="margin-top:24px">
-          <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. Our service area is built around the towns where most project work happens, and the project sites around them.</p>
+          <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. RBE Capital Equip. deploys backhoe loaders from Haldwani, at the foot of the hills, to project sites around the towns below. (Haldwani is the deployment base; the head office is in Sector 27C, Faridabad, Haryana.)</p>
           <p>A site does not need to be <em>in</em> one of these towns. If it is a village road above Bageshwar or a resort plot beyond Ramgarh, <a href="/contact/">send the location</a> and we will plan from there.</p>
         </div>
         <ul class="plist" data-plist>
@@ -48,7 +48,7 @@ const selfDrive = qa('self-drive');
     <div class="wrap">
       <div class="elevhead">
         <p class="eyebrow"><span class="idx">02</span>Altitude</p>
-        <h2 id="h-elev">Two thousand metres of difference inside one region.</h2>
+        <h2 id="h-elev">Nearly two thousand metres of difference inside one region.</h2>
         <p class="muted">Altitude brings narrower roads, steeper plots, colder mornings and longer travel time. It is the single best predictor of how much planning a mobilisation needs.</p>
       </div>
       <ElevationProfile />
@@ -87,7 +87,7 @@ const selfDrive = qa('self-drive');
                 <p class="pcard__links">
                   {projFor(p.slug).map((pr) => <a class="inline" href={`/project-solutions/#${pr.id}`}>{pr.title.split(' &')[0].split(',')[0]}</a>)}
                 </p>
-                <a class="pcard__wa" href={wa(`Hello RBE Capital Equip., I need a backhoe loader near ${p.name}. Project: `)} rel="noopener"><Icon name="wa" />Backhoe loader near {p.name}</a>
+                <a class="pcard__wa" href={wa(`Hello RBE Capital Equip., I need a backhoe loader for a project near ${p.name} (${p.district} district).\nType of work:\nStart date / duration:`)} rel="noopener"><Icon name="wa" />Backhoe loader near {p.name}</a>
               </article>
             ))}
           </div>
@@ -121,7 +121,7 @@ const selfDrive = qa('self-drive');
         </ol>
         <div class="btn-row" style="margin-top:36px">
           <a class="btn" href="/contact/">Send your site location <Icon name="arrow" /></a>
-          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., sharing my site location for backhoe loader mobilisation: ')} rel="noopener"><Icon name="wa" />Share a map pin</a>
+          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., sharing my site location for backhoe loader mobilisation (map pin below).\nAccess road:\nType of work:\nStart date / duration:')} rel="noopener"><Icon name="wa" />Share a map pin</a>
         </div>
       </div>
     </div>
@@ -137,11 +137,11 @@ const selfDrive = qa('self-drive');
         <p class="lead" style="max-width:none">Many contracts in Kumaon are won by companies based elsewhere. The work is familiar; the terrain, routes and seasons often are not.</p>
         <ul>
           <li><strong>The plains are the gateway.</strong> Haldwani and Kathgodam are where the hill roads begin. Plan site visits and mobilisation through them.</li>
-          <li><strong>Hill distances are measured in hours, not kilometres.</strong> A move that looks short on a map can take a full day on mountain roads.</li>
+          <li><strong>Hill distances are measured in hours, not kilometres.</strong> A move that looks short on a map can take far longer on mountain roads.</li>
           <li><strong>The monsoon reshapes the programme.</strong> From about June to September, slips and closures are normal. Front-load earthwork and drainage before the rains where you can.</li>
-          <li><strong>Arrange equipment before you need it.</strong> Machines available at short notice are rarely available at short notice at a remote site.</li>
+          <li><strong>Arrange equipment before you need it.</strong> Short-notice availability in the plains does not mean a machine can reach a remote site at short notice.</li>
         </ul>
-        <p>Share your work-order scope, site locations and programme, and we will plan machine availability and mobilisation around it. See <a href="/how-rental-works/">how rental works</a>.</p>
+        <p>Share your work-order scope, site locations and programme, and we will look at machine availability and mobilisation from Haldwani around it. See <a href="/how-rental-works/">how rental works</a>.</p>
       </div>
     </div>
   </section>

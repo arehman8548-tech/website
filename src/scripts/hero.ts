@@ -70,8 +70,14 @@ export function initHero() {
   if (!gl) return;
 
   const load = async () => {
-    const { createScene } = await import('./backhoe/scene');
-    scene = createScene(canvas, { mobile, reduced });
+    try {
+      const { createScene } = await import('./backhoe/scene');
+      scene = await createScene(canvas, { mobile, reduced });
+    } catch {
+      // WebGL context could not be created after all: fall back to the static layout.
+      root.classList.add('hero-static');
+      return;
+    }
     const hud = {
       x: hero.querySelector('[data-r="x"]'),
       boom: hero.querySelector('[data-r="boom"]'),
