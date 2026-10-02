@@ -133,7 +133,7 @@ The facts are stated the same way everywhere, without repeating one paragraph:
 | 404 | Unknown URL → 404 page, noindex ✔ (tested in a browser) |
 | HTTP→HTTPS, www/non-www, 301s | **Host configuration — cannot be set or verified without the real domain and host.** See dependencies |
 
-**Domain:** the repository only had an *assumed* domain (`www.rbecapitalequip.com`, marked "CONFIRM"). It has been removed. `src/data/site-url.mjs` now reads `SITE_URL` from the build environment. Without it the build uses `http://localhost:4321` and prints a warning.
+**Domain:** the production domain is **`https://rbecapitalequip.in`** (apex canonical), set in `src/data/site-url.mjs`. `www.rbecapitalequip.in` 301s to the apex (`public/_redirects` on Netlify, or the host's domain settings elsewhere). `SITE_URL` can still override it at build time.
 
 ---
 
@@ -250,7 +250,7 @@ There are no testimonials, client names, project counts, years in business, cert
 
 ## 10. Remaining dependencies (external only)
 
-1. **Production domain.** Build with `SITE_URL=https://<verified-domain> npm run build`. Until this is set, canonical, Open Graph, sitemap, robots.txt and schema URLs point to `http://localhost:4321`, and the build prints a warning. **Do not deploy a build made without it.**
-2. **Host redirects**, once the domain is known: HTTP→HTTPS, a single www/non-www version, and non-trailing-slash → trailing-slash 301s, configured on the host. They cannot be verified from the repository.
+1. **Production domain.** Set: `https://rbecapitalequip.in`. Canonical, Open Graph, sitemap, robots.txt and schema URLs use it by default.
+2. **Host redirects** on the chosen host: HTTP→HTTPS, www → apex (`public/_redirects` covers this on Netlify), and non-trailing-slash → trailing-slash 301s, configured on the host. They cannot be verified from the repository.
 3. **Field data:** submit the sitemap in Search Console once the site is live, and check real-user Core Web Vitals (CrUX/Search Console) after traffic builds up. The lab numbers above come from a container with no GPU.
 4. **Optional, only if the business confirms:** a Rotoblast Engineering website URL (`site.parent.url`), a form/CRM endpoint (`site.formEndpoint`), an operator policy, service commitments or machine models. Each can then be stated. None is currently claimed.

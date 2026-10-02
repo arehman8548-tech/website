@@ -9,18 +9,20 @@ Static site built with **Astro**, with a lazily-loaded **Three.js** scroll story
 ```bash
 npm install
 npm run dev       # http://localhost:4321
-SITE_URL=https://<verified-domain> npm run build   # static output in dist/
+npm run build     # static output in dist/, URLs on https://rbecapitalequip.in
 npm run preview
 ```
 
-Deploy `dist/` to any static host (Netlify, Cloudflare Pages, Vercel, S3). `public/_headers` sets long-term caching for hashed assets and fonts on hosts that support it.
+Production URL: **https://rbecapitalequip.in** (apex is canonical; `www.` 301s to it).
+
+Deploy `dist/` to a static host (build command `npm run build`, publish directory `dist`). `public/_headers` sets long-term caching for hashed assets and fonts, and `public/_redirects` 301s `www.rbecapitalequip.in` to the apex, on Netlify. On any other host, set the www → apex 301 in the host's domain settings.
 
 ## Where things live
 
 | Path | What |
 |---|---|
 | `src/data/site.ts` | **Business facts** — WhatsApp, emails, deployment base (Haldwani), head office (Sector 27C, Faridabad), optional form endpoint |
-| `src/data/site-url.mjs` | Reads `SITE_URL` at build time for canonical URLs, sitemap, robots.txt and schema. No domain is hard-coded |
+| `src/data/site-url.mjs` | Production domain `https://rbecapitalequip.in` for canonical URLs, Open Graph, sitemap, robots.txt and schema (overridable with `SITE_URL` at build time) |
 | `src/data/geo.ts` | Kumaon locations, districts, terrain belts |
 | `src/data/projects.ts` | Project types (Project Solutions page, home cards) |
 | `src/data/faq.ts` | Knowledge base Q&A + glossary (also feeds FAQPage schema) |

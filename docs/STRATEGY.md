@@ -17,7 +17,7 @@ The site has to answer one buyer question: *"Can these people actually support m
 | Machine deployment base | Haldwani, Uttarakhand (not an office address) |
 | Head office | Sector 27C, Faridabad, Haryana, India (no street/PIN supplied — none invented) |
 | Phone line | None supplied → no Call buttons, no `telephone` in schema |
-| Domain | Not supplied → set `SITE_URL` at build time (see `src/data/site-url.mjs`) |
+| Domain | `https://rbecapitalequip.in` (apex canonical, www → apex 301) — `src/data/site-url.mjs` |
 | Fleet, years, clients, certifications, operator policy, service commitments | Not supplied → not claimed. Specs shown only as labelled general industry ranges |
 
 See `docs/SEO-CONVERSION-AUDIT.md` for the October 2026 audit that replaced the earlier placeholder values.
@@ -86,7 +86,7 @@ Static HTML (Astro), clean trailing-slash URLs, one H1 per page, canonical, Open
 ## 8. Before launch — checklist
 
 - [x] WhatsApp and email set in `src/data/site.ts`
-- [ ] Build with `SITE_URL=https://<verified-domain>`
+- [x] Production domain set: `https://rbecapitalequip.in`
 - [ ] Add form endpoint (or keep WhatsApp handoff)
 - [ ] Only if a genuine public premises exists: consider `LocalBusiness`
 - [ ] If the business confirms an operator policy or service commitments, they can be stated (currently not claimed)

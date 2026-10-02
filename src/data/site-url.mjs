@@ -2,16 +2,15 @@
  * Production origin used for canonical URLs, Open Graph URLs, the sitemap,
  * robots.txt and JSON-LD @ids.
  *
- * The live domain has not been confirmed, so none is hard-coded here.
- * Set it at build time:
+ * The canonical host is the apex domain https://rbecapitalequip.in.
+ * https://www.rbecapitalequip.in must 301 to it (see public/_redirects).
  *
- *   SITE_URL=https://your-verified-domain.example npm run build
+ * SITE_URL can still be overridden at build time (e.g. for a staging host):
  *
- * Without SITE_URL the build still works (for local review), but every
- * canonical/OG/sitemap URL points at http://localhost:4321 and the build
- * prints a warning. Do not deploy a build made without SITE_URL.
+ *   SITE_URL=https://staging.example npm run build
  */
+export const PRODUCTION_URL = 'https://rbecapitalequip.in';
+
 const raw = (typeof process !== 'undefined' && process.env && process.env.SITE_URL) || '';
 
-export const SITE_URL_CONFIGURED = Boolean(raw);
-export const SITE_URL = (raw || 'http://localhost:4321').replace(/\/+$/, '');
+export const SITE_URL = (raw || PRODUCTION_URL).replace(/\/+$/, '');

@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { SITE_URL, SITE_URL_CONFIGURED } from './src/data/site-url.mjs';
+import { SITE_URL, PRODUCTION_URL } from './src/data/site-url.mjs';
 
-if (!SITE_URL_CONFIGURED) {
-  console.warn(`\n[rbe] SITE_URL is not set — canonical, Open Graph, sitemap and schema URLs will use ${SITE_URL}.\n[rbe] Build with SITE_URL=https://<verified-domain> before deploying.\n`);
+if (SITE_URL !== PRODUCTION_URL) {
+  console.warn(`\n[rbe] SITE_URL override in use — canonical, Open Graph, sitemap and schema URLs will use ${SITE_URL}, not ${PRODUCTION_URL}.\n`);
 }
 
 export default defineConfig({
