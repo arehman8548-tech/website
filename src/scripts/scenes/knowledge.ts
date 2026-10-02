@@ -122,7 +122,7 @@ export const create: Factory = async (canvas, ctx) => {
       camera.updateProjectionMatrix();
     },
     render(p) {
-      const f = Math.min(n - 0.0001, p * n);
+      const f = Math.min(n - 0.0001, Math.max(0, p * n));
       const i = Math.floor(f), t = f - i;
       machine.apply(poseFor(i, t));
       drain.set(i === 3 ? 0.4 + t * 0.4 : 0.7);
@@ -134,7 +134,7 @@ export const create: Factory = async (canvas, ctx) => {
       renderer.render(scene, camera);
     },
     hud(p) {
-      return { cap: VIEWS[Math.min(n - 1, Math.floor(p * n))].cap };
+      return { cap: VIEWS[Math.min(n - 1, Math.max(0, Math.floor(p * n)))].cap };
     },
     dispose,
   };
