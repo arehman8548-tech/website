@@ -36,8 +36,8 @@ export const site = {
   hours: '8:00 AM – 8:00 PM',
 
   headOffice: {
-    display: 'Sector 27C, Faridabad, Haryana, India',
-    street: 'Sector 27C',
+    display: 'Plot No 71A, Sector 27C, Faridabad, Haryana, India',
+    street: 'Plot No 71A, Sector 27C',
     locality: 'Faridabad',
     region: 'Haryana',
     country: 'IN',

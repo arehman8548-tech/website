@@ -16,7 +16,7 @@ The site has to answer one buyer question: *"Can these people actually support m
 | WhatsApp | +91 78277 28607 | All WhatsApp links, footer, contact, schema |
 | Sales email | sales@rbecapitalgroup.in | Form fallback, footer, contact, schema |
 | General email | rehman@rbecapitalgroup.in | Footer, contact, Why RBE, schema |
-| Head office | Sector 27C, Faridabad, Haryana, India | Footer, contact, Why RBE, home facts, schema `address` |
+| Head office | Plot No 71A, Sector 27C, Faridabad, Haryana, India | Footer, contact, Why RBE, home facts, schema `address` |
 | Deployment bases | Haldwani; Majkhali (near Ranikhet, Almora district) | Hero, map, service area, FAQ, schema `location` |
 | Domain | https://rbecapitalgroup.in | `src/data/site-url.mjs` |
 | Operator | Always included | Everywhere terms are stated |

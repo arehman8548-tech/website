@@ -90,7 +90,7 @@ The glossary gains **Wet hire / dry hire**, a term that appears across the price
 
 | Type | Where | Status |
 |---|---|---|
-| `Organization` | Every page (`@id …/#org`) | **Corrected:** removed the placeholder `telephone` and the WhatsApp link wrongly placed in `sameAs`. Added `email` (sales), two `ContactPoint`s (sales: email + WhatsApp URL, no phone; direct email), head-office `PostalAddress` limited to what was supplied (Sector 27C, Faridabad, Haryana, IN — no street or PIN). The description states the Haldwani deployment base and the head office separately. `parentOrganization`: Rotoblast Engineering |
+| `Organization` | Every page (`@id …/#org`) | **Corrected:** removed the placeholder `telephone` and the WhatsApp link wrongly placed in `sameAs`. Added `email` (sales), two `ContactPoint`s (sales: email + WhatsApp URL, no phone; direct email), head-office `PostalAddress` limited to what was supplied (Plot No 71A, Sector 27C, Faridabad, Haryana, IN — no PIN). The description states the Haldwani deployment base and the head office separately. `parentOrganization`: Rotoblast Engineering |
 | `LocalBusiness` | — | **Deliberately not used.** There is no verified walk-in premises, and Haldwani is a deployment base, not an office |
 | `WebSite`, `WebPage` | Every page | Unchanged. The Knowledge page node is now one merged `FAQPage` |
 | `BreadcrumbList` | All inner pages | Matches the visible breadcrumbs |
@@ -108,7 +108,7 @@ The facts are stated the same way everywhere, without repeating one paragraph:
 
 - **Entity:** RBE Capital Equip. — **an enterprise of Rotoblast Engineering** (wordmark sub-line, footer, home, Why RBE, Knowledge, schema `parentOrganization`).
 - **Machine deployment base: Haldwani, Uttarakhand** (hero lead, hero chapter 02, home Kumaon section, service-area lead and Haldwani card, footer fact list, contact fact list, FAQ answers, Organization description). It is never called an office.
-- **Head office: Sector 27C, Faridabad, Haryana, India** (footer, contact, Why RBE, service-area intro, FAQ "Where is RBE based?", schema address).
+- **Head office: Plot No 71A, Sector 27C, Faridabad, Haryana, India** (footer, contact, Why RBE, service-area intro, FAQ "Where is RBE based?", schema address).
 - **Service:** backhoe loader rental and deployment, for **serious construction and infrastructure projects**, with a **Kumaon** focus. Target users (contractors, developers, infrastructure/EPC companies, project and procurement teams) appear on the home page, in the FAQ "Who is RBE", in `Service.audience` and in meta descriptions.
 - `areaServed` lists each location with its verified district. District membership was checked against district/official sources: Bhowali, Ramgarh, Mukteshwar, Bhimtal and Haldwani in Nainital district (nainital.nic.in "important places" and tehsils); Rudrapur (district HQ) and Pantnagar in Udham Singh Nagar; Ranikhet in Almora; Berinag in Pithoragarh (Incredible India, Govt. of India). The spelling is **Berinag**.
 

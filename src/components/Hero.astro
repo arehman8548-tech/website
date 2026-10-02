@@ -146,21 +146,24 @@ const chapters = [
   :global(.hero-static) .hero__chap:not(.hero__chap--0) { background: rgba(14,16,18,.82); }
 
   @media (max-width: 860px) {
-    .hero { --len: 470vh; }
+    .hero { --len: 470vh; --abar: calc(60px + env(safe-area-inset-bottom)); } /* fixed quick-contact bar height */
     .hero__shade { background: linear-gradient(0deg, rgba(14,16,18,.95) 0%, rgba(14,16,18,.78) 40%, rgba(14,16,18,.1) 70%, rgba(14,16,18,.35) 100%); }
-    .hero__chap { justify-content: flex-end; padding-bottom: 72px; }
-    .hero__chap--0 { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } /* clear the fixed quick-contact bar */
+    .hero__chap { justify-content: flex-end; padding-bottom: calc(72px + var(--abar)); }
+    .hero__chap--0 { padding-bottom: calc(76px + var(--abar)); }
     .hero__chap--0 .eyebrow { display: none; }
     .hero__chap--0 h1 { font-size: clamp(2rem, 9vw, 2.7rem); }
     .hero__chap--0 .lead { font-size: .95rem; margin-top: 14px; }
     .hero__chap--0 .btn-row { margin-top: 20px; }
-    .hero__chap--0 .btn-row .btn { flex: 1 1 auto; justify-content: center; }
-    .hero__chap--0 .btn-row .btn--ghost, .hero__chap--0 .btn-row .btn--wa { display: none; }
+    .hero__chap--0 .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .hero__chap--0 .btn-row .btn { justify-content: center; }
+    .hero__chap--0 .btn-row .btn:first-child { grid-column: 1 / -1; }
     .hero__scroll { display: none; }
     .hero__card { padding: 0 0 0 18px; }
     .hero__card h2 { font-size: 1.7rem; }
     .hero__hud { display: none; }
-    .hero__rail { bottom: 20px; font-size: .58rem; }
+    .hero__rail { bottom: calc(20px + var(--abar)); font-size: .58rem; }
+    .hero__rail { justify-content: space-between; gap: 8px; }
+    .hero__rail li { flex: none; white-space: nowrap; }
   }
   @media (max-height: 820px) and (min-width: 861px) {
     .hero__chap--0 { padding-bottom: 96px; }
