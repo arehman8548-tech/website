@@ -8,6 +8,11 @@ import { projects } from '../data/projects';
 import { places } from '../data/geo';
 import { qa } from '../data/faq';
 import { breadcrumbs } from '../data/schema';
+import Evidence from '../components/Evidence.astro';
+import { caseFor } from '../data/cases';
+import { photos, type Photo } from '../data/media';
+// One real photograph per case, each used nowhere else on the site.
+const casePhoto: Record<string, Photo> = { 'ranikhet-majkhali': photos.resortSnow, padampuri: photos.padStabilisers };
 import { wa } from '../data/site';
 
 const crumbs = [{ name: 'Project Solutions', href: '/project-solutions/' }];
@@ -69,6 +74,17 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
                 <p class="muted">{p.limits}</p>
               </div>
             </div>
+            {(() => { const c = caseFor(p.id); if (!c) return null; return (
+              <section class="pjc" aria-label={`Real project: ${c.name}`}>
+                <div class="pjc__txt">
+                  <p class="mono pjc__k">On a real site · {c.district} district</p>
+                  <h3>{c.name} — {c.work.toLowerCase()}</h3>
+                  <p class="muted">{c.why}</p>
+                  <p class="pjc__s"><b>RBE supplied:</b> {c.supplied}. <b>Work:</b> {c.scope.join(', ').toLowerCase()}.</p>
+                </div>
+                <div class="pjc__m"><Evidence photo={casePhoto[c.id]} ratio="4 / 5" short sizes="(max-width: 960px) 70vw, 18vw" /></div>
+              </section>
+            ); })()}
             <div class="pj__foot">
               <div class="pj__where">
                 <span class="mono">Common around</span>
@@ -126,6 +142,11 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
   .pj__tasks { list-style: none; margin: 0; padding: 0; counter-reset: t; }
   .pj__tasks li { counter-increment: t; display: grid; grid-template-columns: 32px 1fr; padding: 10px 0; border-bottom: 1px dashed var(--line-l); }
   .pj__tasks li::before { content: counter(t, decimal-leading-zero); font-family: var(--f-mono); font-size: .72rem; color: var(--copper-lo); padding-top: 4px; }
+  .pjc { margin-top: 40px; padding: 24px; background: var(--stone); display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: end; }
+  .pjc__k { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--copper-lo); margin: 0 0 8px; }
+  .pjc h3 { font-size: 1.25rem; margin-bottom: 10px; }
+  .pjc p.muted { margin: 0; }
+  .pjc__s { margin: 12px 0 0; font-size: .92rem; }
   .pj__foot { margin-top: 40px; display: grid; gap: 24px; }
   .pj__foot .mono { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-light-2); margin-bottom: 10px; }
   .pj__where { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -161,6 +182,8 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
     .ps__grid { grid-template-columns: 1fr; grid-template-areas: 'stage' 'body'; gap: 0; }
     .pj__head { grid-template-columns: 44px 1fr; }
     .pj__fig { margin-inline: calc(var(--gutter) * -1); }
+    .pjc { padding: 20px; margin-inline: calc(var(--gutter) * -1); grid-template-columns: 1fr; }
+    .pjc__m { max-width: 320px; }
   }
   @media (max-width: 960px) and (prefers-reduced-motion: no-preference) {
     :global(.js) .ps:not(.is-static) { padding-top: 0; }

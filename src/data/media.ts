@@ -6,7 +6,6 @@
  */
 import type { ImageMetadata } from 'astro';
 import resortPortrait from '../assets/media/resort-himalaya-portrait.jpg';
-import resortWide from '../assets/media/resort-himalaya-wide.jpg';
 import resortSnow from '../assets/media/resort-snow.jpg';
 import padWorking from '../assets/media/padampuri-backhoe-working.jpg';
 import padStabilisers from '../assets/media/padampuri-stabilisers.jpg';
@@ -23,8 +22,6 @@ export interface Photo {
 export const photos = {
   resortPortrait: { src: resortPortrait, project: 'ranikhet-majkhali', taken: 'Dec 2019',
     alt: 'RBE’s JCB backhoe loader on the levelled ground of the Ranikhet–Majkhali resort site, new buildings around it and snow peaks of the Himalaya behind at dusk.' },
-  resortWide: { src: resortWide, project: 'ranikhet-majkhali', taken: 'Dec 2019',
-    alt: 'JCB backhoe loader working between new resort buildings on the Ranikhet–Majkhali site, with the Himalayan range on the horizon.' },
   resortSnow: { src: resortSnow, project: 'ranikhet-majkhali',
     alt: 'The JCB backhoe loader on the Ranikhet–Majkhali resort site during snowfall, cottages and a building under construction behind.' },
   padWorking: { src: padWorking, project: 'padampuri', taken: 'Oct 2021',

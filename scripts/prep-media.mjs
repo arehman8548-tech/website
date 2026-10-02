@@ -7,7 +7,6 @@ const out = 'src/assets/media/';
 const jobs = [
   // Ranikhet–Majkhali resort development
   ['IMG_20191207_171042.jpg', 'resort-himalaya-portrait.jpg', { left: 0, top: 1000, width: 2400, height: 3000 }],
-  ['IMG_20191207_171042.jpg', 'resort-himalaya-wide.jpg', { left: 0, top: 1200, width: 3000, height: 2000 }],
   ['IMG-20200131-WA0004.jpg', 'resort-snow.jpg', { left: 0, top: 0, width: 960, height: 1200 }],
   // Padampuri road widening
   ['IMG_20211011_130603.jpg', 'padampuri-backhoe-working.jpg', { left: 0, top: 0, width: 4000, height: 2667 }],
