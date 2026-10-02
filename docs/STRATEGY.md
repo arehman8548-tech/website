@@ -18,7 +18,7 @@ The site has to answer one buyer question: *"Can these people actually support m
 | General email | rehman@rbecapitalgroup.in | Footer, contact, Why RBE, schema |
 | Head office | Sector 27C, Faridabad, Haryana, India | Footer, contact, Why RBE, home facts, schema `address` |
 | Deployment bases | Haldwani; Majkhali (near Ranikhet, Almora district) | Hero, map, service area, FAQ, schema `location` |
-| Domain | https://rbecapitalequip.in | `src/data/site-url.mjs` |
+| Domain | https://rbecapitalgroup.in | `src/data/site-url.mjs` |
 | Operator | Always included | Everywhere terms are stated |
 | Minimum rental | 15 days (no hourly / daily hire) | Hero, terms, FAQ, form |
 | GST invoice | On request | Terms, FAQ, form field |
@@ -34,7 +34,7 @@ Fleet size · a fixed machine model or spec (JCB, range of models) · 4WD or 2WD
 ## 1b. Round-2 re-audit — what the first build got wrong
 
 - **Unusable contact data.** Every call/WhatsApp/email link was a placeholder; the site could not generate a single enquiry. Fixed.
-- **Wrong domain** in canonical/sitemap/schema (`rbecapitalequip.com`). Fixed to `rbecapitalequip.in`.
+- **Wrong domain** in canonical/sitemap/schema (`rbecapitalequip.com`, then `rbecapitalequip.in`). Fixed to `rbecapitalgroup.in`, the domain actually owned.
 - **No home base.** The site said "across Kumaon" but never where the machine actually comes from — the single most useful fact for "JCB rental Haldwani" searches and for any buyer asking "will it reach my site?". Now Haldwani + Majkhali are stated everywhere it matters.
 - **Unconfirmed practices written as promises** (servicing "timed around your hours", machine "maintenance discipline", "heritage"). Removed or replaced with the four owner-confirmed commitments.
 - **Implied fleet.** Copy said "backhoe loaders" as if a fleet existed. Reworded so no fleet size is implied.
