@@ -1,5 +1,5 @@
 import { site } from './site';
-import { places, districts } from './geo';
+import { allPlaces as places, districts } from './geo';
 
 const ORG_ID = `${site.url}/#org`;
 const SITE_ID = `${site.url}/#website`;

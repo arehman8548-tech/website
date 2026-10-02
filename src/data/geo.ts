@@ -72,8 +72,17 @@ export const places: Place[] = [
   { name: 'Ramgarh', slug: 'ramgarh', district: 'Nainital', belt: 'midhills', lat: 29.44, lon: 79.57, altM: 1790, note: 'Hillside villas and cottages — terracing, retaining walls and access roads.' },
   { name: 'Mukteshwar', slug: 'mukteshwar', district: 'Nainital', belt: 'midhills', lat: 29.47, lon: 79.65, altM: 2280, note: 'High-ridge sites with narrow approach roads and exposed slopes.' },
   { name: 'Ranikhet', slug: 'ranikhet', district: 'Almora', belt: 'innerhills', lat: 29.64, lon: 79.43, altM: 1870, note: 'Cantonment town on ridge terrain, a short drive from RBE’s Majkhali base.' },
-  { name: 'Majkhali', slug: 'majkhali', district: 'Almora', belt: 'innerhills', lat: 29.68, lon: 79.51, altM: 1800, base: true, note: 'RBE deployment base, about 10 km from Ranikhet on the Ranikhet–Almora road.' },
   { name: 'Almora', slug: 'almora', district: 'Almora', belt: 'innerhills', lat: 29.6, lon: 79.66, altM: 1640, note: 'District headquarters on a ridge — urban works and link roads around it.' },
   { name: 'Bageshwar', slug: 'bageshwar', district: 'Bageshwar', belt: 'innerhills', lat: 29.84, lon: 79.77, altM: 1000, note: 'Valley town at the river confluence — road, river-protection and civic works.' },
   { name: 'Berinag', slug: 'berinag', district: 'Pithoragarh', belt: 'innerhills', lat: 29.78, lon: 80.06, altM: 1860, note: 'Remote ridge sites in Pithoragarh district; mobilisation is planned in advance.' },
 ];
+
+/**
+ * RBE's second dispatch base, near Ranikhet. Kept out of `places` because the
+ * Kumaon 3D scene (src/scripts/scenes/kumaon.ts) builds its markers, corridors
+ * and labels from exactly that list.
+ */
+export const majkhali: Place = { name: 'Majkhali', slug: 'majkhali', district: 'Almora', belt: 'innerhills', lat: 29.68, lon: 79.51, altM: 1800, base: true, note: 'RBE deployment base, about 10 km from Ranikhet on the Ranikhet–Almora road.' };
+
+/** Every named location, including the Majkhali base (Ranikhet order kept). */
+export const allPlaces: Place[] = places.flatMap((p) => (p.slug === 'ranikhet' ? [p, majkhali] : [p]));

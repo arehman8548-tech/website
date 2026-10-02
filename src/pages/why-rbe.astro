@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import QuoteBand from '../components/QuoteBand.astro';
 import NextSteps from '../components/NextSteps.astro';
 import Wordmark from '../components/Wordmark.astro';
+import ScrollStage, { type Chapter } from '../components/ScrollStage.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
 import { qa } from '../data/faq';
@@ -24,12 +25,35 @@ const rows = [
   ['Commitment', 'Hourly, between other jobs.', '15-day minimum — set up for project work.'],
 ];
 const breakdown = qa('breakdown');
+
+const chapters: Chapter[] = [
+  { k: 'Requirement', h: 'It starts with your site and your dates.', p: 'Availability is checked against your start date and duration before you commit — not “should be free” on the phone.', still: '/scenes/yard-0.jpg', alt: 'Dawn over an equipment yard at Haldwani, with a light marking a project site on the hills to the north.' },
+  { k: 'Planning', h: 'The machine, stated in the quote.', p: 'Make, model and specification are written into the quote, with the operator arrangement and what travels with it — so you know what is coming to your site.', still: '/scenes/yard-1.jpg', alt: 'A backhoe loader under floodlights on the hardstand in front of the workshop.' },
+  { k: 'Mobilisation', h: 'Route and travel method worked out in advance.', p: 'On its own wheels for nearby sites, or on a low-bed trailer for longer moves into the hills. The route and arrival date are worked out with the quote, not on the day.', still: '/scenes/yard-2.jpg', alt: 'The backhoe loader driving up the ramps onto a low-bed trailer.' },
+  { k: 'Deployment', h: 'Deployed from Haldwani, at the foot of the hills.', p: 'Haldwani is where the plains meet the Kumaon hills, so machines start every move at the gateway to the hill roads.', still: '/scenes/yard-3.jpg', alt: 'The low-bed carrying the backhoe loader along the road out of the yard towards the hills.' },
+  { k: 'Project support', h: 'Downtime terms settled before work starts.', p: 'Who you contact, who attends, expected repair times and servicing — settled at quote stage, so nothing is renegotiated while your site waits.', cta: true, still: '/scenes/yard-4.jpg', alt: 'Aerial view of the road leading from the yard towards the hills and the project site.' },
+];
 ---
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Why RBE">
     <h1>An equipment partner, <span class="serif">not a machine on hire.</span></h1>
     <p class="lead">On a serious project, the rental is the easy part. What matters is whether the machine arrives when planned, keeps working, and whether someone responsible answers when it doesn’t.</p>
   </PageHero>
+
+  <ScrollStage
+    scene="yard"
+    id="from-haldwani"
+    label="From requirement to deployment: a backhoe loader leaves the Haldwani base for a hill site"
+    chapters={chapters}
+    tone="dusk"
+    hud={[
+      { k: 'avail', label: 'Availability', v: 'Checking' },
+      { k: 'check', label: 'Machine', v: 'Pending' },
+      { k: 'route', label: 'Route & transport', v: 'Pending' },
+      { k: 'support', label: 'Support terms', v: 'Pending' },
+    ]}
+    caption="Illustrative scene of a deployment from Haldwani."
+  />
 
   <section class="section paper" aria-labelledby="h-diff">
     <div class="wrap">

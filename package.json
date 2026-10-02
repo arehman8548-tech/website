@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "stills": "node scripts/capture-stills.mjs",
+    "terrain": "node scripts/geo/build-kumaon.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@types/three": "^0.186.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "playwright-core": "^1.56.0"
   }
 }

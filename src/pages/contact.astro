@@ -13,6 +13,7 @@ const description =
 ---
 <Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]}>
   <section class="ct dark">
+    <div class="ct__bg" aria-hidden="true"><img src="/scenes/contact.jpg" alt="" width="1600" height="1000" decoding="async" fetchpriority="low" /></div>
     <div class="wrap ct__grid">
       <div class="ct__side">
         <Breadcrumbs items={crumbs} />
@@ -62,6 +63,12 @@ const description =
           <div class="fm__head">
             <h2>Project enquiry</h2>
             <p class="mono">Fields marked * are required</p>
+          </div>
+          <div class="fm__ready" data-ready>
+            <ol class="fm__seg" aria-hidden="true">
+              <li data-seg="f-name"></li><li data-seg="f-phone"></li><li data-seg="f-loc"></li><li data-seg="f-type" class="opt"></li><li data-seg="f-start" class="opt"></li><li data-seg="f-dur" class="opt"></li>
+            </ol>
+            <p class="mono" data-ready-text>Name, phone and site location are all we need to start.</p>
           </div>
           <div class="fm__grid">
             <div class="f">
@@ -153,6 +160,27 @@ const description =
 </Base>
 
 <script>
+  // Enquiry readiness: required details first, then the ones that make a quote faster.
+  {
+    const ready = document.querySelector<HTMLElement>('[data-ready]');
+    const text = ready?.querySelector<HTMLElement>('[data-ready-text]');
+    const segs = [...(ready?.querySelectorAll<HTMLElement>('[data-seg]') ?? [])];
+    const update = () => {
+      let req = 0, opt = 0;
+      for (const sg of segs) {
+        const el = document.getElementById(sg.dataset.seg!) as HTMLInputElement | HTMLSelectElement | null;
+        const ok = !!el && el.value.trim() !== '' && (!(el instanceof HTMLInputElement) || el.checkValidity());
+        sg.classList.toggle('is-on', ok);
+        if (ok) sg.classList.contains('opt') ? opt++ : req++;
+      }
+      if (!text) return;
+      text.textContent = req < 3 ? `${req} of 3 required details` : opt < 3 ? `Ready to send — add type of work, start date or duration for a faster quote` : 'Ready to send — everything we need for a quote';
+      ready!.classList.toggle('is-ready', req === 3);
+    };
+    document.querySelector('[data-form]')?.addEventListener('input', update);
+    document.querySelector('[data-form]')?.addEventListener('change', update);
+  }
+
   const form = document.querySelector<HTMLFormElement>('[data-form]')!;
   const status = form.querySelector<HTMLElement>('[data-status]')!;
   const endpoint = form.dataset.endpoint ?? '';
@@ -212,7 +240,20 @@ const description =
 </script>
 
 <style>
-  .ct { padding-top: calc(var(--header-h) + clamp(40px, 6vw, 88px)); padding-bottom: clamp(64px, 8vw, 120px); min-height: 100vh; }
+  .ct__bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .ct__bg img { width: 100%; height: 100%; object-fit: cover; opacity: .34; filter: saturate(.85); transform: scale(1.06); animation: ct-drift 60s var(--ease) infinite alternate; }
+  .ct__bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(14,16,18,.55) 0%, rgba(14,16,18,.82) 48%, rgba(14,16,18,.96) 70%), linear-gradient(0deg, var(--ink) 0%, rgba(14,16,18,0) 40%); }
+  @keyframes ct-drift { from { transform: scale(1.06) translate3d(0, 0, 0); } to { transform: scale(1.12) translate3d(-2%, -1%, 0); } }
+  @media (prefers-reduced-motion: reduce) { .ct__bg img { animation: none; } }
+  .ct__grid { position: relative; }
+  .fm__ready { margin: -12px 0 24px; }
+  .fm__seg { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr) repeat(3, .6fr); gap: 4px; margin: 0 0 8px; padding: 0; }
+  .fm__seg li { height: 3px; background: var(--line-l); transition: background .35s var(--ease); }
+  .fm__seg li.is-on { background: var(--copper); }
+  .fm__seg li.opt.is-on { background: var(--steel); }
+  .fm__ready p { margin: 0; font-size: .72rem; color: var(--on-light-2); }
+  .fm__ready.is-ready p { color: var(--copper-lo); }
+  .ct { position: relative; overflow: hidden; padding-top: calc(var(--header-h) + clamp(40px, 6vw, 88px)); padding-bottom: clamp(64px, 8vw, 120px); min-height: 100vh; }
   .ct__grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
   .ct h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); }
   .ct .lead { margin-top: 24px; }

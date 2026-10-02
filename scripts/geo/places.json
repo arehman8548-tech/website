@@ -1,0 +1,136 @@
+{
+ "places": [
+  {
+   "slug": "rudrapur",
+   "lat": 28.98,
+   "lon": 79.4
+  },
+  {
+   "slug": "pantnagar",
+   "lat": 29.02,
+   "lon": 79.49
+  },
+  {
+   "slug": "kashipur",
+   "lat": 29.21,
+   "lon": 78.96
+  },
+  {
+   "slug": "haldwani",
+   "lat": 29.22,
+   "lon": 79.51
+  },
+  {
+   "slug": "kathgodam",
+   "lat": 29.27,
+   "lon": 79.54
+  },
+  {
+   "slug": "bhimtal",
+   "lat": 29.34,
+   "lon": 79.56
+  },
+  {
+   "slug": "bhowali",
+   "lat": 29.38,
+   "lon": 79.52
+  },
+  {
+   "slug": "nainital",
+   "lat": 29.38,
+   "lon": 79.46
+  },
+  {
+   "slug": "ramgarh",
+   "lat": 29.44,
+   "lon": 79.57
+  },
+  {
+   "slug": "mukteshwar",
+   "lat": 29.47,
+   "lon": 79.65
+  },
+  {
+   "slug": "ranikhet",
+   "lat": 29.64,
+   "lon": 79.43
+  },
+  {
+   "slug": "almora",
+   "lat": 29.6,
+   "lon": 79.66
+  },
+  {
+   "slug": "bageshwar",
+   "lat": 29.84,
+   "lon": 79.77
+  },
+  {
+   "slug": "berinag",
+   "lat": 29.78,
+   "lon": 80.06
+  }
+ ],
+ "links": [
+  [
+   "haldwani",
+   "kathgodam"
+  ],
+  [
+   "haldwani",
+   "pantnagar"
+  ],
+  [
+   "pantnagar",
+   "rudrapur"
+  ],
+  [
+   "rudrapur",
+   "kashipur"
+  ],
+  [
+   "kathgodam",
+   "bhimtal"
+  ],
+  [
+   "kathgodam",
+   "nainital"
+  ],
+  [
+   "bhimtal",
+   "bhowali"
+  ],
+  [
+   "nainital",
+   "bhowali"
+  ],
+  [
+   "bhowali",
+   "ramgarh"
+  ],
+  [
+   "ramgarh",
+   "mukteshwar"
+  ],
+  [
+   "bhowali",
+   "ranikhet"
+  ],
+  [
+   "bhowali",
+   "almora"
+  ],
+  [
+   "ranikhet",
+   "almora"
+  ],
+  [
+   "almora",
+   "bageshwar"
+  ],
+  [
+   "bageshwar",
+   "berinag"
+  ]
+ ]
+}

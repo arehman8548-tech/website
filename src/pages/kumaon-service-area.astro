@@ -1,18 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import KumaonMap from '../components/KumaonMap.astro';
-import ElevationProfile from '../components/ElevationProfile.astro';
+import ScrollStage, { type Chapter } from '../components/ScrollStage.astro';
 import QuoteBand from '../components/QuoteBand.astro';
 import NextSteps from '../components/NextSteps.astro';
 import Icon from '../components/Icon.astro';
-import { belts, places, districts, type Belt } from '../data/geo';
+import { belts, places, allPlaces, districts, type Belt } from '../data/geo';
 import { projects } from '../data/projects';
 import { qa } from '../data/faq';
 import { breadcrumbs } from '../data/schema';
 import { wa, site } from '../data/site';
-import Evidence from '../components/Evidence.astro';
-import { photos } from '../data/media';
 
 const crumbs = [{ name: 'Kumaon Service Area', href: '/kumaon-service-area/' }];
 const title = 'JCB / Backhoe Loader on Rent in Haldwani, Ranikhet, Almora, Nainital & Rudrapur | RBE Capital Equip.';
@@ -22,6 +19,17 @@ const order: Belt[] = ['plains', 'midhills', 'innerhills'];
 const projFor = (slug: string) => projects.filter((p) => p.where.includes(slug)).slice(0, 2);
 const remote = qa('remote');
 const selfDrive = qa('self-drive');
+const alt = (slug: string) => places.find((p) => p.slug === slug)!.altM.toLocaleString('en-IN');
+const names = (b: Belt) => places.filter((p) => p.belt === b).map((p) => `${p.name} (${p.altM.toLocaleString('en-IN')} m)`).join(', ');
+
+const chapters: Chapter[] = [
+  { k: 'Deployment base', h: 'Machines leave from Haldwani, where the plains meet the hills.', p: `Haldwani (about ${alt('haldwani')} m) sits at the foot of the Kumaon hills, beside the Kathgodam railhead where the hill roads begin. Sites in the plains and lake district are planned from here; RBE’s second base at Majkhali, near Ranikhet, serves the inner hills.`, still: '/scenes/kumaon-0.jpg', alt: 'Terrain model looking north from Haldwani across the plains to the first ridges of the Kumaon hills.' },
+  { k: 'The network', h: 'From Haldwani, routes into every belt of Kumaon.', p: `Kumaon is the eastern division of Uttarakhand — ${districts.join(', ')} districts. From Haldwani, machines reach the plains, the lake district and the inner hills.`, still: '/scenes/kumaon-1.jpg', alt: 'Aerial view of the Kumaon terrain model with corridors radiating from Haldwani to the towns served.' },
+  { k: 'Terai & plains', h: belts.plains.title + '.', p: `${names('plains')}. ${belts.plains.realities[0]}`, still: '/scenes/kumaon-2.jpg', alt: 'The flat Terai plains around Rudrapur and Pantnagar with corridors to Haldwani.' },
+  { k: 'Mid-hills', h: belts.midhills.title + '.', p: `${names('midhills')}. ${belts.midhills.realities[0]}`, still: '/scenes/kumaon-3.jpg', alt: 'The lake district hills around Bhimtal, Bhowali, Nainital, Ramgarh and Mukteshwar.' },
+  { k: 'Inner hills', h: belts.innerhills.title + '.', p: `${names('innerhills')}. ${belts.innerhills.realities[0]}`, still: '/scenes/kumaon-4.jpg', alt: 'The inner Kumaon hills from Ranikhet and Almora to Bageshwar and Berinag.' },
+  { k: 'Your site', h: 'Nearly two thousand metres of difference in one region.', p: 'Altitude brings narrower roads, steeper plots, colder mornings and longer travel. Send the site location and we will plan how the machine gets there.', cta: true, still: '/scenes/kumaon-5.jpg', alt: 'The whole Kumaon service network seen from above.' },
+];
 ---
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Service area · Kumaon, Uttarakhand">
@@ -38,28 +46,34 @@ const selfDrive = qa('self-drive');
           <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. The machine is dispatched from <a href="#haldwani">Haldwani</a> (Nainital district) and <a href="#majkhali">Majkhali</a> (near Ranikhet, Almora district), and works on project sites around the towns below.</p>
           <p>A site does not need to be <em>in</em> one of these towns. If it is a village road above Bageshwar or a resort plot beyond Ramgarh, <a href="/contact/">send the location</a> and we will plan from there.</p>
         </div>
-        <ul class="plist" data-plist>
-          {places.map((p) => <li><a href={`#${p.slug}`} data-place={p.slug}>{p.name}</a></li>)}
-        </ul>
       </div>
-      <KumaonMap />
+      <ul class="plist" data-plist aria-label="Locations we deploy to">
+        {allPlaces.map((p) => <li><a href={`#${p.slug}`}>{p.name}<span class="mono">{p.altM.toLocaleString('en-IN')} m</span></a></li>)}
+      </ul>
     </div>
   </section>
 
-  <section class="section--tight paper" aria-labelledby="h-elev">
-    <div class="wrap">
-      <div class="elevhead">
-        <p class="eyebrow"><span class="idx">02</span>Altitude</p>
-        <h2 id="h-elev">Two thousand metres of difference inside one region.</h2>
-        <p class="muted">Altitude brings narrower roads, steeper plots, colder mornings and longer travel time. It is the single best predictor of how much planning a mobilisation needs.</p>
-      </div>
-      <ElevationProfile />
+  <ScrollStage
+    scene="kumaon"
+    id="network"
+    label="Three-dimensional terrain model of Kumaon showing the Haldwani deployment base and the service network"
+    chapters={chapters}
+    len={115}
+    caption="Terrain: SRTM elevation, vertical scale ×2.2 · Boundaries: Census of India 2011 districts · Corridors are indicative, not road alignments"
+    ctaWa={wa('Hello RBE Capital Equip., sharing my site location for backhoe loader mobilisation: ')}
+  >
+    <div class="klabels" slot="overlay" aria-hidden="true">
+      {places.map((p) => (
+        <span class={`kl${p.slug === 'haldwani' ? ' kl--base' : ''}`} data-label={p.slug} data-w={Math.max(p.name.length * 9 + 28, p.slug === 'haldwani' ? 170 : 0)}>
+          <b>{p.name}</b><i>{p.slug === 'haldwani' ? 'Machine deployment base' : `${p.altM.toLocaleString('en-IN')} m · ${p.district}`}</i>
+        </span>
+      ))}
     </div>
-  </section>
+  </ScrollStage>
 
   {order.map((b, bi) => {
     const B = belts[b];
-    const ps = places.filter((p) => p.belt === b);
+    const ps = allPlaces.filter((p) => p.belt === b);
     return (
       <section class={`section belt ${bi % 2 ? 'stone' : 'paper'}`} id={`belt-${b}`} aria-labelledby={`h-${b}`}>
         <div class="wrap">
@@ -77,16 +91,6 @@ const selfDrive = qa('self-drive');
               <ul class="belt__list belt__list--w">{B.work.map((r) => <li>{r}</li>)}</ul>
             </div>
           </div>
-          {b === 'innerhills' && (
-            <div class="belt__ev">
-              <Evidence photo={photos.resortWide} ratio="16 / 9" pos="50% 40%" sizes="(max-width: 960px) 100vw, 60vw" />
-              <div>
-                <p class="mono belt__evk">Worked here</p>
-                <p>RBE supplied a JCB backhoe loader and operator to a resort development between Ranikhet and Majkhali — site cutting and levelling on a hill plot, with the snow range on the horizon.</p>
-                <a class="inline" href="/project-solutions/#site-development">Site development in the hills →</a>
-              </div>
-            </div>
-          )}
           <div class="pcards">
             {ps.map((p) => (
               <article class="pcard" id={p.slug} aria-labelledby={`${p.slug}-h`}>
@@ -122,7 +126,6 @@ const selfDrive = qa('self-drive');
           <h3>{selfDrive.q}</h3>
           <p class="muted">{selfDrive.a}</p>
         </div>
-        <div class="dep__ev"><Evidence photo={photos.resortSnow} ratio="4 / 3" pos="50% 40%" tone="dark" sizes="(max-width: 960px) 100vw, 40vw" note="Season is part of the plan: snowfall on the Ranikhet–Majkhali resort site, as well as monsoon slips from June to September." /></div>
       </div>
       <div>
         <ol class="factors">
@@ -135,7 +138,7 @@ const selfDrive = qa('self-drive');
         </ol>
         <div class="btn-row" style="margin-top:36px">
           <a class="btn" href="/contact/">Send your site location <Icon name="arrow" /></a>
-          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., sharing my site location for backhoe loader mobilisation: ')} rel="noopener"><Icon name="wa" />Share a map pin</a>
+          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., sharing my site location for backhoe loader mobilisation (map pin below).\nAccess road:\nType of work:\nStart date / duration:')} rel="noopener"><Icon name="wa" />Share a map pin</a>
         </div>
       </div>
     </div>
@@ -169,20 +172,25 @@ const selfDrive = qa('self-drive');
   <QuoteBand heading="Send the site location. We’ll plan how the machine gets there." />
 </Base>
 
-<script>
-  // Link the location list and the map: hovering or focusing a name lights its point.
-  const pts = document.querySelectorAll<SVGGElement>('.kmap .pt');
-  document.querySelectorAll<HTMLAnchorElement>('[data-plist] a').forEach((a) => {
-    const on = (v: boolean) => pts.forEach((p) => p.classList.toggle('is-hot', v && p.dataset.place === a.dataset.place));
-    a.addEventListener('mouseenter', () => on(true));
-    a.addEventListener('mouseleave', () => on(false));
-    a.addEventListener('focus', () => on(true));
-    a.addEventListener('blur', () => on(false));
-  });
-</script>
 
 <style>
-  .mapgrid { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .mapgrid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: end; }
+  .plist .mono { margin-left: 8px; font-size: .7rem; color: var(--on-dark-2); }
+  .klabels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; display: none; }
+  :global(.stg.is-live) .klabels { display: block; }
+  .kl { position: absolute; left: 0; top: 0; display: grid; gap: 1px; padding: 0 0 22px 0; border-left: 1px solid rgba(238,235,229,.6); opacity: 0; transition: opacity .35s var(--ease); white-space: nowrap; will-change: transform; transform-origin: 0 100%; }
+  .kl { translate: 0 -100%; }
+  .kl.is-on { opacity: .78; }
+  .kl.is-hot { opacity: 1; }
+  .kl b, .kl i { display: block; margin-left: -1px; padding: 0 9px; background: rgba(14,16,18,.62); backdrop-filter: blur(4px); }
+  .kl b { padding-top: 4px; }
+  .kl i { padding-bottom: 5px; }
+  .kl b { font-family: var(--f-display); font-stretch: 110%; font-weight: 650; font-size: .95rem; color: var(--on-dark); text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+  .kl i { font-style: normal; font-family: var(--f-mono); font-size: .62rem; letter-spacing: .06em; color: var(--on-dark-2); text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+  .kl--base { border-left-color: var(--copper-hi); }
+  .kl--base b { font-size: 1.15rem; }
+  .kl--base i { color: var(--copper-hi); text-transform: uppercase; letter-spacing: .12em; }
+  @media (max-width: 860px) { .kl b { font-size: .8rem; } .kl i { display: none; } .kl--base i { display: block; font-size: .55rem; } }
   .mapgrid h2 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); }
   .plist { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .plist a { display: inline-block; padding: 6px 12px; border: 1px solid var(--line-d); text-decoration: none; font-size: .9rem; transition: border-color .2s, color .2s; }
@@ -213,10 +221,6 @@ const selfDrive = qa('self-drive');
   .pcard__wa { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-l); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: .88rem; font-weight: 600; color: #1f7a4d; }
   .pcard__wa :global(svg) { width: 16px; }
   .pcard__wa:hover { color: #23905a; }
-  .belt__ev { display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px; align-items: end; margin-bottom: 40px; }
-  .belt__evk { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--copper-lo); margin: 0 0 10px; }
-  .belt__ev .inline { display: inline-block; margin-top: 8px; font-weight: 500; }
-  .dep__ev { margin-top: 32px; }
   .dep { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 6vw, 96px); }
   .dep h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
   .factors { list-style: none; counter-reset: f; margin: 0; padding: 0; border-top: 1px solid var(--line-d); }
@@ -227,5 +231,5 @@ const selfDrive = qa('self-drive');
   .out { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(32px, 6vw, 96px); }
   .out h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
   .out li { margin-bottom: 14px; }
-  @media (max-width: 960px) { .mapgrid, .elevhead, .belt__grid, .dep, .out, .belt__ev { grid-template-columns: 1fr; } }
+  @media (max-width: 960px) { .mapgrid, .elevhead, .belt__grid, .dep, .out { grid-template-columns: 1fr; } }
 </style>

@@ -25,6 +25,7 @@ import {
   Object3D,
   Quaternion,
   Shape,
+  SphereGeometry,
   Vector2,
   Vector3,
 } from 'three';
@@ -235,6 +236,19 @@ function makeWheel(r: number, w: number, rimR: number, lugs: number, mats: Mats)
   return g;
 }
 
+/** Lumpy half-dome used for material carried in the buckets. */
+function heap() {
+  const g = new SphereGeometry(1, 14, 6, 0, Math.PI * 2, 0, Math.PI / 2);
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+    const n = 0.85 + 0.3 * Math.abs(Math.sin(x * 7.1 + z * 5.3) * Math.cos(z * 6.7 - y * 3.1));
+    p.setXYZ(i, x * n, y * n, z * n);
+  }
+  g.computeVertexNormals();
+  return g;
+}
+
 /* ------------------------------------------------------------------ */
 /* Buckets                                                             */
 /* ------------------------------------------------------------------ */
@@ -302,6 +316,15 @@ export interface Pose {
   swing: number; // rad
   stab: number; // 0 stowed .. 1 deployed
   pitch: number; // body pitch from acceleration
+  /* optional — for scenes where the machine drives freely over a site */
+  z?: number; // lateral position (m)
+  y?: number; // ground height under the machine (m)
+  heading?: number; // rad about Y; 0 = facing +X
+  steer?: number; // front-wheel steer angle (rad)
+  odo?: number; // signed distance travelled, drives wheel roll (defaults to x)
+  tilt?: number; // whole-machine pitch on a slope (rad, + = nose up)
+  loaderFill?: number; // 0..1 material heaped in the loader bucket
+  hoeFill?: number; // 0..1 material in the backhoe bucket
 }
 
 export function buildBackhoe(mats: Mats) {
@@ -405,14 +428,19 @@ export function buildBackhoe(mats: Mats) {
 
   /* ---- wheels ---- */
   const wheels: { g: Group; r: number }[] = [];
+  const knuckles: Group[] = [];
   for (const z of [-0.97, 0.97]) {
     const rw = makeWheel(R_REAR, 0.46, 0.4, 22, mats);
     rw.position.set(X_REAR, R_REAR, z);
     root.add(rw);
     wheels.push({ g: rw, r: R_REAR });
+    // front wheels hang on steering knuckles
+    const kn = new Group();
+    kn.position.set(X_FRONT, R_FRONT, z * 0.86);
+    root.add(kn);
+    knuckles.push(kn);
     const fw = makeWheel(R_FRONT, 0.32, 0.28, 18, mats);
-    fw.position.set(X_FRONT, R_FRONT, z * 0.86);
-    root.add(fw);
+    kn.add(fw);
     wheels.push({ g: fw, r: R_FRONT });
   }
 
@@ -436,6 +464,11 @@ export function buildBackhoe(mats: Mats) {
   const lBucket = makeLoaderBucket(mats);
   lBucket.position.copy(bucketPin);
   loader.add(lBucket);
+  const soilMat = new MeshStandardMaterial({ color: new Color('#6b5240'), roughness: 1, flatShading: true });
+  const lFill = new Mesh(heap(), soilMat);
+  lFill.position.set(0.36, -0.46, 0);
+  lFill.scale.set(0.5, 0.45, 1.05);
+  lBucket.add(lFill);
 
   /* ---- backhoe ---- */
   const hoe = new Group(); // local +X points backward
@@ -466,6 +499,12 @@ export function buildBackhoe(mats: Mats) {
   const hBucket = makeHoeBucket(mats);
   hBucket.position.set(DIP_L, 0, 0);
   dipper.add(hBucket);
+  const hFill = new Mesh(heap(), soilMat);
+  // dome faces out of the bucket mouth
+  hFill.position.set(0.34, -0.18, 0);
+  hFill.rotation.z = 2.52;
+  hFill.scale.set(0.3, 0.26, 0.27);
+  hBucket.add(hFill);
 
   /* ---- stabilisers ---- */
   const stabs: Group[] = [];
@@ -502,8 +541,16 @@ export function buildBackhoe(mats: Mats) {
 
   const STAB_STOW = 2.75; // leg folded up and slightly outboard; swings outward, never through the body
   function apply(p: Pose) {
-    root.position.x = p.x;
-    for (const w of wheels) w.g.rotation.z = -p.x / w.r;
+    root.position.set(p.x, p.y ?? 0, p.z ?? 0);
+    root.rotation.set(0, p.heading ?? 0, p.tilt ?? 0, 'YXZ');
+    const odo = p.odo ?? p.x;
+    for (const w of wheels) w.g.rotation.z = -odo / w.r;
+    for (const k of knuckles) k.rotation.y = p.steer ?? 0;
+    const lf = p.loaderFill ?? 0, hf = p.hoeFill ?? 0;
+    lFill.visible = lf > 0.02;
+    lFill.scale.set(0.5, 0.45 * lf, 1.05);
+    hFill.visible = hf > 0.02;
+    hFill.scale.set(0.3, 0.26 * hf, 0.27);
     // stabilisers: rotate about X so the leg swings outward and down
     const deployAngle = 0.42;
     for (const s of stabs) {
@@ -525,7 +572,47 @@ export function buildBackhoe(mats: Mats) {
     for (const r of rams) r.update();
   }
 
-  return { root, body, apply, hoeBucketTip: hBucket };
+  const TIP = new Vector3(0.7, -0.47, 0);
+  const EDGE = new Vector3(0.9, -0.5, 0);
+  return {
+    root,
+    body,
+    apply,
+    hoeBucketTip: hBucket,
+    /** World position of the backhoe bucket teeth. */
+    hoeTip: (out = new Vector3()) => hBucket.localToWorld(out.copy(TIP)),
+    /** World position of the loader bucket cutting edge. */
+    loaderEdge: (out = new Vector3()) => lBucket.localToWorld(out.copy(EDGE)),
+  };
 }
 
 export type Backhoe = ReturnType<typeof buildBackhoe>;
+
+/* ------------------------------------------------------------------ */
+/* Backhoe inverse kinematics                                          */
+/* ------------------------------------------------------------------ */
+/** Linkage geometry in the machine frame (metres): boom pivot sits 2.40 m behind and 1.42 m above the root. */
+export const HOE = { back: 2.4, up: 1.42, L1: 2.55, L2: 1.9, tip: [0.7, -0.47] as const };
+
+/**
+ * Solve boom/dipper/bucket angles so the bucket teeth reach a point `back`
+ * metres behind the machine origin and `h` metres above its ground, with the
+ * bucket held at world angle `phi` (−π/2: teeth straight down; −π: curled
+ * full; ~0: dumping). Out-of-reach targets are clamped to the envelope.
+ */
+export function hoeIK(back: number, h: number, phi: number, lift = 0) {
+  const [tx, ty] = HOE.tip;
+  // bucket pin = tip − R(phi)·tip
+  const px = back - HOE.back - (tx * Math.cos(phi) - ty * Math.sin(phi));
+  const py = h - HOE.up - lift - (tx * Math.sin(phi) + ty * Math.cos(phi));
+  const { L1, L2 } = HOE;
+  let d2 = px * px + py * py;
+  const maxR = (L1 + L2) * 0.995, minR = Math.abs(L1 - L2) * 1.01;
+  let x = px, y = py;
+  const r = Math.sqrt(d2);
+  if (r > maxR || r < minR) { const k = (r > maxR ? maxR : minR) / (r || 1); x *= k; y *= k; d2 = x * x + y * y; }
+  const c = Math.min(1, Math.max(-1, (d2 - L1 * L1 - L2 * L2) / (2 * L1 * L2)));
+  const dipper = -Math.acos(c); // elbow up: boom rises, dipper hangs down
+  const boom = Math.atan2(y, x) - Math.atan2(L2 * Math.sin(dipper), L1 + L2 * Math.cos(dipper));
+  return { boom, dipper, hoeBucket: phi - boom - dipper };
+}

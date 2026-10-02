@@ -75,48 +75,6 @@ export const faq: FaqGroup[] = [
     ],
   },
   {
-    id: 'local',
-    title: 'Haldwani, Ranikhet and the rest of Kumaon',
-    intro: 'Where the machine comes from, and which sites it can reach.',
-    items: [
-      {
-        id: 'haldwani',
-        q: 'Do you rent backhoe loaders in Haldwani?',
-        a: 'Yes. Haldwani is one of RBE’s two deployment bases, so projects in and around Haldwani, Kathgodam, Lalkuan and the Udham Singh Nagar plains are a short move. Rentals are for 15 days or more and always include an operator — RBE does not take hourly or one-day jobs.',
-        html: 'Yes. Haldwani is one of RBE’s two deployment bases, so projects in and around Haldwani, Kathgodam, Lalkuan and the Udham Singh Nagar plains are a short move. Rentals are for <a href="/knowledge/#minimum">15 days or more</a> and always include an operator — RBE does not take hourly or one-day jobs. See <a href="/kumaon-service-area/#haldwani">Haldwani</a> and the <a href="/kumaon-service-area/#belt-plains">plains belt</a>.',
-      },
-      {
-        id: 'ranikhet',
-        q: 'Can I get a backhoe loader near Ranikhet or Almora without bringing it up from the plains?',
-        a: 'Yes. RBE’s second base is at Majkhali, about 10 km from Ranikhet on the Ranikhet–Almora road. For sites around Ranikhet, Almora, Dwarahat or further into the inner hills, the machine starts already in the hills instead of climbing up from Haldwani.',
-        html: 'Yes. RBE’s second base is at <a href="/kumaon-service-area/#majkhali">Majkhali</a>, about 10 km from Ranikhet on the Ranikhet–Almora road. For sites around Ranikhet, Almora, Dwarahat or further into the inner hills, the machine starts already in the hills instead of climbing up from Haldwani. See the <a href="/kumaon-service-area/#belt-innerhills">inner hills</a>.',
-      },
-      {
-        id: 'where',
-        q: 'Which areas of Kumaon do you cover?',
-        a: 'Projects across Kumaon’s six districts — Nainital, Udham Singh Nagar, Almora, Bageshwar, Pithoragarh and Champawat. That includes the plains around Haldwani, Rudrapur and Kashipur; the lake and mid-hill area around Bhimtal, Bhowali, Nainital, Ramgarh and Mukteshwar; and the inner hills around Ranikhet, Almora, Bageshwar and Berinag. The machine is dispatched from Haldwani or Majkhali (Ranikhet); remote sites are planned case by case.',
-        html: 'Projects across Kumaon’s six districts — Nainital, Udham Singh Nagar, Almora, Bageshwar, Pithoragarh and Champawat. That includes the plains around Haldwani, Rudrapur and Kashipur; the lake and mid-hill area around Bhimtal, Bhowali, Nainital, Ramgarh and Mukteshwar; and the inner hills around Ranikhet, Almora, Bageshwar and Berinag. The machine is dispatched from Haldwani or Majkhali (Ranikhet); remote sites are planned case by case. See the <a href="/kumaon-service-area/">Kumaon service area</a>.',
-      },
-      {
-        id: 'outside',
-        q: 'We are a contractor from outside Uttarakhand. Can you support our Kumaon project?',
-        a: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing.',
-        html: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing. Read <a href="/kumaon-service-area/#outside">working in Kumaon from outside the state</a>.',
-      },
-      {
-        id: 'remote',
-        q: 'Can a backhoe loader be deployed to a remote construction site in Kumaon?',
-        a: 'Yes, with planning. For remote sites — around Bageshwar, Berinag or deep in Almora district, for example — RBE needs the exact location, the condition of the access road (width, bends, gradient, last stretch), where the machine will park overnight, and how diesel and the operator’s stay will be arranged. With that, mobilisation is planned before the start date instead of being worked out on the road.',
-        html: 'Yes, with planning. For remote sites — around Bageshwar, Berinag or deep in Almora district, for example — RBE needs the exact location, the condition of the access road (width, bends, gradient, last stretch), where the machine will park overnight, and how diesel and the operator’s stay will be arranged. With that, mobilisation is planned before the start date instead of being worked out on the road. See <a href="/kumaon-service-area/#deployment">deployment planning</a>.',
-      },
-      {
-        id: 'self-drive',
-        q: 'Does a backhoe loader travel to site on its own wheels or on a trailer?',
-        a: 'Both are common. A backhoe loader is road-going, so it is often driven over short and moderate distances. For longer moves, or where timing and road conditions make it sensible, it goes on a trailer. Which one applies to your site is confirmed as part of the mobilisation plan.',
-      },
-    ],
-  },
-  {
     id: 'terrain',
     title: 'Terrain and machine capability',
     intro: 'What site engineers want to know before they plan the work.',
@@ -155,6 +113,48 @@ export const faq: FaqGroup[] = [
         id: 'monsoon',
         q: 'Can backhoe loaders work in Kumaon during the monsoon?',
         a: 'The machine can work, but the site and the roads decide. From roughly June to September, landslides can close hill roads, soft ground limits where a machine can safely stand, and drainage work becomes urgent. Mobilise before the heavy rains where possible, keep schedule buffer for road closures, and prioritise drainage and slip clearance during the season.',
+      },
+    ],
+  },
+  {
+    id: 'local',
+    title: 'Haldwani, Ranikhet and the rest of Kumaon',
+    intro: 'Where the machine comes from, and which sites it can reach.',
+    items: [
+      {
+        id: 'haldwani',
+        q: 'Do you rent backhoe loaders in Haldwani?',
+        a: 'Yes. Haldwani is one of RBE’s two deployment bases, so projects in and around Haldwani, Kathgodam, Lalkuan and the Udham Singh Nagar plains are a short move. Rentals are for 15 days or more and always include an operator — RBE does not take hourly or one-day jobs.',
+        html: 'Yes. Haldwani is one of RBE’s two deployment bases, so projects in and around Haldwani, Kathgodam, Lalkuan and the Udham Singh Nagar plains are a short move. Rentals are for <a href="/knowledge/#minimum">15 days or more</a> and always include an operator — RBE does not take hourly or one-day jobs. See <a href="/kumaon-service-area/#haldwani">Haldwani</a> and the <a href="/kumaon-service-area/#belt-plains">plains belt</a>.',
+      },
+      {
+        id: 'ranikhet',
+        q: 'Can I get a backhoe loader near Ranikhet or Almora without bringing it up from the plains?',
+        a: 'Yes. RBE’s second base is at Majkhali, about 10 km from Ranikhet on the Ranikhet–Almora road. For sites around Ranikhet, Almora, Dwarahat or further into the inner hills, the machine starts already in the hills instead of climbing up from Haldwani.',
+        html: 'Yes. RBE’s second base is at <a href="/kumaon-service-area/#majkhali">Majkhali</a>, about 10 km from Ranikhet on the Ranikhet–Almora road. For sites around Ranikhet, Almora, Dwarahat or further into the inner hills, the machine starts already in the hills instead of climbing up from Haldwani. See the <a href="/kumaon-service-area/#belt-innerhills">inner hills</a>.',
+      },
+      {
+        id: 'where',
+        q: 'Which areas of Kumaon do you cover?',
+        a: 'Projects across Kumaon’s six districts — Nainital, Udham Singh Nagar, Almora, Bageshwar, Pithoragarh and Champawat. That includes the plains around Haldwani, Rudrapur and Kashipur; the lake and mid-hill area around Bhimtal, Bhowali, Nainital, Ramgarh and Mukteshwar; and the inner hills around Ranikhet, Almora, Bageshwar and Berinag. The machine is dispatched from Haldwani or Majkhali (Ranikhet); remote sites are planned case by case.',
+        html: 'Projects across Kumaon’s six districts — Nainital, Udham Singh Nagar, Almora, Bageshwar, Pithoragarh and Champawat. That includes the plains around Haldwani, Rudrapur and Kashipur; the lake and mid-hill area around Bhimtal, Bhowali, Nainital, Ramgarh and Mukteshwar; and the inner hills around Ranikhet, Almora, Bageshwar and Berinag. The machine is dispatched from Haldwani or Majkhali (Ranikhet); remote sites are planned case by case. See the <a href="/kumaon-service-area/">Kumaon service area</a>.',
+      },
+      {
+        id: 'outside',
+        q: 'We are a contractor from outside Uttarakhand. Can you support our Kumaon project?',
+        a: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing.',
+        html: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing. Read <a href="/kumaon-service-area/#outside">working in Kumaon from outside the state</a>.',
+      },
+      {
+        id: 'remote',
+        q: 'Can a backhoe loader be deployed to a remote construction site in Kumaon?',
+        a: 'Yes, with planning. For remote sites — around Bageshwar, Berinag or deep in Almora district, for example — RBE needs the exact location, the condition of the access road (width, bends, gradient, last stretch), where the machine will park overnight, and how diesel and the operator’s stay will be arranged. With that, mobilisation is planned before the start date instead of being worked out on the road.',
+        html: 'Yes, with planning. For remote sites — around Bageshwar, Berinag or deep in Almora district, for example — RBE needs the exact location, the condition of the access road (width, bends, gradient, last stretch), where the machine will park overnight, and how diesel and the operator’s stay will be arranged. With that, mobilisation is planned before the start date instead of being worked out on the road. See <a href="/kumaon-service-area/#deployment">deployment planning</a>.',
+      },
+      {
+        id: 'self-drive',
+        q: 'Does a backhoe loader travel to site on its own wheels or on a trailer?',
+        a: 'Both are common. A backhoe loader is road-going, so it is often driven over short and moderate distances. For longer moves, or where timing and road conditions make it sensible, it goes on a trailer. Which one applies to your site is confirmed as part of the mobilisation plan.',
       },
     ],
   },

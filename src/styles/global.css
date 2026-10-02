@@ -206,3 +206,6 @@ h1 .serif, h2 .serif { font-size: 1.08em; line-height: 0.9; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .js .rv { opacity: 1; transform: none; }
 }
+
+/* Still capture mode (?capture): hide page chrome so only the scene is rendered */
+.capture .hdr, .capture .abar { display: none !important; }

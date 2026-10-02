@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import QuoteBand from '../components/QuoteBand.astro';
 import NextSteps from '../components/NextSteps.astro';
 import Icon from '../components/Icon.astro';
+import ScrollStage, { type Chapter } from '../components/ScrollStage.astro';
 import { breadcrumbs } from '../data/schema';
 import { tel, wa, site } from '../data/site';
 import { qa } from '../data/faq';
@@ -21,6 +22,16 @@ const steps = [
   { t: 'Deployment', who: 'RBE + your site team', d: 'The machine and its RBE operator arrive and start work. Your site contact and the operator agree the daily plan.', out: 'Work underway.' },
   { t: 'Support & close-out', who: 'RBE', d: 'One named contact through the rental, the agreed breakdown process if anything stops, and an extension or return at the end.', out: 'One person accountable until the job is done.' },
 ];
+const out = (who: string, o: string) => `<p class="stg-meta"><span>${who}</span> → ${o}</p>`;
+const chapters: Chapter[] = [
+  { span: 1, k: 'Requirement', h: 'Your site, your work, your dates.', html: `<p>${steps[0].d}</p>${out(steps[0].who, steps[0].out)}`, still: '/scenes/journey-0.jpg', alt: 'A levelled hillside plot at the top of a winding road, marked out with pegs and string lines and a site pin.' },
+  { span: 1.1, k: 'Site information', h: 'How the machine reaches and works on your site.', html: `<p>${steps[1].d}</p>${out(steps[1].who, steps[1].out)}`, still: '/scenes/journey-1.jpg', alt: 'An aerial view down the switchback access road, traced from the plot to the foot of the hill.' },
+  { span: 0.8, k: 'Machine & terms', h: 'The machine and the terms, in the quote.', html: `<p>${steps[2].d}</p>${out(steps[2].who, steps[2].out)}`, still: '/scenes/journey-2.jpg', alt: 'The backhoe loader at the foot of the hill road, ready to move.' },
+  { span: 1.65, k: 'Mobilisation', h: 'Out from Haldwani, on a planned route.', html: `<p>${steps[3].d}</p>${out(steps[3].who, steps[3].out)}`, still: '/scenes/journey-3.jpg', alt: 'The backhoe loader climbing a hairpin bend on the hill road.' },
+  { span: 0.55, k: 'Arrival', h: 'Into the plot. Stabilisers down.', p: 'The machine arrives on the agreed date and sets up where the site plan said it would work and park.', still: '/scenes/journey-4.jpg', alt: 'The backhoe loader on the plot with its stabilisers lowered.' },
+  { span: 1.0, k: 'Work begins', h: 'Daily plan agreed, hours on record.', html: `<p>${steps[4].d}</p>${out(steps[4].who, steps[4].out)}`, still: '/scenes/journey-5.jpg', alt: 'The backhoe digging a foundation trench along the setting-out lines, spoil beside it.' },
+  { span: 0.9, k: 'Support', h: 'Through the rental, to extension or return.', html: `<p>${steps[5].d}</p>${out(steps[5].who, steps[5].out)}`, cta: true, still: '/scenes/journey-6.jpg', alt: 'A wide view of the hill road and the working site, with the route back down traced.' },
+];
 const quoteInfo = qa('quote-info');
 const quick = qa('how-quickly');
 ---
@@ -30,24 +41,29 @@ const quick = qa('how-quickly');
     <p class="lead">Six steps, each with a clear outcome. Nothing is dispatched to your site until availability, access and terms are settled in writing.</p>
   </PageHero>
 
-  <section class="section paper" aria-labelledby="h-steps">
-    <div class="wrap">
-      <h2 id="h-steps" class="sr-only">The six steps</h2>
-      <ol class="steps">
-        {steps.map((s, i) => (
-          <li class="step rv">
-            <div class="step__n"><span>{String(i + 1).padStart(2, '0')}</span></div>
-            <div class="step__body">
-              <p class="mono step__who">{s.who}</p>
-              <h3>{s.t}</h3>
-              <p>{s.d}</p>
-            </div>
-            <div class="step__out"><span class="mono">Outcome</span><p>{s.out}</p></div>
-          </li>
-        ))}
-      </ol>
+  <ScrollStage
+    scene="journey"
+    id="steps"
+    label="The journey of one rental, from the first message to a working machine on a hill site"
+    chapters={chapters}
+    len={105}
+    hud={[
+      { k: 'travel', label: 'Road travelled', v: '0 m' },
+      { k: 'climb', label: 'Height gained', v: '0 m' },
+      { k: 'terms', label: 'Terms', v: 'Pending' },
+      { k: 'hours', label: 'Hour meter', v: '—' },
+    ]}
+    caption="Illustrative hill site. Distances and heights read from the scene."
+    ctaWa={wa('Site location:\nType of work:\nStart date:\nDuration:\nWorking hours per day:')}
+  >
+    <div class="jlabels" slot="overlay" aria-hidden="true">
+      <span class="jl" data-label="work">Working &amp; parking area</span>
+      <span class="jl" data-label="last">Last-mile surface</span>
+      <span class="jl" data-label="bends">Sharp bends</span>
+      <span class="jl" data-label="width">Road width</span>
+      <span class="jl" data-label="route">Access route</span>
     </div>
-  </section>
+  </ScrollStage>
 
   <section class="section dark" id="fast-quote" aria-labelledby="h-fast">
     <div class="wrap fast">
@@ -92,14 +108,12 @@ const quick = qa('how-quickly');
 </Base>
 
 <style>
-  .steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-l); }
-  .step { display: grid; grid-template-columns: 160px 1.4fr 1fr; gap: clamp(20px, 4vw, 64px); padding: clamp(28px, 4vw, 48px) 0; border-bottom: 1px solid var(--line-l); align-items: start; }
-  .step__n span { font-family: var(--f-display); font-weight: 800; font-stretch: 125%; font-size: clamp(3rem, 6vw, 5.5rem); line-height: .8; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1px var(--copper); }
-  .step__who { font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-light-2); margin-bottom: 8px; }
-  .step h3 { font-size: clamp(1.4rem, 2.4vw, 2rem); margin-bottom: 14px; }
-  .step__out { padding: 18px 20px; background: var(--stone); border-left: 2px solid var(--copper); }
-  .step__out .mono { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--copper-lo); }
-  .step__out p { margin: 6px 0 0; font-weight: 500; }
+  .jlabels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; display: none; }
+  :global(.stg.is-live) .jlabels { display: block; }
+  .jl { position: absolute; left: 0; top: 0; translate: -50% -100%; padding: 6px 10px; margin-top: -10px; background: rgba(14,16,18,.7); backdrop-filter: blur(4px); border-bottom: 2px solid var(--copper-hi); font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--on-dark); white-space: nowrap; opacity: 0; transition: opacity .4s var(--ease); }
+  .jl.is-on { opacity: 1; }
+  :global(.stg-meta) { margin-top: 14px !important; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .04em; color: var(--on-dark-2); }
+  :global(.stg-meta span) { color: var(--copper-hi); text-transform: uppercase; letter-spacing: .1em; }
   .fast { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
   .fast h2, .time h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
   .five { list-style: none; counter-reset: v; margin: 0; padding: 0; border-top: 1px solid var(--line-d); }
@@ -109,7 +123,6 @@ const quick = qa('how-quickly');
   .five span { color: var(--on-dark-2); font-size: .92rem; }
   .time { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); }
   @media (max-width: 960px) {
-    .step { grid-template-columns: 1fr; gap: 16px; }
     .fast, .time { grid-template-columns: 1fr; }
   }
 </style>
