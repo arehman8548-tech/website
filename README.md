@@ -13,7 +13,7 @@ npm run build     # static output in dist/
 npm run preview
 ```
 
-Deploy `dist/` to any static host (Netlify, Cloudflare Pages, Vercel, S3). `public/_headers` sets long-term caching for hashed assets and fonts on hosts that support it.
+Deployed as a static-assets-only Cloudflare Worker (`wrangler.jsonc`: serves `dist/`, custom 404, automatic trailing slashes) via Workers Builds — build command `npm run build`, deploy command `npx wrangler deploy`. `public/_headers` sets long-term caching for hashed assets and fonts. The www → apex 301 is a Cloudflare Redirect Rule, not a repo file (`_redirects` cannot redirect by hostname).
 
 ## Where things live
 

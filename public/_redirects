@@ -1,3 +1,0 @@
-# Canonical host is the apex. Send www (and plain-HTTP www) there with a 301.
-http://www.rbecapitalequip.in/*  https://rbecapitalequip.in/:splat  301!
-https://www.rbecapitalequip.in/* https://rbecapitalequip.in/:splat  301!
