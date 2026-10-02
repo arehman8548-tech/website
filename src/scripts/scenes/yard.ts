@@ -4,15 +4,20 @@
  *  0 Requirement     dawn over the yard; a site beacon on the hills to the north
  *  1 Planning        the machine for the job, under the floodlights
  *  2 Mobilisation    ramps down, machine drives onto the low-bed, ramps up
- *  3 Deployment      the low-bed leaves through the gate for the hills
- *  4 Project support the camera rises: the route ahead to the site, terms settled
+ *  3 Deployment      the low-bed leaves through the gate and takes the road for the hills
+ *  4 Project support the camera rises: the road climbing ahead to the site, terms settled
+ *
+ * The dispatch road is one 3D centreline (plan + grade). The terrain is cut and
+ * filled to its bench, the truck keeps to the left lane, and the articulated rig
+ * is placed from its axle contact points on that lane, so wheels, chassis and
+ * load follow the road's curvature and climb.
  *
  * Only what RBE states on the site is shown: no inspection routine, fleet size
  * or service-vehicle commitments are implied.
  */
-import { AdditiveBlending, BoxGeometry, Color, CylinderGeometry, FogExp2, Group, Mesh, MeshStandardMaterial, PerspectiveCamera, ShaderMaterial, SphereGeometry, SpotLight, Vector3 } from 'three';
+import { AdditiveBlending, BoxGeometry, CatmullRomCurve3, Color, CylinderGeometry, FogExp2, Group, InstancedBufferAttribute, InstancedMesh, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, ShaderMaterial, SphereGeometry, SpotLight, Vector3 } from 'three';
 import {
-  addGrain, clamp, createRenderer, Dust, fbm, hash, heightfield, lerp, makeCones, makeForest, makeLights, makeRidges, makeRoad, makeSky, orbit, pathTrack, seg, sstep, track, yieldToMain,
+  addGrain, clamp, createRenderer, Dust, fbm, hash, heightfield, lerp, makeCones, makeForest, makeLights, makeRidges, makeRoad, makeRocks, makeSky, orbit, pathTrack, seg, sstep, track, yieldToMain,
 } from '../three/kit';
 import { buildContainer, buildLowbed, buildPickup, buildShed, vehicleMats } from '../three/vehicles';
 import { buildBackhoe, hoeIK, makeMaterials, type Pose } from '../backhoe/model';
@@ -20,10 +25,137 @@ import type { Factory } from '../stage/runtime';
 
 const PI = Math.PI;
 const TRUCK0 = 8, LANE = 10; // low-bed parked at x = 8, z = 10, facing the gate (+x)
-const SITE = new Vector3(190, 0, -300); // the site beacon, out on the hills
 const BASE: Pose = { x: 0, loaderLift: 0.18, bucketWorld: 0.3, boom: 1.18, dipper: -2.72, hoeBucket: -1.7, swing: 0, stab: 0, pitch: 0 };
 
-const truckX = (p: number) => TRUCK0 + Math.pow(sstep(0.62, 0.86, p), 1.6) * 230;
+/* ---------------- dispatch road ---------------- */
+const ROAD_W = 7.5; // two-lane carriageway
+const KEEP_LEFT = 1.6; // lane centre, left of the road centreline (India drives on the left)
+const ROAD_START = 31; // surfaced from the yard gate (x = 32) outwards
+const SURF = 0.02; // makeRoad lifts its surface this much above the centreline
+// Centreline [x, z, y]: out of the gate along the Haldwani plain, north into the foothills,
+// then a 6–7 % traverse and a hairpin up to the site bench. Starts inside the yard so the
+// parked low-bed is already on it (z = LANE + KEEP_LEFT puts the left lane on z = LANE).
+const ctrl: [number, number, number][] = [
+  [-24, 11.6, 0], [0, 11.6, 0], [32, 11.6, 0], [60, 11.6, 0], [90, 10.6, 0.1], [118, 5.2, 0.3], [140, -6, 0.6], [156, -22, 1.2],
+  [166, -42, 2.4], [172, -64, 4.0], [186, -86, 5.6], [210, -100, 7.2], [240, -108, 9.0], [266, -117, 10.8], [282, -132, 12.2],
+  [276, -150, 13.6], [250, -158, 15.4], [220, -170, 17.4], [200, -190, 19.4], [188, -215, 21.4], [186, -245, 23.4], [190, -270, 24.8], [192, -288, 25.4],
+];
+const centre = new CatmullRomCurve3(ctrl.map(([x, z, y]) => new Vector3(x, y, z)), false, 'centripetal');
+centre.arcLengthDivisions = 4000;
+const DENSE = centre.getSpacedPoints(Math.round(centre.getLength() / 1.5));
+const SITE = DENSE[DENSE.length - 1].clone(); // the site bench at the head of the road
+
+/** Polyline with arc-length lookup; extrapolates straight off either end. */
+function polyline(pts: Vector3[]) {
+  const acc = new Float64Array(pts.length);
+  for (let i = 1; i < pts.length; i++) acc[i] = acc[i - 1] + pts[i].distanceTo(pts[i - 1]);
+  const length = acc[pts.length - 1];
+  return {
+    length,
+    at(s: number, out = new Vector3()) {
+      let i = 0;
+      if (s >= length) i = pts.length - 2;
+      else if (s > 0) { let lo = 0, hi = pts.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (acc[m] <= s) lo = m; else hi = m; } i = lo; }
+      const t = (s - acc[i]) / (acc[i + 1] - acc[i]);
+      return out.lerpVectors(pts[i], pts[i + 1], t);
+    },
+  };
+}
+// left-lane track: the centreline offset to the left of the direction of travel
+const LANE_PTS = DENSE.map((p, i) => {
+  const a = DENSE[Math.max(0, i - 1)], b = DENSE[Math.min(DENSE.length - 1, i + 1)];
+  const dx = b.x - a.x, dz = b.z - a.z, L = Math.hypot(dx, dz) || 1;
+  return new Vector3(p.x + (dz / L) * KEEP_LEFT, p.y, p.z - (dx / L) * KEEP_LEFT);
+});
+const lane = polyline(LANE_PTS);
+
+/** Nearest point on the centreline: plan distance, interpolated road level and arc index. */
+function nearRoad(x: number, z: number) {
+  let bi = 0, bd = Infinity;
+  for (let i = 0; i < DENSE.length; i += 4) { const p = DENSE[i], d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; bi = i; } }
+  for (let i = Math.max(0, bi - 4); i <= Math.min(DENSE.length - 1, bi + 4); i++) { const p = DENSE[i], d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; bi = i; } }
+  let best = { d: Math.sqrt(bd), y: DENSE[bi].y, i: bi };
+  for (const j of [bi - 1, bi]) {
+    if (j < 0 || j >= DENSE.length - 1) continue;
+    const a = DENSE[j], b = DENSE[j + 1], ex = b.x - a.x, ez = b.z - a.z;
+    const t = clamp(((x - a.x) * ex + (z - a.z) * ez) / (ex * ex + ez * ez));
+    const d = Math.hypot(a.x + ex * t - x, a.z + ez * t - z);
+    if (d <= best.d) best = { d, y: lerp(a.y, b.y, t), i: j + t };
+  }
+  return best;
+}
+
+/** Undisturbed ground: the bhabar plain at Haldwani, with the foothills rising to the north-east where the road climbs. */
+function natural(x: number, z: number) {
+  const k = -z - 30, hills = sstep(40, 150, x);
+  let h = (fbm(x * 0.02, z * 0.02) - 0.5) * 1.2;
+  h += hills * 0.11 * (k + Math.sqrt(k * k + 64)) / 2; // foothill grade, eased in
+  h += hills * (fbm(x * 0.012 + 7, z * 0.012) - 0.5) * 10 * sstep(-40, -140, z); // spurs and re-entrants
+  h += Math.max(0, x - 300) * 0.1;
+  return h;
+}
+
+/** Finished ground: natural terrain cut / filled to the road bench, the yard and the site levelled. */
+export function heightAt(x: number, z: number) {
+  let h = natural(x, z);
+  const r = nearRoad(x, z);
+  const bench = r.y - 0.03, dh = h - bench;
+  const half = ROAD_W / 2 + 1.6; // carriageway + shoulder and side drain
+  // steep rock / earth cut on the hill side, flatter fill slope on the valley side
+  h = lerp(bench, h, sstep(half, half + (dh > 0 ? 1 + dh * 0.75 : 1 - dh * 1.7), r.d));
+  const sd = Math.hypot(x - SITE.x, z - SITE.z);
+  h = lerp(SITE.y - 0.03, h, sstep(16, 28, sd));
+  const yd = Math.hypot(Math.max(0, Math.abs(x) - 34), Math.max(0, Math.abs(z) - 24));
+  return lerp(0, h, sstep(0, 8, yd));
+}
+
+type Lowbed = ReturnType<typeof buildLowbed>;
+const tmpA = new Vector3(), tmpB = new Vector3();
+/** Road-surface height under a lane point (the yard is bare ground, the road is surfaced). */
+const onSurface = (v: Vector3) => { v.y += SURF * sstep(ROAD_START - 1, ROAD_START + 1, v.x); return v; };
+const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
+
+/**
+ * Place the articulated rig with its drive bogie at arc length s on the left lane:
+ * the tractor rests on its drive bogie and steer axle, the trailer hangs on the kingpin
+ * and rests its bogie on the lane at the trailer's true length.
+ */
+export function placeRig(lb: Lowbed, s: number) {
+  const wb = lb.steerX - lb.driveX;
+  const R = onSurface(lane.at(s, new Vector3())), F = onSurface(lane.at(s + wb, new Vector3()));
+  const h = Math.atan2(-(F.z - R.z), F.x - R.x), pitch = Math.atan2(F.y - R.y, Math.hypot(F.x - R.x, F.z - R.z));
+  lb.tractor.rotation.set(0, h, pitch, 'YXZ');
+  const dir = new Vector3(Math.cos(h) * Math.cos(pitch), Math.sin(pitch), -Math.sin(h) * Math.cos(pitch));
+  lb.tractor.position.copy(R).addScaledVector(dir, -lb.driveX);
+  lb.tractor.updateMatrix();
+  const K = lb.kingpin.clone().applyMatrix4(lb.tractor.matrix);
+  // front wheels point along the lane where they are
+  lane.at(s + wb + 0.5, tmpA); lane.at(s + wb - 0.5, tmpB);
+  lb.steer(wrap(Math.atan2(-(tmpA.z - tmpB.z), tmpA.x - tmpB.x) - h));
+  // trailer bogie: on the lane, one trailer length (kingpin → bogie contact) behind the kingpin
+  const lx = lb.kingpin.x - lb.bogieX, ly = lb.kingpin.y, Lt = Math.hypot(lx, ly);
+  let st = s + (lb.kingpin.x - lb.driveX) - lx;
+  const T = new Vector3();
+  for (let k = 0; k < 6; k++) { onSurface(lane.at(st, T)); st += K.distanceTo(T) - Lt; }
+  onSurface(lane.at(st, T));
+  const th = Math.atan2(-(K.z - T.z), K.x - T.x);
+  const tp = Math.atan2(K.y - T.y, Math.hypot(K.x - T.x, K.z - T.z)) - Math.atan2(ly, lx);
+  lb.trailer.position.copy(K);
+  lb.trailer.rotation.set(0, th, tp, 'YXZ');
+  lb.root.updateMatrixWorld(true);
+  return { K, T, heading: th, centre: new Vector3().addVectors(K, T).multiplyScalar(0.5).setY((K.y - ly + T.y) / 2) };
+}
+/** Drive-bogie arc length on the lane when parked in the yard. */
+export const S0 = (() => { let lo = 0, hi = 100; const v = new Vector3(); for (let i = 0; i < 50; i++) { const m = (lo + hi) / 2; if (lane.at(m, v).x < TRUCK0 + 3.875) lo = m; else hi = m; } return lo; })();
+/** Distance driven for scroll p: away at 0.62, cruising through ch. 3, easing to a crawl as the camera rises. */
+export const travel = (() => {
+  const N = 2000, acc = new Float64Array(N + 1);
+  const v = (p: number) => sstep(0.62, 0.71, p) * (1 - 0.65 * sstep(0.8, 0.9, p));
+  for (let i = 1; i <= N; i++) acc[i] = acc[i - 1] + v(i / N);
+  const k = 268 / acc[N]; // stops short of the hairpin, where a 17 m rig would sweep the verge
+  return (p: number) => { const f = clamp(p) * N, i = Math.min(N - 1, Math.floor(f)); return lerp(acc[i], acc[i + 1], f - i) * k; };
+})();
+export { ROAD_W, KEEP_LEFT, nearRoad, lane };
 
 export const create: Factory = async (canvas, ctx) => {
   const { renderer, scene, dispose } = createRenderer(canvas, ctx, { envIntensity: 0.28 });
@@ -47,14 +179,65 @@ export const create: Factory = async (canvas, ctx) => {
   await yieldToMain();
 
   /* ---------------- yard ---------------- */
-  scene.add(heightfield({ w: 600, d: 360, cx: 120, cz: -60, res: ctx.lite ? 3 : 2 }, (x, z) => (Math.abs(x) < 34 && Math.abs(z) < 24 ? 0 : (fbm(x * 0.02, z * 0.02) - 0.5) * 1.2), (x, z, _y, _s, c) => {
+  scene.add(heightfield({ w: 560, d: 460, cx: 110, cz: -110, res: ctx.lite ? 2.6 : 1.6 }, heightAt, (x, z, y, sl, c) => {
     const n = fbm(x * 0.2, z * 0.2, 3);
     if (Math.abs(x) < 32 && Math.abs(z) < 22) return c.set('#78736a').lerp(new Color('#5f5b54'), n * 0.7);
-    return c.set('#4c5737').lerp(new Color('#68663f'), n);
+    const r = nearRoad(x, z);
+    if (r.d < ROAD_W / 2 + 1.6) return c.set('#6c6455').lerp(new Color('#57503f'), n); // murram shoulder and side drain
+    const hill = sstep(-30, -90, z);
+    c.set('#4c5737').lerp(new Color('#68663f'), n).lerp(new Color('#3a4630').lerp(new Color('#4d5236'), n), hill);
+    // exposed cut faces and fill slopes: weathered phyllite / earth
+    const bare = sstep(0.32, 0.6, sl) * (1 - sstep(16, 30, r.d));
+    c.lerp(new Color('#6f6353').lerp(new Color('#857d70'), fbm(x * 0.5, y * 0.8, 3)), bare);
   }));
-  const road: Vector3[] = [];
-  for (let x = 30; x <= 340; x += 6) road.push(new Vector3(x, 0, LANE + Math.max(0, x - 120) * -0.06));
-  scene.add(makeRoad(road, 7));
+  await yieldToMain();
+  scene.add(makeRoad(DENSE.slice(DENSE.findIndex((v) => v.x >= ROAD_START)).map((v) => v.clone()), ROAD_W));
+  // PWD parapet blocks along the valley edge wherever the road stands on fill
+  {
+    const pts: [number, number, number, number][] = [];
+    const cand: ([number, number, number, number] | null)[] = [];
+    for (let i = 2; i < DENSE.length - 2; i += 2) {
+      const a = DENSE[i - 1], b = DENSE[i + 1], p = DENSE[i];
+      const dx = b.x - a.x, dz = b.z - a.z, L = Math.hypot(dx, dz);
+      const lx = dz / L, lz = -dx / L; // left of travel
+      const off = 13, hl = natural(p.x + lx * off, p.z + lz * off), hr = natural(p.x - lx * off, p.z - lz * off);
+      const side = hl < hr ? 1 : -1, o = ROAD_W / 2 + 0.55;
+      cand.push(p.x < ROAD_START + 8 || p.y - Math.min(hl, hr) < 1.1 ? null : [p.x + lx * o * side, p.y, p.z + lz * o * side, Math.atan2(-dz, dx)]);
+    }
+    // only continuous runs along a drop; 1.8 m blocks at 3 m centres
+    for (let i = 0; i < cand.length;) {
+      if (!cand[i]) { i++; continue; }
+      let j = i; while (j < cand.length && cand[j]) j++;
+      if (j - i >= 8) for (let k = i; k < j; k += 2) pts.push(cand[k]!);
+      i = j;
+    }
+    const blk = new InstancedMesh(new BoxGeometry(1.8, 0.6, 0.4), addGrain(new MeshStandardMaterial({ color: '#ffffff', roughness: 0.85 }), { scale: 3, strength: 0.18 }), pts.length);
+    blk.instanceColor = new InstancedBufferAttribute(new Float32Array(pts.length * 3), 3);
+    const o3 = new Object3D(), white = new Color('#d6d2c8'), black = new Color('#2a2a28');
+    pts.forEach(([x, y, z, h], i) => { o3.position.set(x, y + 0.27, z); o3.rotation.set(0, h, 0); o3.updateMatrix(); blk.setMatrixAt(i, o3.matrix); blk.setColorAt(i, i % 2 ? black : white); });
+    blk.castShadow = true; blk.receiveShadow = true;
+    scene.add(blk);
+  }
+  // kilometre stones on the left verge (yellow cap: national highway)
+  {
+    const stoneM = addGrain(new MeshStandardMaterial({ color: '#dcd8cf', roughness: 0.8 }), { scale: 4, strength: 0.15 });
+    const capM = new MeshStandardMaterial({ color: '#d9a72b', roughness: 0.7 });
+    for (const s of [70, 175, 290]) {
+      const p = lane.at(s), q = lane.at(s + 1), h = Math.atan2(-(q.z - p.z), q.x - p.x);
+      const g = new Group();
+      const body = new Mesh(new BoxGeometry(0.2, 0.6, 0.5), stoneM);
+      body.position.y = 0.3;
+      g.add(body);
+      const cap = new Mesh(new CylinderGeometry(0.25, 0.25, 0.2, 16, 1, false, 0, PI), capM);
+      cap.rotation.set(0, 0, PI / 2); cap.position.y = 0.6;
+      g.add(cap);
+      const o = ROAD_W / 2 - KEEP_LEFT + 0.9, x = p.x - Math.sin(h) * o, z = p.z - Math.cos(h) * o; // just off the left edge
+      g.position.set(x, heightAt(x, z), z);
+      g.rotation.y = h;
+      g.traverse((c) => { c.castShadow = true; });
+      scene.add(g);
+    }
+  }
   // hardstand slab in front of the workshop
   const slab = new Mesh(new BoxGeometry(22, 0.08, 10), addGrain(new MeshStandardMaterial({ color: '#9a968c', roughness: 0.9 }), { scale: 3, strength: 0.18 }));
   slab.position.set(-13, 0.04, 9);
@@ -86,20 +269,97 @@ export const create: Factory = async (canvas, ctx) => {
     const mast = new Mesh(new CylinderGeometry(0.1, 0.16, 9, 8), mastM); mast.position.set(x, 4.5, z); mast.castShadow = true; scene.add(mast);
     const head = new Mesh(new BoxGeometry(1.2, 0.3, 0.4), lampM); head.position.set(x, 9, z + 0.3); scene.add(head);
   }
-  scene.add(makeForest(ctx.lite ? 300 : 700, (i) => {
-    const x = -200 + hash(i, 1) * 600, z = -260 + hash(i, 2) * 200;
-    if (fbm(x * 0.02, z * 0.02) < 0.45) return null;
-    return [x, 0, z, 2 + hash(i, 3) * 2.2];
-  }, { broad: 0.35 }));
-  scene.add(makeForest(ctx.lite ? 80 : 200, (i) => {
-    const x = -80 + hash(i, 4) * 400, z = 30 + hash(i, 5) * 60;
-    return [x, 0, z, 2 + hash(i, 6) * 2];
+  /* ---------------- low-bed and camera path ---------------- */
+  const vm = vehicleMats();
+  const lowbed = buildLowbed(vm);
+  scene.add(lowbed.root);
+  placeRig(lowbed, S0); // parked at x = TRUCK0, z = LANE
+  // final aerial: from behind the low-bed's last position, looking up the road to the site
+  const AERIAL = (() => {
+    const end = placeRig(lowbed, S0 + travel(1)).centre;
+    placeRig(lowbed, S0);
+    const t = end.clone().lerp(SITE, 0.25);
+    return [(Math.atan2(end.z - SITE.z, end.x - SITE.x) * 180) / PI, 18, 140, t.x, t.y + 3, t.z];
+  })();
+  /* camera: [p, az, el, dist, tx, ty, tz] — absolute targets until the chase in ch. 3 */
+  const cam = [
+    [0.0, 104, 20, 92, 4, 2, -24],
+    [0.18, 92, 14, 84, 20, 6, -50],
+    [0.24, 52, 14, 15, -15, 1.6, LANE],
+    [0.4, 128, 18, 14, -15, 1.6, LANE],
+    [0.47, 70, 16, 22, -5, 1.5, LANE],
+    [0.6, 100, 22, 26, 0, 1.5, LANE],
+    [0.66, 120, 14, 30, 8, 2, LANE],
+  ];
+
+  const camKeys = (p: number, rig: ReturnType<typeof placeRig>) => {
+    let k = track(cam, p);
+    if (p > 0.6) {
+      // chase: off the low-bed's right rear quarter, turning with it as the road turns
+      const q = seg(p, 0.66, 0.86), c = rig.centre;
+      const follow = [lerp(120, 150, q) - (rig.heading * 180) / PI, lerp(14, 9, q), lerp(30, 34, q), c.x, c.y + 2.4, c.z];
+      k = k.map((v, i) => lerp(v, follow[i], sstep(0.6, 0.7, p)));
+      // then rise behind it: the road climbing ahead, and the site at its head
+      k = k.map((v, i) => lerp(v, AERIAL[i], sstep(0.86, 1, p)));
+    }
+    return k;
+  };
+  // portrait screens stand further back; a little more while the whole 17 m rig is in shot
+  const camMul = (p: number) => (ctx.mobile ? 1.3 + 0.25 * sstep(0.6, 0.7, p) * (1 - sstep(0.86, 1, p)) : 1);
+  // sight lines from the dispatch camera to the rig (both framings), so no tree stands in them
+  const sight: [Vector3, Vector3][] = [];
+  {
+    const eye = { position: new Vector3(), lookAt() {} };
+    for (let p = 0.6; p <= 1.0001; p += 0.004) {
+      const rig = placeRig(lowbed, S0 + travel(p)), k = camKeys(p, rig);
+      for (const m of [1, 1.3 + 0.25 * sstep(0.6, 0.7, p) * (1 - sstep(0.86, 1, p))]) {
+        orbit(eye, [k[0], k[1], k[2] * m, k[3], k[4], k[5]]);
+        for (const t of [new Vector3(k[3], k[4], k[5]), rig.K.clone().setY(rig.K.y + 2), rig.T.clone().setY(rig.T.y + 1)]) sight.push([eye.position.clone(), t]);
+      }
+    }
+    placeRig(lowbed, S0);
+  }
+  const inSight = (x: number, y: number, z: number, sc: number) => {
+    const top = y + 6 * sc, rad = 1.3 * sc + 1;
+    for (const [a, b] of sight) {
+      const ex = b.x - a.x, ez = b.z - a.z, t = clamp(((x - a.x) * ex + (z - a.z) * ez) / (ex * ex + ez * ez || 1));
+      if (Math.hypot(a.x + ex * t - x, a.z + ez * t - z) < rad && lerp(a.y, b.y, t) < top) return true;
+    }
+    return false;
+  };
+
+  const clear = (x: number, z: number, m: number) => nearRoad(x, z).d < ROAD_W / 2 + m || Math.hypot(x - SITE.x, z - SITE.z) < 26 || (Math.abs(x) < 38 && Math.abs(z) < 28);
+  // chir pine and oak on the foothills
+  scene.add(makeForest(ctx.lite ? 440 : 1000, (i) => {
+    const x = -200 + hash(i, 1) * 600, z = -330 + hash(i, 2) * 270, sc = 2 + hash(i, 3) * 2.2;
+    if (fbm(x * 0.02, z * 0.02) < 0.42 || clear(x, z, 6)) return null;
+    const y = heightAt(x, z);
+    return inSight(x, y, z, sc) ? null : [x, y, z, sc];
+  }, { broad: 0.3 }));
+  // sal on the plain south of the yard, and trees lining the road out of the gate
+  scene.add(makeForest(ctx.lite ? 120 : 280, (i) => {
+    const x = -80 + hash(i, 4) * 400, z = -60 + hash(i, 5) * 150;
+    const sc = 2 + hash(i, 6) * 2;
+    if (clear(x, z, 7) || (z < 30 && (x < 44 || nearRoad(x, z).d > 24 || fbm(x * 0.05, z * 0.05) < 0.45))) return null;
+    const y = heightAt(x, z);
+    return inSight(x, y, z, sc) ? null : [x, y, z, sc];
   }, { broad: 0.6 }));
+  // loose rock on and below the cut faces
+  scene.add(makeRocks(ctx.lite ? 60 : 140, (i) => {
+    const r = DENSE[Math.floor(hash(i, 7) * DENSE.length)];
+    if (r.z > -36) return null;
+    const a = hash(i, 8) * PI * 2, d = ROAD_W / 2 + 2.2 + hash(i, 9) * 9;
+    const x = r.x + Math.cos(a) * d, z = r.z + Math.sin(a) * d;
+    if (nearRoad(x, z).d < ROAD_W / 2 + 1.8) return null;
+    const y = heightAt(x, z);
+    if (y - r.y < 0.6) return null;
+    return [x, y, z, 0.25 + hash(i, 10) * 0.6];
+  }, '#6f6a60'));
   await yieldToMain();
 
   // site beacon on the hills
   const beacon = new Group();
-  beacon.position.copy(SITE);
+  beacon.position.set(SITE.x, heightAt(SITE.x, SITE.z), SITE.z);
   const beamM = new ShaderMaterial({
     transparent: true, depthWrite: false, blending: AdditiveBlending,
     uniforms: { uA: { value: 0 } },
@@ -115,10 +375,6 @@ export const create: Factory = async (canvas, ctx) => {
   scene.add(beacon);
 
   /* ---------------- vehicles ---------------- */
-  const vm = vehicleMats();
-  const lowbed = buildLowbed(vm);
-  lowbed.root.position.set(TRUCK0, 0, LANE);
-  scene.add(lowbed.root);
   const pickup = buildPickup(vm);
   pickup.root.position.set(15, 0, -4);
   pickup.root.rotation.y = -PI / 2;
@@ -159,22 +415,10 @@ export const create: Factory = async (canvas, ctx) => {
       boom: lerp(1.18, r.boom, arm), dipper: lerp(-2.72, r.dipper, arm), hoeBucket: lerp(-1.7, r.hoeBucket, arm), swing: Math.sin(arm * PI) * 0.5 * arm,
       loaderLift, pitch: clamp(-m.speed * 0.0004, -0.01, 0.01),
     };
-    // riding on the low-bed once loaded
-    const tx = truckX(p) - TRUCK0;
-    if (p > 0.6) { pose.x = deckSeat + tx; pose.y = lowbed.deckY; pose.tilt = 0; pose.pitch = 0; }
+    // riding on the low-bed once loaded: seated on the deck, in the trailer's own frame
+    if (p > 0.6) Object.assign(pose, { x: deckSeat - TRUCK0 - lowbed.kingpin.x, y: lowbed.deckY - lowbed.kingpin.y, z: 0, heading: 0, steer: 0, tilt: 0, pitch: 0 });
     return pose;
   };
-
-  /* camera: [p, az, el, dist, tx, ty, tz] — absolute targets, with a truck-follow term in ch. 3 */
-  const cam = [
-    [0.0, 104, 20, 92, 4, 2, -24],
-    [0.18, 92, 14, 84, 20, 6, -50],
-    [0.24, 52, 14, 15, -15, 1.6, LANE],
-    [0.4, 128, 18, 14, -15, 1.6, LANE],
-    [0.47, 70, 16, 22, -5, 1.5, LANE],
-    [0.6, 100, 22, 26, 0, 1.5, LANE],
-    [0.66, 120, 14, 30, 8, 2, LANE],
-  ];
 
   return {
     resize(w, h) {
@@ -186,11 +430,13 @@ export const create: Factory = async (canvas, ctx) => {
       camera.updateProjectionMatrix();
     },
     render(p, dt, now) {
+      const d = travel(p);
+      const rig = placeRig(lowbed, S0 + d);
+      lowbed.roll(d);
       const pose = poseAt(p);
+      const carrier = p > 0.6 ? lowbed.trailer : scene;
+      if (machine.root.parent !== carrier) carrier.add(machine.root);
       machine.apply(pose);
-      const tx = truckX(p);
-      lowbed.root.position.x = tx;
-      lowbed.roll(tx - TRUCK0);
       lowbed.ramps(sstep(0.41, 0.45, p) * (1 - sstep(0.57, 0.61, p)));
       // inspection sweep
       const ins = seg(p, 0.2, 0.42);
@@ -201,23 +447,16 @@ export const create: Factory = async (canvas, ctx) => {
       beamM.uniforms.uA.value = ba * (0.55 + 0.45 * Math.sin(now / 420));
       orb.visible = ba > 0.02;
       // dust behind moving vehicles
-      if (dt > 0 && p > 0.62 && p < 0.86) dust.emit(tx - 10, 0.4, LANE, 2, 2, 0.6, 2.4);
+      if (dt > 0 && p > 0.62 && travel(p) - travel(p - 0.004) > 0.15) dust.emit(rig.T.x, rig.T.y + 0.4, rig.T.z, 2, 2, 0.6, 2.4);
       dust.step(dt);
 
-      let k: number[];
-      if (p < 0.66) k = track(cam, p);
-      else if (p < 0.86) {
-        // tracking alongside the low-bed as it heads for the hills
-        const q = seg(p, 0.66, 0.86);
-        k = [lerp(120, 150, q), lerp(14, 9, q), lerp(30, 34, q), tx - 2, 2.4, LANE - (tx > 120 ? (tx - 120) * 0.06 : 0)];
-      } else {
-        const q = seg(p, 0.86, 1);
-        // rise above the departing low-bed to see the road ahead and the site on the hills
-        const a = [150, 9, 34, truckX(0.86) - 2, 2.4, LANE];
-        k = a.map((v, i) => lerp(v, [70, 16, 200, 213, 10, -150][i], sstep(0, 1, q)));
-      }
-      orbit(camera, [k[0], k[1], ctx.mobile ? k[2] * 1.3 : k[2], k[3], k[4], k[5]]);
-      L.follow(clamp(pose.x ?? 0, -40, 400), 0, LANE * 0.5, sunDir);
+      const k = camKeys(p, rig);
+      orbit(camera, [k[0], k[1], k[2] * camMul(p), k[3], k[4], k[5]]);
+      // never below the hillside
+      const gy = heightAt(camera.position.x, camera.position.z) + 2.5;
+      if (camera.position.y < gy) { camera.position.y = gy; camera.lookAt(k[3], k[4], k[5]); }
+      if (p > 0.6) L.follow(rig.centre.x, rig.centre.y, rig.centre.z, sunDir);
+      else L.follow(clamp(pose.x ?? 0, -40, 400), 0, LANE * 0.5, sunDir);
       renderer.render(scene, camera);
       return ba > 0.02 || dust.alive > 0;
     },

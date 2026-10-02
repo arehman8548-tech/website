@@ -18,6 +18,7 @@ import {
   PlaneGeometry,
   Shape,
   Vector2,
+  Vector3,
   type Material,
 } from 'three';
 import { addGrain, clamp, heapGeometry } from './kit';
@@ -181,30 +182,43 @@ export function buildTipper(m: VMats) {
 }
 
 /* ------------------------------------------------------------------ */
-/** Prime mover + gooseneck low-bed trailer (~17 m). The deck top is at y = deckY; its centre at x = deckX. */
+/**
+ * Prime mover + gooseneck low-bed trailer (~17 m). The deck top is at y = deckY; its centre at x = deckX.
+ * The rig is articulated: `tractor` and `trailer` are separate groups, the trailer hinged on the
+ * fifth-wheel kingpin. Left untouched they reproduce the rigid parked layout in root space.
+ */
 export function buildLowbed(m: VMats) {
   const root = new Group();
+  const tractor = new Group();
+  const trailer = new Group();
+  root.add(tractor, trailer);
   const wheels: { g: Group; r: number }[] = [];
+  const kingpin = new Vector3(4.4, 1.34, 0); // top of the fifth wheel
+  trailer.position.copy(kingpin);
+  const tb = new Group(); // trailer body, in root coordinates
+  tb.position.copy(kingpin).negate();
+  trailer.add(tb);
   // prime mover
-  for (const s of [-1, 1]) root.add(box(5.6, 0.28, 0.12, m.dark, 5.2, 1.0, s * 0.45));
+  for (const s of [-1, 1]) tractor.add(box(5.6, 0.28, 0.12, m.dark, 5.2, 1.0, s * 0.45));
   const cab = truckCab(m, 2.0, 2.45, 3.15, 1.2, m.cabWhite);
   cab.position.x = 8.0;
-  root.add(cab);
-  root.add(box(0.7, 0.55, 0.55, m.steel, 6.4, 0.9, 1.05));
-  root.add(box(1.4, 0.12, 1.4, m.dark, 4.4, 1.28, 0)); // fifth wheel
-  axle(root, 7.1, 0.55, 2.0, m, false, wheels);
-  axle(root, 4.5, 0.55, 1.7, m, true, wheels);
-  axle(root, 3.25, 0.55, 1.7, m, true, wheels);
+  tractor.add(cab);
+  tractor.add(box(0.7, 0.55, 0.55, m.steel, 6.4, 0.9, 1.05));
+  tractor.add(box(1.4, 0.12, 1.4, m.dark, 4.4, 1.28, 0)); // fifth wheel
+  axle(tractor, 7.1, 0.55, 2.0, m, false, wheels);
+  const steered = wheels.slice();
+  axle(tractor, 4.5, 0.55, 1.7, m, true, wheels);
+  axle(tractor, 3.25, 0.55, 1.7, m, true, wheels);
   // gooseneck
-  root.add(new Mesh(extrude([[2.6, 1.0], [4.9, 1.45], [4.9, 1.85], [2.2, 1.85], [1.4, 1.05]], 2.5, 0.03), m.yellow));
+  tb.add(new Mesh(extrude([[2.6, 1.0], [4.9, 1.45], [4.9, 1.85], [2.2, 1.85], [1.4, 1.05]], 2.5, 0.03), m.yellow));
   // deck
   const deckY = 1.0;
   const deck = box(10.5, 0.22, 3.0, m.deck, -3.9, deckY - 0.11, 0);
-  root.add(deck);
-  for (const s of [-1, 1]) root.add(box(10.5, 0.3, 0.12, m.yellow, -3.9, deckY - 0.2, s * 1.48));
+  tb.add(deck);
+  for (const s of [-1, 1]) tb.add(box(10.5, 0.3, 0.12, m.yellow, -3.9, deckY - 0.2, s * 1.48));
   // deck planks
-  for (let i = 0; i < 18; i++) root.add(box(0.04, 0.005, 2.9, m.dark, -8.9 + i * 0.58, deckY + 0.003, 0));
-  for (const x of [-7.4, -8.4, -9.4]) axle(root, x, 0.42, 2.3, m, true, wheels);
+  for (let i = 0; i < 18; i++) tb.add(box(0.04, 0.005, 2.9, m.dark, -8.9 + i * 0.58, deckY + 0.003, 0));
+  for (const x of [-7.4, -8.4, -9.4]) axle(tb, x, 0.42, 2.3, m, true, wheels);
   // folding rear ramps
   const ramps: Group[] = [];
   for (const s of [-1, 1]) {
@@ -213,20 +227,30 @@ export function buildLowbed(m: VMats) {
     const plate = box(2.3, 0.08, 0.75, m.yellow, -1.15, 0, 0);
     r.add(plate);
     for (let i = 0; i < 8; i++) r.add(box(0.03, 0.03, 0.72, m.dark, -0.2 - i * 0.27, 0.05, 0));
-    root.add(r);
+    tb.add(r);
     ramps.push(r);
   }
   shadows(root);
   const api = {
     root,
+    tractor,
+    trailer,
     deckY,
     deckX: -4.2,
+    /** Kingpin in tractor space; the trailer group's origin. */
+    kingpin,
+    /** Ground-contact centres (root x) of the tractor's drive bogie, its steer axle and the trailer bogie. */
+    driveX: 3.875,
+    steerX: 7.1,
+    bogieX: -8.4,
     /** 0 = ramps stowed upright, 1 = down on the ground. */
     ramps(t: number) {
       const down = Math.asin(clamp(deckY / 2.3, 0, 1));
       for (const r of ramps) r.rotation.z = (1 - clamp(t)) * -1.35 + clamp(t) * down;
     },
     roll(distance: number) { for (const w of wheels) w.g.rotation.z = -distance / w.r; },
+    /** Front-wheel steer angle (rad, + = left). */
+    steer(a: number) { for (const w of steered) w.g.rotation.y = (w.g.position.z < 0 ? Math.PI : 0) + a; },
   };
   api.ramps(0);
   return api;

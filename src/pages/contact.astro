@@ -123,9 +123,9 @@ const description =
           </div>
           <div class="fm__foot">
             <button class="btn" type="submit" data-submit>
-              {site.formEndpoint ? 'Send enquiry' : 'Continue on WhatsApp'} <Icon name="arrow" />
+              {site.formEndpoint ? 'Send enquiry' : 'Submit on WhatsApp'} <Icon name="arrow" />
             </button>
-            <p class="mono fm__alt">or <a href={mailtoWith('Backhoe loader rental enquiry')} data-mail>send the same details by email</a></p>
+            <p class="mono fm__alt">or <a href={mailtoWith('Backhoe loader rental enquiry')} data-mail>Mail your enquiry</a></p>
           </div>
           {!site.formEndpoint && <p class="fm__how">This form does not send anything by itself. It writes your enquiry into a WhatsApp message (or an email) for you to send.</p>}
           <p class="fm__status" role="status" aria-live="polite" data-status></p>
@@ -227,11 +227,6 @@ const description =
       return;
     }
     const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(summary(fd, 'wa'))}`;
-    // Show a tappable link first, so the hand-off still works if a pop-up blocker stops the new tab.
-    status.innerHTML = '';
-    status.append('WhatsApp should open with your enquiry written out — press send there to deliver it. ');
-    const link = Object.assign(document.createElement('a'), { href: url, target: '_blank', rel: 'noopener', textContent: 'Open WhatsApp again' });
-    status.append(link);
     window.open(url, '_blank', 'noopener');
   });
 </script>
