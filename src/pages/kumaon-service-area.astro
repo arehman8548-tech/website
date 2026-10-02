@@ -11,6 +11,8 @@ import { projects } from '../data/projects';
 import { qa } from '../data/faq';
 import { breadcrumbs } from '../data/schema';
 import { wa, site } from '../data/site';
+import Evidence from '../components/Evidence.astro';
+import { photos } from '../data/media';
 
 const crumbs = [{ name: 'Kumaon Service Area', href: '/kumaon-service-area/' }];
 const title = 'JCB / Backhoe Loader on Rent in Haldwani, Ranikhet, Almora, Nainital & Rudrapur | RBE Capital Equip.';
@@ -75,6 +77,16 @@ const selfDrive = qa('self-drive');
               <ul class="belt__list belt__list--w">{B.work.map((r) => <li>{r}</li>)}</ul>
             </div>
           </div>
+          {b === 'innerhills' && (
+            <div class="belt__ev">
+              <Evidence photo={photos.resortWide} ratio="16 / 9" pos="50% 40%" sizes="(max-width: 960px) 100vw, 60vw" />
+              <div>
+                <p class="mono belt__evk">Worked here</p>
+                <p>RBE supplied a JCB backhoe loader and operator to a resort development between Ranikhet and Majkhali — site cutting and levelling on a hill plot, with the snow range on the horizon.</p>
+                <a class="inline" href="/project-solutions/#site-development">Site development in the hills →</a>
+              </div>
+            </div>
+          )}
           <div class="pcards">
             {ps.map((p) => (
               <article class="pcard" id={p.slug} aria-labelledby={`${p.slug}-h`}>
@@ -110,6 +122,7 @@ const selfDrive = qa('self-drive');
           <h3>{selfDrive.q}</h3>
           <p class="muted">{selfDrive.a}</p>
         </div>
+        <div class="dep__ev"><Evidence photo={photos.resortSnow} ratio="4 / 3" pos="50% 40%" tone="dark" sizes="(max-width: 960px) 100vw, 40vw" note="Season is part of the plan: snowfall on the Ranikhet–Majkhali resort site, as well as monsoon slips from June to September." /></div>
       </div>
       <div>
         <ol class="factors">
@@ -117,7 +130,7 @@ const selfDrive = qa('self-drive');
           <li><b>Which base, and the route</b><span>From Haldwani or from Majkhali (Ranikhet); which road, and how long it takes.</span></li>
           <li><b>Access road condition</b><span>Width, hairpin bends, gradient and the last-mile surface to the plot.</span></li>
           <li><b>Travel method</b><span>On its own wheels or on a trailer, depending on distance and route.</span></li>
-          <li><b>Season</b><span>Monsoon slips and closures mean earlier mobilisation and buffer.</span></li>
+          <li><b>Season</b><span>Monsoon slips and closures, and snow on higher sites in winter, mean earlier mobilisation and buffer.</span></li>
           <li><b>Stay and supplies</b><span>Overnight parking, diesel and operator accommodation at remote sites.</span></li>
         </ol>
         <div class="btn-row" style="margin-top:36px">
@@ -200,6 +213,10 @@ const selfDrive = qa('self-drive');
   .pcard__wa { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-l); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: .88rem; font-weight: 600; color: #1f7a4d; }
   .pcard__wa :global(svg) { width: 16px; }
   .pcard__wa:hover { color: #23905a; }
+  .belt__ev { display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px; align-items: end; margin-bottom: 40px; }
+  .belt__evk { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--copper-lo); margin: 0 0 10px; }
+  .belt__ev .inline { display: inline-block; margin-top: 8px; font-weight: 500; }
+  .dep__ev { margin-top: 32px; }
   .dep { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 6vw, 96px); }
   .dep h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
   .factors { list-style: none; counter-reset: f; margin: 0; padding: 0; border-top: 1px solid var(--line-d); }
@@ -210,5 +227,5 @@ const selfDrive = qa('self-drive');
   .out { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(32px, 6vw, 96px); }
   .out h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
   .out li { margin-bottom: 14px; }
-  @media (max-width: 960px) { .mapgrid, .elevhead, .belt__grid, .dep, .out { grid-template-columns: 1fr; } }
+  @media (max-width: 960px) { .mapgrid, .elevhead, .belt__grid, .dep, .out, .belt__ev { grid-template-columns: 1fr; } }
 </style>

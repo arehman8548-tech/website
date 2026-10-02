@@ -8,6 +8,8 @@ import Icon from '../components/Icon.astro';
 import { breadcrumbs, rentalService } from '../data/schema';
 import { tel, wa } from '../data/site';
 import { qa } from '../data/faq';
+import Evidence from '../components/Evidence.astro';
+import { photos } from '../data/media';
 
 const crumbs = [{ name: 'Backhoe Loader Rental', href: '/backhoe-loader-rental/' }];
 const title = 'Backhoe Loader (JCB) on Rent With Operator — Kumaon Projects | RBE Capital Equip.';
@@ -71,6 +73,7 @@ const dig = qa('dig-depth');
           <p class="direct">About 4.5 to 6 metres at maximum, depending on the model and dipper.</p>
           <p class="muted">Practical trench depth on site is usually less and depends on soil, shoring and safety.</p>
         </div>
+        <div class="spec__ev"><Evidence photo={photos.padFront} ratio="3 / 2" sizes="(max-width: 960px) 100vw, 40vw" note="A JCB from RBE on a working hill project. The model sent to your site depends on the job and on what is available for your dates." /></div>
       </div>
       <dl class="spec">
         <div><dt>Operating weight</dt><dd>≈ 7–8.5 t</dd></div>
@@ -131,6 +134,7 @@ const dig = qa('dig-depth');
         <div class="rv rv-d2"><h3>Season</h3><p class="muted">From about June to September, slips and road closures are part of the plan. Mobilise early and keep schedule buffer.</p></div>
         <div class="rv rv-d3"><h3>Support</h3><p class="muted">At remote sites, diesel, the operator’s stay and breakdown handling are agreed before the machine leaves. RBE’s Majkhali base means inner-hill sites are not supported only from the plains.</p></div>
       </div>
+      <div class="hill__ev"><Evidence photo={photos.padWall} ratio="21 / 9" pos="50% 12%" sizes="100vw" note="Stabilisers planted on firm ground below a retaining wall — how the machine is set up before the backhoe digs on a hill site." /></div>
       <p class="measure" style="margin-top:40px">More on terrain by area in the <a class="inline" href="/kumaon-service-area/">Kumaon service area</a> guide, and season planning in <a class="inline" href="/knowledge/#monsoon">monsoon working</a>.</p>
     </div>
   </section>
@@ -204,6 +208,8 @@ const dig = qa('dig-depth');
   .hill > div { padding: 28px 24px 0 0; }
   .hill > div + div { padding-left: 24px; border-left: 1px solid var(--line-l); }
   .hill h3 { margin-bottom: 12px; }
+  .spec__ev { margin-top: 32px; }
+  .hill__ev { margin-top: 48px; }
   .terms { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 96px); }
   .terms h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
   .dur { list-style: none; counter-reset: d; margin: 0 0 40px; padding: 0; border-top: 1px solid var(--line-l); }

@@ -1,0 +1,77 @@
+---
+/**
+ * Home: the bridge from the 3D model to real-world evidence. Two real projects,
+ * each with its own photographs and only the facts the owner has confirmed.
+ */
+import Evidence from './Evidence.astro';
+import Icon from './Icon.astro';
+import { cases } from '../data/cases';
+import { photos } from '../data/media';
+const resort = cases.find((c) => c.id === 'ranikhet-majkhali')!;
+const pad = cases.find((c) => c.id === 'padampuri')!;
+---
+<section class="rs dark" aria-labelledby="h-rs">
+  <div class="wrap">
+    <header class="rs__head">
+      <p class="eyebrow"><span class="idx">→</span>Real sites</p>
+      <h2 id="h-rs" class="rv">The machine above is a model. <span class="serif">These sites are not.</span></h2>
+      <p class="muted rv">Two Kumaon projects RBE has supplied a JCB backhoe loader and operator to, photographed on site.</p>
+    </header>
+
+    <article class="case" aria-labelledby="h-case-1">
+      <div class="case__lead rv"><Evidence photo={photos.resortPortrait} ratio="4 / 5" tone="dark" sizes="(max-width: 860px) 100vw, 46vw" /></div>
+      <div class="case__body">
+        <p class="mono case__k">Case 01 · {resort.district} district</p>
+        <h3 id="h-case-1">{resort.name} — <span class="serif">{resort.work.toLowerCase()}.</span></h3>
+        <p class="case__why">{resort.why}</p>
+        <dl class="case__dl">
+          <div><dt>RBE supplied</dt><dd>{resort.supplied}</dd></div>
+          <div><dt>Work</dt><dd>{resort.scope.join(' and ').toLowerCase().replace(/^./, (m) => m.toUpperCase())}</dd></div>
+        </dl>
+        <div class="case__sub rv"><Evidence photo={photos.resortSnow} ratio="4 / 5" tone="dark" short sizes="(max-width: 860px) 60vw, 18vw" note="Hill sites have a winter as well as a monsoon." /></div>
+        <a class="inline" href="/project-solutions/#site-development">Site development in the hills <Icon name="arrow" /></a>
+      </div>
+    </article>
+
+    <article class="case case--r" aria-labelledby="h-case-2">
+      <div class="case__lead rv"><Evidence photo={photos.padWorking} ratio="3 / 2" tone="dark" sizes="(max-width: 860px) 100vw, 54vw" /></div>
+      <div class="case__body">
+        <p class="mono case__k">Case 02 · {pad.district} district</p>
+        <h3 id="h-case-2">{pad.name} — <span class="serif">{pad.work.toLowerCase()}.</span></h3>
+        <p class="case__why">{pad.why}</p>
+        <dl class="case__dl">
+          <div><dt>RBE supplied</dt><dd>{pad.supplied}</dd></div>
+          <div><dt>Work</dt><dd>{pad.scope.join(', ')}</dd></div>
+        </dl>
+        <div class="case__sub rv"><Evidence photo={photos.padStabilisers} ratio="4 / 5" tone="dark" short sizes="(max-width: 860px) 60vw, 18vw" note="Uttarakhand-registered, stabilisers planted before the backhoe digs." /></div>
+        <a class="inline" href="/project-solutions/#road-construction">Road construction and widening <Icon name="arrow" /></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .rs { padding-block: clamp(80px, 10vw, 150px); border-top: 1px solid var(--line-d); }
+  .rs__head { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px 56px; align-items: end; margin-bottom: clamp(48px, 7vw, 96px); }
+  .rs__head .eyebrow { grid-column: 1 / -1; margin: 0; }
+  .rs__head h2 { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
+  .rs__head p.muted { max-width: 46ch; }
+  .case { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; padding-block: clamp(32px, 5vw, 64px); border-top: 1px solid var(--line-d); }
+  .case--r { grid-template-columns: 1fr 1.1fr; }
+  .case--r .case__lead { order: 2; }
+  .case__k { font-size: .72rem; text-transform: uppercase; letter-spacing: .14em; color: var(--copper-hi); margin: 0 0 14px; }
+  .case h3 { font-size: clamp(1.7rem, 2.8vw, 2.5rem); }
+  .case__why { color: var(--on-dark-2); margin: 20px 0 0; max-width: 48ch; }
+  .case__dl { margin: 24px 0 0; border-top: 1px solid var(--line-d); }
+  .case__dl div { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-d); }
+  .case__dl dt { font-family: var(--f-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-dark-2); padding-top: 3px; }
+  .case__dl dd { margin: 0; }
+  .case__sub { width: min(240px, 60%); margin: 28px 0 24px; }
+  .case .inline { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+  .case .inline :global(svg) { width: 16px; color: var(--copper-hi); }
+  @media (max-width: 860px) {
+    .rs__head, .case, .case--r { grid-template-columns: 1fr; }
+    .case--r .case__lead { order: 0; }
+    .case__dl div { grid-template-columns: 110px 1fr; }
+  }
+</style>

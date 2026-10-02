@@ -29,7 +29,7 @@ Majkhali location (public sources): Ranikhet tehsil, Almora district, PIN 263652
 
 ### Still NOT on the site (not supplied — do not add without real evidence)
 
-Fleet size · machine make/model and real specification · 4WD or 2WD · years in operation · Rotoblast Engineering history/website · past projects · clients · testimonials · certifications · enquiry hours · response time · pricing · GSTIN · machine documents (RC/insurance/fitness) · real photographs.
+Fleet size · a fixed machine model or spec (JCB, range of models) · 4WD or 2WD · years in operation · Rotoblast Engineering history/website (placeholder kept) · client names, dates, durations, quantities or results for the two projects · testimonials · certifications · response time · pricing · GSTIN · machine documents · operator photos · Haldwani/Majkhali base photos · real video.
 
 ## 1b. Round-2 re-audit — what the first build got wrong
 
@@ -44,6 +44,23 @@ Fleet size · machine make/model and real specification · 4WD or 2WD · years i
 - **Schema issues.** `sameAs` pointed at a wa.me link; Organization lacked an address. Fixed; bases modelled as `location` Places.
 - **Mobile header bug.** Menu button overflowed the viewport at 360–390 px. Fixed.
 - **Research was from memory.** Replaced by live search below.
+
+## 1c. Real media (round 3)
+
+Six genuine phone photographs (Redmi cameras / WhatsApp copies, 2019–2022) of RBE's JCB backhoe loader, attributed by the owner to two real projects:
+**Ranikhet–Majkhali resort development** (Almora district — site cutting and levelling) and **Padampuri road widening** (Nainital district). RBE supplied a JCB backhoe loader with operator on both.
+
+| Placement | Photo(s) | Purpose |
+|---|---|---|
+| Home → "Real sites" (straight after the 3D hero) | Resort at dusk + snow; Padampuri working + stabilisers | 3D model → real-world proof |
+| Project Solutions → site development / road construction | Resort wide + snow; Padampuri working + retaining wall | Case evidence inside the matching project type |
+| Backhoe Loader → typical specification | Padampuri front three-quarter (UK02 plate) | The real machine beside generic figures; model varies by job |
+| Backhoe Loader → working in the hills | Padampuri, stabilisers below retaining wall | Supports the "Ground" point |
+| Kumaon Service Area → inner hills belt; deployment planning | Resort wide; resort snow | Worked in this belt; season planning |
+
+Not used: `1b77f74d-….jpg` and `JCB_operating_at_construction_site_….mp4` show signs of AI generation (Google encoder tag, garbled "JOX/JDX" lettering, no camera EXIF). They stay in `media/originals/` unpublished until their origin is confirmed. No real video was supplied.
+
+Pipeline: `node scripts/prep-media.mjs` crops originals (framing only, metadata stripped) into `src/assets/media/`; Astro `<Picture>` serves AVIF/WebP at 480–1600 px, lazy-loaded with fixed aspect ratios (CLS ≈ 0). No media loads before the visitor scrolls past the hero.
 
 ## 2. Research summary
 

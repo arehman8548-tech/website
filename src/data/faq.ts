@@ -182,6 +182,12 @@ export const faq: FaqGroup[] = [
     intro: 'Who you would be working with.',
     items: [
       {
+        id: 'projects',
+        q: 'Has RBE worked on projects in the Kumaon hills?',
+        a: 'Yes. Two examples: a resort development between Ranikhet and Majkhali in Almora district, where RBE supplied a JCB backhoe loader with operator for site cutting and levelling; and the Padampuri road-widening project in Nainital district, where RBE supplied a JCB backhoe loader with operator for the widening works. Photographs from both sites are on this website.',
+        html: 'Yes. Two examples: a resort development between Ranikhet and Majkhali in Almora district, where RBE supplied a JCB backhoe loader with operator for site cutting and levelling; and the Padampuri road-widening project in Nainital district, where RBE supplied a JCB backhoe loader with operator for the widening works. See the photographs under <a href="/project-solutions/#site-development">site development</a> and <a href="/project-solutions/#road-construction">road construction</a>.',
+      },
+      {
         id: 'who',
         q: 'Who is RBE Capital Equip.?',
         a: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet.',

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import RealSites from '../components/RealSites.astro';
 import Icon from '../components/Icon.astro';
 import QuoteBand from '../components/QuoteBand.astro';
 import KumaonMap from '../components/KumaonMap.astro';
@@ -33,6 +34,7 @@ const answers = ['haldwani', 'ranikhet', 'minimum', 'cost', 'hill-roads'].map(qa
 ---
 <Base title={title} description={description}>
   <Hero />
+  <RealSites />
 
   <!-- Problem → answer -->
   <section class="section paper" aria-labelledby="h-concerns">

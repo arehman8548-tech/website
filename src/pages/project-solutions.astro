@@ -9,6 +9,13 @@ import { projects } from '../data/projects';
 import { places } from '../data/geo';
 import { qa } from '../data/faq';
 import { breadcrumbs } from '../data/schema';
+import Evidence from '../components/Evidence.astro';
+import { caseFor } from '../data/cases';
+import { photos } from '../data/media';
+const casePhotos: Record<string, [typeof photos.resortWide, typeof photos.resortWide]> = {
+  'ranikhet-majkhali': [photos.resortWide, photos.resortSnow],
+  padampuri: [photos.padWorking, photos.padWall],
+};
 import { wa } from '../data/site';
 
 const crumbs = [{ name: 'Project Solutions', href: '/project-solutions/' }];
@@ -57,6 +64,20 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
                 <p class="muted">{p.limits}</p>
               </div>
             </div>
+            {(() => { const c = caseFor(p.id); if (!c) return null; const [m1, m2] = casePhotos[c.id]; return (
+              <section class="pjc" aria-label={`Real project: ${c.name}`}>
+                <div class="pjc__txt">
+                  <p class="mono pjc__k">On a real site · {c.district} district</p>
+                  <h3>{c.name} — {c.work.toLowerCase()}</h3>
+                  <p class="muted">{c.why}</p>
+                  <p class="pjc__s"><b>RBE supplied:</b> {c.supplied}. <b>Work:</b> {c.scope.join(', ').toLowerCase()}.</p>
+                </div>
+                <div class="pjc__m">
+                  <Evidence photo={m1} ratio="3 / 2" sizes="(max-width: 960px) 100vw, 40vw" />
+                  <Evidence photo={m2} ratio={m2 === photos.resortSnow ? '4 / 5' : '3 / 2'} sizes="(max-width: 960px) 100vw, 22vw" />
+                </div>
+              </section>
+            ); })()}
             <div class="pj__foot">
               <div class="pj__where">
                 <span class="mono">Common around</span>
@@ -116,6 +137,11 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
   .pj__tasks { list-style: none; margin: 0; padding: 0; counter-reset: t; }
   .pj__tasks li { counter-increment: t; display: grid; grid-template-columns: 32px 1fr; padding: 10px 0; border-bottom: 1px dashed var(--line-l); }
   .pj__tasks li::before { content: counter(t, decimal-leading-zero); font-family: var(--f-mono); font-size: .72rem; color: var(--copper-lo); padding-top: 4px; }
+  .pjc { margin-top: 48px; padding: 28px; background: var(--stone); display: grid; gap: 24px; }
+  .pjc__k { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--copper-lo); margin: 0 0 8px; }
+  .pjc h3 { font-size: 1.35rem; margin-bottom: 10px; }
+  .pjc__s { margin: 12px 0 0; font-size: .95rem; }
+  .pjc__m { display: grid; grid-template-columns: 1.8fr 1fr; gap: 16px; align-items: end; }
   .pj__foot { margin-top: 40px; display: grid; gap: 24px; }
   .pj__foot .mono { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-light-2); margin-bottom: 10px; }
   .pj__where { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -130,6 +156,8 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
     .pj__cols { grid-template-columns: 1fr; }
     .pj__short { margin-left: 0; }
     .pj__head { grid-template-columns: 44px 1fr; }
+    .pjc { padding: 20px; margin-inline: calc(var(--gutter) * -1); }
+    .pjc__m { grid-template-columns: 1fr; }
     .pj__fig { padding: 16px; margin-inline: calc(var(--gutter) * -1); }
   }
 </style>
