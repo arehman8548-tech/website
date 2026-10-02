@@ -21,12 +21,14 @@ export const site = {
   },
   tagline: 'Backhoe loader rental with operator for construction and infrastructure projects across Kumaon',
 
-  // Calls
-  phoneDisplay: '+91 98110 30794',
-  phoneE164: '+919811030794',
-  // WhatsApp (a different number from the calling line)
+  // Primary number: every Call button and every WhatsApp link.
+  phoneDisplay: '+91 78277 28607',
+  phoneE164: '+917827728607',
   whatsappDisplay: '+91 78277 28607',
   whatsappE164: '917827728607', // digits only, no "+", for wa.me links
+  // Secondary call line, listed only beside full contact details.
+  phone2Display: '+91 98110 30794',
+  phone2E164: '+919811030794',
   // Enquiries go to sales; general correspondence to the contact address.
   email: 'sales@rbecapitalgroup.in',
   contactEmail: 'rehman@rbecapitalgroup.in',
@@ -36,8 +38,8 @@ export const site = {
   hours: '8:00 AM – 8:00 PM',
 
   headOffice: {
-    display: 'Sector 27C, Faridabad, Haryana, India',
-    street: 'Sector 27C',
+    display: 'Plot No 71A, Sector 27C, Faridabad, Haryana, India',
+    street: 'Plot No 71A, Sector 27C',
     locality: 'Faridabad',
     region: 'Haryana',
     country: 'IN',
@@ -62,6 +64,7 @@ export const site = {
 
 export const basesText = 'Haldwani and Majkhali (Ranikhet)';
 export const tel = `tel:${site.phoneE164}`;
+export const tel2 = `tel:${site.phone2E164}`;
 export const mailto = `mailto:${site.email}`;
 export const mailtoContact = `mailto:${site.contactEmail}`;
 export function wa(text = 'Hello RBE Capital Equip., I want to check backhoe loader availability for a project in Kumaon.') {
