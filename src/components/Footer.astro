@@ -1,7 +1,7 @@
 ---
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { site, tel, wa, mailto, mailtoContact } from '../data/site';
+import { site, tel, tel2, wa, mailto, mailtoContact } from '../data/site';
 import { allPlaces as places, districts } from '../data/geo';
 const year = new Date().getFullYear();
 ---
@@ -29,6 +29,7 @@ const year = new Date().getFullYear();
         </div>
         <p class="mono muted ftr__hours"><Icon name="clock" />Enquiry hours · {site.hours}</p>
         <p class="mono muted ftr__hours"><Icon name="mail" />General: <a href={mailtoContact}>{site.contactEmail}</a></p>
+        <p class="mono muted ftr__hours"><Icon name="phone" />Second line: <a href={tel2}>{site.phone2Display}</a></p>
       </div>
     </div>
 

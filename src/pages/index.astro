@@ -174,9 +174,8 @@ const photos: Record<string, string> = {
         <div><dt>Rock breaker</dt><dd>Available</dd></div>
         <div><dt>GST invoice</dt><dd>On request</dd></div>
         <div><dt>Dispatched from</dt><dd>Haldwani · Majkhali (Ranikhet)</dd></div>
-        <div><dt>Head office</dt><dd>Sector 27C, Faridabad</dd></div>
-        <div><dt>Call</dt><dd><a href={tel}>{site.phoneDisplay}</a></dd></div>
-        <div><dt>WhatsApp</dt><dd><a href={wa()} rel="noopener">{site.whatsappDisplay}</a></dd></div>
+        <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
+        <div><dt>Call &amp; WhatsApp</dt><dd><a href={tel}>{site.phoneDisplay}</a> · <a href={wa()} rel="noopener">WhatsApp</a></dd></div>
         <div><dt>Email</dt><dd><a href={mailto}>{site.email}</a></dd></div>
       </dl>
       </div>

@@ -12,8 +12,8 @@ The site has to answer one buyer question: *"Can these people actually support m
 
 | Fact | Value | Where it appears |
 |---|---|---|
-| Calls | +91 98110 30794 | Header, hero, footer, contact, schema |
-| WhatsApp | +91 78277 28607 | All WhatsApp links, footer, contact, schema |
+| Primary (calls + WhatsApp) | +91 78277 28607 | Header, hero, every Call button, all WhatsApp links, footer, contact, schema |
+| Secondary call line | +91 98110 30794 | Contact page, footer, Why RBE company details, schema |
 | Sales email | sales@rbecapitalgroup.in | Form fallback, footer, contact, schema |
 | General email | rehman@rbecapitalgroup.in | Footer, contact, Why RBE, schema |
 | Head office | Plot No 71A, Sector 27C, Faridabad, Haryana, India | Footer, contact, Why RBE, home facts, schema `address` |

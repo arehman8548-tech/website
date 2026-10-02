@@ -3,13 +3,13 @@ import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
-import { site, tel, wa, mailto, mailtoContact } from '../data/site';
+import { site, tel, tel2, wa, mailto, mailtoContact } from '../data/site';
 import { projects } from '../data/projects';
 
 const crumbs = [{ name: 'Book Equipment', href: '/contact/' }];
 const title = 'Check JCB Backhoe Availability for Your Site | RBE';
 const description =
-  `Send your site location, work type and start date. Call ${site.phoneDisplay} or WhatsApp ${site.whatsappDisplay}, 8 AM–8 PM, and we confirm availability.`;
+  `Send your site location, work type and start date. Call or WhatsApp ${site.phoneDisplay}, 8 AM–8 PM, and we confirm availability and mobilisation.`;
 ---
 <Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]}>
   <section class="ct dark">
@@ -25,6 +25,10 @@ const description =
           <a class="ct__ch" href={tel}>
             <Icon name="phone" />
             <span><b>Call</b><span class="mono">{site.phoneDisplay}</span></span>
+          </a>
+          <a class="ct__ch" href={tel2}>
+            <Icon name="phone" />
+            <span><b>Call — second line</b><span class="mono">{site.phone2Display}</span></span>
           </a>
           <a class="ct__ch ct__ch--wa" href={wa()} rel="noopener">
             <Icon name="wa" />

@@ -8,7 +8,7 @@ import ScrollStage, { type Chapter } from '../components/ScrollStage.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
 import { qa } from '../data/faq';
-import { site, tel, wa, mailto, mailtoContact } from '../data/site';
+import { site, tel, tel2, wa, mailto, mailtoContact } from '../data/site';
 
 const crumbs = [{ name: 'Why RBE', href: '/why-rbe/' }];
 const title = 'Why Contractors Choose RBE, a Rotoblast Engineering Enterprise';
@@ -110,8 +110,8 @@ const chapters: Chapter[] = [
         <dl class="spec" style="margin-top:28px">
           <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
           <div><dt>Deployment bases</dt><dd>Haldwani · Majkhali (Ranikhet)</dd></div>
-          <div><dt>Calls</dt><dd><a href={tel}>{site.phoneDisplay}</a></dd></div>
-          <div><dt>WhatsApp</dt><dd><a href={wa()} rel="noopener">{site.whatsappDisplay}</a></dd></div>
+          <div><dt>Call &amp; WhatsApp</dt><dd><a href={tel}>{site.phoneDisplay}</a> · <a href={wa()} rel="noopener">WhatsApp</a></dd></div>
+          <div><dt>Second line</dt><dd><a href={tel2}>{site.phone2Display}</a></dd></div>
           <div><dt>Sales</dt><dd><a href={mailto}>{site.email}</a></dd></div>
           <div><dt>General</dt><dd><a href={mailtoContact}>{site.contactEmail}</a></dd></div>
           <div><dt>Billing</dt><dd>GST invoice on request</dd></div>

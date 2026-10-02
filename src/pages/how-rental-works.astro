@@ -94,7 +94,7 @@ const quick = qa('how-quickly');
       </div>
       <div class="prose">
         <p class="lead" style="max-width:none" set:html={quick.html ?? quick.a} />
-        <p class="muted">Speak to us directly: call <a href={tel}>{site.phoneDisplay}</a> · WhatsApp <a href={wa()} rel="noopener">{site.whatsappDisplay}</a> · <a href={`mailto:${site.email}`}>{site.email}</a> · Enquiry hours {site.hours}</p>
+        <p class="muted">Speak to us directly: call or <a href={wa()} rel="noopener">WhatsApp</a> <a href={tel}>{site.phoneDisplay}</a> · <a href={`mailto:${site.email}`}>{site.email}</a> · Enquiry hours {site.hours}</p>
       </div>
     </div>
   </section>

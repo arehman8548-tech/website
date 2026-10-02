@@ -142,8 +142,8 @@ export const faq: FaqGroup[] = [
       {
         id: 'outside',
         q: 'We are a contractor from outside Uttarakhand. Can you support our Kumaon project?',
-        a: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing.',
-        html: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing. Read <a href="/kumaon-service-area/#outside">working in Kumaon from outside the state</a>.',
+        a: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Plot No 71A, Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing.',
+        html: 'Yes. Companies from Delhi NCR and elsewhere win road, building and infrastructure work in Kumaon but often have no equipment or contacts in the hills. RBE’s head office is in Plot No 71A, Sector 27C, Faridabad, and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme; RBE confirms availability, mobilisation and terms in writing. Read <a href="/kumaon-service-area/#outside">working in Kumaon from outside the state</a>.',
       },
       {
         id: 'remote',
@@ -190,8 +190,8 @@ export const faq: FaqGroup[] = [
       {
         id: 'who',
         q: 'Who is RBE Capital Equip.?',
-        a: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet.',
-        html: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet. See <a href="/why-rbe/">what you can expect from RBE</a>.',
+        a: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Plot No 71A, Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet.',
+        html: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Plot No 71A, Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet. See <a href="/why-rbe/">what you can expect from RBE</a>.',
       },
     ],
   },
