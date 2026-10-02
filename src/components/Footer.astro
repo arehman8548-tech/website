@@ -1,7 +1,7 @@
 ---
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { site, tel, wa, mailto } from '../data/site';
+import { site, tel, tel2, wa, mailto, mailtoContact } from '../data/site';
 import { places, districts } from '../data/geo';
 const year = new Date().getFullYear();
 ---
@@ -19,11 +19,13 @@ const year = new Date().getFullYear();
       <div class="ftr__contact">
         <p class="eyebrow">Talk to us about your site</p>
         <a class="ftr__big" href={tel}>{site.phoneDisplay}</a>
+        <p class="mono muted ftr__alt">Second line <a href={tel2}>{site.phone2Display}</a> · <a href={mailtoContact}>{site.contactEmail}</a></p>
         <div class="btn-row">
           <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp</a>
           <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.email}</a>
         </div>
-        <p class="mono muted ftr__hours"><Icon name="clock" />{site.hours}</p>
+        <p class="mono muted ftr__hours"><Icon name="clock" />Enquiries {site.hours}</p>
+        <p class="mono muted ftr__loc">Head office: {site.address.display}<br />Machine base: {site.machineBase.display}</p>
       </div>
     </div>
 
@@ -79,6 +81,8 @@ const year = new Date().getFullYear();
   .ftr__big:hover { color: var(--copper-hi); }
   .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
   .ftr__hours :global(svg) { width: 16px; }
+  .ftr__alt { margin: -14px 0 24px; font-size: .78rem; }
+  .ftr__loc { margin-top: 10px; font-size: .78rem; line-height: 1.7; }
   .ftr__cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.5fr; gap: 32px; padding-block: 56px; }
   .ftr__h { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .14em; color: var(--on-dark-2); margin-bottom: 18px; font-stretch: normal; }
   .ftr__h a { text-decoration: none; } .ftr__h a:hover { color: var(--copper-hi); }

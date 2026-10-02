@@ -3,13 +3,13 @@ import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
-import { site, tel, wa, mailto } from '../data/site';
+import { site, tel, tel2, wa, mailto, mailtoContact } from '../data/site';
 import { projects } from '../data/projects';
 
 const crumbs = [{ name: 'Book Equipment', href: '/contact/' }];
-const title = 'Book a Backhoe Loader — Check Availability for Your Kumaon Project | RBE Capital Equip.';
+const title = 'Check JCB Backhoe Availability for Your Site | RBE';
 const description =
-  'Check backhoe loader availability and request a rental quote for your project in Kumaon. Call, WhatsApp or send the two-minute project form to RBE Capital Equip.';
+  `Send your site location, work type and start date. Call or WhatsApp ${site.phoneDisplay}, 8 AM–8 PM, and we confirm availability and mobilisation.`;
 ---
 <Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]}>
   <section class="ct dark">
@@ -25,15 +25,25 @@ const description =
             <Icon name="phone" />
             <span><b>Call</b><span class="mono">{site.phoneDisplay}</span></span>
           </a>
+          <a class="ct__ch" href={tel2}>
+            <Icon name="phone" />
+            <span><b>Call — second line</b><span class="mono">{site.phone2Display}</span></span>
+          </a>
           <a class="ct__ch ct__ch--wa" href={wa()} rel="noopener">
             <Icon name="wa" />
             <span><b>WhatsApp</b><span class="mono">Send a map pin or site photos</span></span>
           </a>
           <a class="ct__ch" href={mailto}>
             <Icon name="mail" />
-            <span><b>Email</b><span class="mono">{site.email}</span></span>
+            <span><b>Sales email</b><span class="mono">{site.email}</span></span>
           </a>
-          <p class="mono ct__hours"><Icon name="clock" />{site.hours}</p>
+          <a class="ct__ch" href={mailtoContact}>
+            <Icon name="mail" />
+            <span><b>Contact email</b><span class="mono">{site.contactEmail}</span></span>
+          </a>
+          <p class="mono ct__hours"><Icon name="clock" />Enquiries {site.hours}</p>
+          <p class="mono ct__hours">Head office: {site.address.display}</p>
+          <p class="mono ct__hours">Machine base: {site.machineBase.display}</p>
         </div>
 
         <div class="ct__next">

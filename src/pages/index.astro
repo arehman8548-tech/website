@@ -9,9 +9,9 @@ import { projects } from '../data/projects';
 import { belts } from '../data/geo';
 import { qa } from '../data/faq';
 
-const title = 'Backhoe Loader Rental in Kumaon, Uttarakhand | RBE Capital Equip.';
+const title = 'JCB Backhoe Loader Hire for Kumaon Projects | RBE Capital Equip.';
 const description =
-  'Backhoe loader (JCB) rental for road, hill-cutting, site-development and infrastructure projects across Kumaon — Haldwani, Nainital, Almora, Bageshwar, Rudrapur and beyond. Check availability today.';
+  'Need a JCB backhoe loader in Kumaon? RBE Capital Equip. supplies machines from its Haldwani base for road, hill-cutting and site work. Check dates on WhatsApp.';
 
 const concerns = [
   { q: 'Will the machine actually reach my site?', a: 'We plan the route, the transport method and the arrival date before you commit — including narrow hill roads and remote last-mile access.', href: '/kumaon-service-area/#deployment', l: 'How deployment is planned' },
@@ -29,6 +29,16 @@ const audiences = [
 ];
 
 const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
+
+// Real site photographs — one per project type, each used once on the site.
+const photos: Record<string, string> = {
+  'road-construction': 'JCB backhoe loader clearing spoil while widening a hill road, workers standing by',
+  'hill-cutting': 'JCB backhoe loader cutting back a hillside on a mountain road above a lake',
+  'site-development': 'JCB backhoe loader excavating on a hillside plot beside a newly built villa',
+  'dam-bridge': 'JCB backhoe loader working a riverbank beside a bridge under construction',
+  'trenching': 'JCB backhoe loader digging a trench alongside a stone retaining wall',
+  'infrastructure': 'JCB backhoe loader excavating on an industrial and institutional project site',
+};
 ---
 <Base title={title} description={description}>
   <Hero />
@@ -85,6 +95,12 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
       {projects.map((p, i) => (
         <a class="proj__card" href={`/project-solutions/#${p.id}`}>
           <span class="mono proj__i">{String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+          {photos[p.id] && (
+            <figure class="proj__photo">
+              <img src={`/projects/${p.id}-800.webp`} srcset={`/projects/${p.id}-480.webp 480w, /projects/${p.id}-800.webp 800w`} sizes="(max-width: 500px) 76vw, 352px" width="800" height="533" loading="lazy" decoding="async" alt={photos[p.id]} />
+              <figcaption class="mono">Site photo</figcaption>
+            </figure>
+          )}
           <div class="proj__fig"><ProjectDiagram kind={p.kind} label={`Cross-section: ${p.title}`} /></div>
           <h3>{p.title}</h3>
           <p class="muted">{p.short}</p>
@@ -196,6 +212,10 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
   .proj__card { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; padding: 24px; background: var(--stone); text-decoration: none; border: 1px solid transparent; transition: border-color .3s var(--ease), background .3s var(--ease); }
   .proj__card:hover { border-color: var(--copper); background: var(--stone-2); }
   .proj__i { color: var(--on-light-2); font-size: .7rem; }
+  .proj__photo { position: relative; margin: 0; aspect-ratio: 3 / 2; overflow: hidden; background: var(--stone-2); }
+  .proj__photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+  .proj__card:hover .proj__photo img { transform: scale(1.03); }
+  .proj__photo figcaption { position: absolute; left: 0; bottom: 0; padding: 5px 10px; background: rgba(14,16,18,.72); color: var(--on-dark); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }
   .proj__fig { color: var(--on-light); padding: 8px 0 12px; border-bottom: 1px solid var(--line-l); }
   .proj__card h3 { font-size: 1.3rem; }
   .proj__card p { font-size: .95rem; flex: 1; }

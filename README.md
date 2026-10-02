@@ -19,7 +19,7 @@ Deploy `dist/` to any static host (Netlify, Cloudflare Pages, Vercel, S3). `publ
 
 | Path | What |
 |---|---|
-| `src/data/site.ts` | **Business facts** — phone, WhatsApp, email, hours, address, form endpoint. Values marked `CONFIRM` must be set before launch |
+| `src/data/site.ts` | **Business facts** — phone, WhatsApp, email, hours, address, form endpoint. Only verified values; anything not yet supplied is left empty and not rendered |
 | `src/data/site-url.mjs` | Production domain (canonical URLs, sitemap, schema) |
 | `src/data/geo.ts` | Kumaon locations, districts, terrain belts |
 | `src/data/projects.ts` | Project types (Project Solutions page, home cards) |

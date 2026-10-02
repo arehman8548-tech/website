@@ -5,6 +5,11 @@
    ========================================================================== */
 
 @font-face { font-family: 'Archivo'; src: url('/fonts/archivo-wdth.woff2') format('woff2'); font-weight: 500 800; font-stretch: 100% 125%; font-display: swap; }
+/* Metric-matched stand-in shown only until Archivo loads: Arial-metric bold scaled to Archivo's
+   width at the 116% stretch used by h1/h2 (and Times-metric italic
+   to Instrument Serif), so headings wrap identically and nothing shifts on swap. */
+@font-face { font-family: 'Archivo Fallback'; src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('LiberationSans-Bold'), local('Helvetica Bold'); font-weight: 500 800; font-stretch: 100% 125%; size-adjust: 117%; }
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT'), local('Liberation Serif Italic'), local('LiberationSerif-Italic'); font-style: italic; font-weight: 400; size-adjust: 92%; }
 @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
 @font-face { font-family: 'Instrument Serif'; src: url('/fonts/instrument-serif-italic.woff2') format('woff2'); font-style: italic; font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Plex Mono'; src: url('/fonts/plex-mono-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
@@ -30,9 +35,9 @@
   --line-d: rgba(238, 235, 229, 0.12);
   --line-l: rgba(20, 23, 26, 0.14);
 
-  --f-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --f-display: 'Archivo', 'Archivo Fallback', 'Arial Narrow', system-ui, sans-serif;
   --f-ui: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --f-serif: 'Instrument Serif', Georgia, serif;
+  --f-serif: 'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif;
   --f-mono: 'Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --gutter: clamp(16px, 4vw, 56px);
@@ -173,7 +178,7 @@ h1 .serif, h2 .serif { font-size: 1.08em; line-height: 0.9; }
 
 /* ---------- Page hero (inner pages) ---------- */
 .phero { background: var(--ink); color: var(--on-dark); padding-top: calc(var(--header-h) + clamp(48px, 8vw, 120px)); padding-bottom: clamp(56px, 8vw, 112px); position: relative; overflow: hidden; }
-.phero h1 { font-size: clamp(2.4rem, 6.2vw, 5.6rem); max-width: 15ch; }
+.phero h1 { font-size: clamp(2.4rem, 6.2vw, 5.6rem); max-width: 10.785em; } /* = 15ch of Archivo, in em so the box does not change size when the font swaps in */
 .phero .lead { color: var(--on-dark-2); margin-top: 28px; max-width: 46ch; }
 .phero .btn-row { margin-top: 36px; }
 .phero__grid { position: absolute; inset: 0; pointer-events: none; opacity: .5;

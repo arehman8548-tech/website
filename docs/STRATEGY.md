@@ -10,18 +10,18 @@ The site has to answer one buyer question: *"Can these people actually support m
 
 ### Facts still needed from the business (nothing below has been invented)
 
-All of these live in `src/data/site.ts` and are marked `CONFIRM`:
+Business facts live in `src/data/site.ts`:
 
 | Item | Status on the site |
 |---|---|
-| Phone / WhatsApp number | Placeholder `+91 00000 00000` — **must replace before launch** |
-| Email | Placeholder `enquiry@rbecapitalequip.com` |
+| Phone / WhatsApp number | Verified: `+91 78277 28607` (calls + WhatsApp); second call line `+91 98110 30794` |
+| Email | Verified: sales `sales@rbecapitalgroup.in`, contact `rehman@rbecapitalgroup.in` |
 | Domain | `src/data/site-url.mjs` — assumed `www.rbecapitalequip.com` |
-| Office / yard address | Not shown. Add it to turn on `LocalBusiness` schema and a map |
-| Enquiry hours | Placeholder `Mon–Sat, 8 am – 8 pm` |
+| Office / yard address | Verified: head office Plot No 71A, Sector 27C, Faridabad, Haryana; machine base Haldwani, Uttarakhand. PIN not supplied |
+| Enquiry hours | Verified: 8:00 AM – 8:00 PM (days not specified) |
 | Form endpoint | Empty → form hands off to WhatsApp / email. Add a Formspree/CRM URL to post directly |
 | Rotoblast Engineering website URL | Empty → omitted from schema |
-| Fleet (models, count, attachments e.g. rock breaker) | Not stated. Specs shown as **typical 7–8 t class ranges** with a note |
+| Fleet (models, count, attachments e.g. rock breaker) | JCB range of models, not one fixed model. Count/attachments not stated. Specs shown as **typical 7–8 t class ranges** with a note |
 | Operator included as standard | FAQ "Does the rental include an operator?" assumes yes — confirm |
 | Service commitments | "Machine checked before dispatch", "breakdown process agreed up front", "servicing planned around your hours", "one point of contact" — these are written as how RBE works. The owner must be willing to honour every one |
 | Years in business, clients, projects, certifications, testimonials | **Deliberately absent.** Add only real, verifiable ones |

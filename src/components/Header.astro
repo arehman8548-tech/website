@@ -65,7 +65,7 @@ const path = Astro.url.pathname;
   .hdr__nav a { white-space: nowrap; position: relative; text-decoration: none; font-size: .9rem; font-weight: 500; color: var(--on-dark-2); transition: color .2s; padding-block: 8px; }
   .hdr__nav a:hover, .hdr__nav a[aria-current] { color: var(--on-dark); }
   .hdr__nav a[aria-current]::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--copper); }
-  .hdr__act { display: flex; align-items: center; gap: 18px; }
+  .hdr__act { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
   .hdr__tel { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--f-mono); font-size: .82rem; color: var(--on-dark); white-space: nowrap; }
   .hdr__tel :global(svg) { width: 16px; height: 16px; color: var(--copper-hi); }
   .hdr__cta { white-space: nowrap; min-height: 42px; padding: 0 16px; font-size: .88rem; }

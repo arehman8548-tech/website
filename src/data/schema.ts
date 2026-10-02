@@ -1,4 +1,4 @@
-import { site, wa } from './site';
+import { site } from './site';
 import { places, districts } from './geo';
 
 const ORG_ID = `${site.url}/#org`;
@@ -33,11 +33,17 @@ export function organization() {
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: site.phoneE164,
+      email: site.email,
       contactType: 'sales',
       areaServed: 'IN',
       availableLanguage: ['English', 'Hindi'],
     },
-    sameAs: [wa().split('?')[0]],
+    // Machine base (Haldwani) is where equipment is kept — distinct from the head-office address below.
+    location: {
+      '@type': 'Place',
+      name: `${site.name} machine base`,
+      address: { '@type': 'PostalAddress', addressLocality: site.machineBase.locality, addressRegion: site.machineBase.region, addressCountry: site.machineBase.country },
+    },
   };
   if (hasAddress) {
     org.address = {
@@ -45,7 +51,6 @@ export function organization() {
       streetAddress: site.address.street,
       addressLocality: site.address.locality,
       addressRegion: site.address.region,
-      postalCode: site.address.postalCode,
       addressCountry: site.address.country,
     };
   }
