@@ -16,7 +16,7 @@ Business facts live in `src/data/site.ts`:
 |---|---|
 | Phone / WhatsApp number | Verified: `+91 78277 28607` (calls + WhatsApp); second call line `+91 98110 30794` |
 | Email | Verified: sales `sales@rbecapitalgroup.in`, contact `rehman@rbecapitalgroup.in` |
-| Domain | `src/data/site-url.mjs` — assumed `www.rbecapitalequip.com` |
+| Domain | Verified: `https://rbecapitalequip.in` (set in `src/data/site-url.mjs`; `rbecapitalgroup.in` is for email only) |
 | Office / yard address | Verified: head office Plot No 71A, Sector 27C, Faridabad, Haryana; machine base Haldwani, Uttarakhand. PIN not supplied |
 | Enquiry hours | Verified: 8:00 AM – 8:00 PM (days not specified) |
 | Form endpoint | Empty → form hands off to WhatsApp / email. Add a Formspree/CRM URL to post directly |

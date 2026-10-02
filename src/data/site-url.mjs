@@ -1,2 +1,2 @@
-// CONFIRM: replace with the live domain before launch. Used for canonical URLs, sitemap and schema.
-export const SITE_URL = 'https://www.rbecapitalequip.com';
+// Production (canonical) domain. Used for canonical URLs, sitemap, robots.txt, schema and Open Graph.
+export const SITE_URL = 'https://rbecapitalequip.in';

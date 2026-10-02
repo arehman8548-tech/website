@@ -30,7 +30,8 @@ const audiences = [
 
 const answers = ['hill-roads', 'how-quickly', 'remote', 'cost'].map(qa);
 
-// Real site photographs — one per project type, each used once on the site.
+// Real site photographs — one per project type, each used once on the site. Captions stay neutral:
+// no photo is attributed to a named project without evidence.
 const photos: Record<string, string> = {
   'road-construction': 'JCB backhoe loader clearing spoil while widening a hill road, workers standing by',
   'hill-cutting': 'JCB backhoe loader cutting back a hillside on a mountain road above a lake',
@@ -98,7 +99,7 @@ const photos: Record<string, string> = {
           {photos[p.id] && (
             <figure class="proj__photo">
               <img src={`/projects/${p.id}-800.webp`} srcset={`/projects/${p.id}-480.webp 480w, /projects/${p.id}-800.webp 800w`} sizes="(max-width: 500px) 76vw, 352px" width="800" height="533" loading="lazy" decoding="async" alt={photos[p.id]} />
-              <figcaption class="mono">Site photo</figcaption>
+              <figcaption class="mono">On-site equipment</figcaption>
             </figure>
           )}
           <div class="proj__fig"><ProjectDiagram kind={p.kind} label={`Cross-section: ${p.title}`} /></div>
