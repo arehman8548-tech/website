@@ -110,8 +110,10 @@ const chapters = [
     opacity: 0; visibility: hidden; transform: translateY(28px); transition: opacity .7s var(--ease), transform .9s var(--ease), visibility 0s .7s; }
   .hero__chap.is-on { opacity: 1; visibility: visible; transform: none; transition: opacity .7s var(--ease), transform .9s var(--ease), visibility 0s; pointer-events: auto; }
   .hero__chap > * { pointer-events: auto; }
-  .hero__chap--0 { padding-top: var(--header-h); padding-bottom: 40px; }
-  .hero__chap--0 h1 { max-width: 13ch; font-size: clamp(2.6rem, 5.4vw, 4.9rem); }
+  /* Opening copy always starts clear of the fixed header: centred when it fits,
+     pushed down (never up behind the logo and nav) when it does not. */
+  .hero__chap--0 { justify-content: safe center; padding-top: calc(var(--header-h) + clamp(28px, 5vh, 56px)); padding-bottom: 104px; }
+  .hero__chap--0 h1 { max-width: 13ch; font-size: clamp(2.4rem, min(5.4vw, 7.4vh), 4.9rem); }
   .hero__chap--0 .lead { color: var(--on-dark-2); margin-top: 28px; max-width: 46ch; }
   .hero__chap--0 .btn-row { margin-top: 36px; }
   .hero__scroll { display: flex; align-items: center; gap: 12px; margin-top: 48px; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-2); }
@@ -147,7 +149,7 @@ const chapters = [
     .hero { --len: 470vh; }
     .hero__shade { background: linear-gradient(0deg, rgba(14,16,18,.95) 0%, rgba(14,16,18,.78) 40%, rgba(14,16,18,.1) 70%, rgba(14,16,18,.35) 100%); }
     .hero__chap { justify-content: flex-end; padding-bottom: 72px; }
-    .hero__chap--0 { padding-bottom: 40px; }
+    .hero__chap--0 { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } /* clear the fixed quick-contact bar */
     .hero__chap--0 .eyebrow { display: none; }
     .hero__chap--0 h1 { font-size: clamp(2rem, 9vw, 2.7rem); }
     .hero__chap--0 .lead { font-size: .95rem; margin-top: 14px; }
@@ -160,5 +162,11 @@ const chapters = [
     .hero__hud { display: none; }
     .hero__rail { bottom: 20px; font-size: .58rem; }
   }
-  @media (max-height: 760px) and (min-width: 861px) { .hero__chap--0 h1 { font-size: clamp(2.4rem, 5.6vw, 4.6rem); } .hero__scroll { display: none; } }
+  @media (max-height: 820px) and (min-width: 861px) {
+    .hero__chap--0 { padding-bottom: 96px; }
+    .hero__chap--0 h1 { font-size: clamp(2.2rem, min(5.4vw, 6.6vh), 4.9rem); }
+    .hero__chap--0 .lead { margin-top: 18px; }
+    .hero__chap--0 .btn-row { margin-top: 22px; }
+    .hero__scroll { display: none; }
+  }
 </style>
