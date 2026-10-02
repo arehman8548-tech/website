@@ -27,6 +27,7 @@ const year = new Date().getFullYear();
           <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp {site.whatsappDisplay}</a>
           <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.email}</a>
         </div>
+        <p class="mono muted ftr__hours"><Icon name="clock" />Enquiry hours · {site.hours}</p>
         <p class="mono muted ftr__hours"><Icon name="mail" />General: <a href={mailtoContact}>{site.contactEmail}</a></p>
       </div>
     </div>
@@ -85,7 +86,7 @@ const year = new Date().getFullYear();
   .ftr__hours a { color: inherit; }
   .ftr__big { display: block; font-family: var(--f-display); font-stretch: 118%; font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: -0.03em; text-decoration: none; margin-bottom: 26px; }
   .ftr__big:hover { color: var(--copper-hi); }
-  .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+  .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
   .ftr__hours :global(svg) { width: 16px; }
   .ftr__cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.5fr; gap: 32px; padding-block: 56px; }
   .ftr__h { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .14em; color: var(--on-dark-2); margin-bottom: 18px; font-stretch: normal; }

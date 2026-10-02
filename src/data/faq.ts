@@ -69,8 +69,8 @@ export const faq: FaqGroup[] = [
       {
         id: 'jcb',
         q: 'Is a “JCB” the same as a backhoe loader?',
-        a: 'Mostly, yes. In India people say “JCB” for any backhoe loader, because JCB is the best-known maker of them. The machine type is a backhoe loader: wheeled, with a loader bucket at the front and a digging arm at the rear. If you are searching for “JCB on rent” for a construction project, a backhoe loader is what you are looking for. (Some people also say “JCB” for a tracked excavator — if that is what your work needs, tell us and we will say so plainly.)',
-        html: 'Mostly, yes. In India people say “JCB” for any backhoe loader, because JCB is the best-known maker of them. The machine type is a <a href="/backhoe-loader-rental/">backhoe loader</a>: wheeled, with a loader bucket at the front and a digging arm at the rear. If you are searching for “JCB on rent” for a construction project, a backhoe loader is what you are looking for. (Some people also say “JCB” for a tracked excavator — if <a href="/backhoe-loader-rental/#when-not">that is what your work needs</a>, tell us and we will say so plainly.)',
+        a: 'Mostly, yes. In India people say “JCB” for any backhoe loader, because JCB is the best-known maker of them. The machine type is a backhoe loader: wheeled, with a loader bucket at the front and a digging arm at the rear. If you are searching for “JCB on rent” for a construction project, a backhoe loader is what you are looking for. RBE’s machines are JCB-make backhoe loaders across a range of models; the model supplied depends on your project and availability. (Some people also say “JCB” for a tracked excavator — if that is what your work needs, tell us and we will say so plainly.)',
+        html: 'Mostly, yes. In India people say “JCB” for any backhoe loader, because JCB is the best-known maker of them. The machine type is a <a href="/backhoe-loader-rental/">backhoe loader</a>: wheeled, with a loader bucket at the front and a digging arm at the rear. If you are searching for “JCB on rent” for a construction project, a backhoe loader is what you are looking for. RBE’s machines are JCB-make backhoe loaders across a range of models; the model supplied depends on your project and availability. (Some people also say “JCB” for a tracked excavator — if <a href="/backhoe-loader-rental/#when-not">that is what your work needs</a>, tell us and we will say so plainly.)',
       },
     ],
   },
@@ -148,8 +148,8 @@ export const faq: FaqGroup[] = [
       {
         id: 'dig-depth',
         q: 'How deep can a backhoe loader dig?',
-        a: 'Backhoe loaders in the common 7–8 tonne class typically reach a maximum digging depth of about 4.5 to 6 metres, depending on the model and whether it has an extending dipper. Practical trench depth on site is usually less and depends on soil, shoring and safety. The exact specification of RBE’s machine is shared with your quote.',
-        html: 'Backhoe loaders in the common 7–8 tonne class typically reach a maximum digging depth of about 4.5 to 6 metres, depending on the model and whether it has an extending dipper. Practical trench depth on site is usually less and depends on soil, shoring and safety. The exact specification of RBE’s machine is shared with your quote — see <a href="/backhoe-loader-rental/#spec">typical specification</a>.',
+        a: 'Backhoe loaders in the common 7–8 tonne class typically reach a maximum digging depth of about 4.5 to 6 metres, depending on the model and whether it has an extending dipper. Practical trench depth on site is usually less and depends on soil, shoring and safety. RBE supplies JCB backhoe loaders across a range of models, so the model and its specification are confirmed in your quote.',
+        html: 'Backhoe loaders in the common 7–8 tonne class typically reach a maximum digging depth of about 4.5 to 6 metres, depending on the model and whether it has an extending dipper. Practical trench depth on site is usually less and depends on soil, shoring and safety. RBE supplies JCB backhoe loaders across a range of models, so the model and its specification are confirmed in your quote — see <a href="/backhoe-loader-rental/#spec">typical specification</a>.',
       },
       {
         id: 'monsoon',
@@ -184,8 +184,8 @@ export const faq: FaqGroup[] = [
       {
         id: 'who',
         q: 'Who is RBE Capital Equip.?',
-        a: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents backhoe loaders, always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet.',
-        html: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents backhoe loaders, always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet. See <a href="/why-rbe/">what you can expect from RBE</a>.',
+        a: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet.',
+        html: 'RBE Capital Equip. is an enterprise of Rotoblast Engineering. It rents JCB backhoe loaders — across a range of models, depending on the project and availability — always with an operator and for a minimum of 15 days, to contractors, developers and infrastructure companies building in Kumaon, Uttarakhand. The head office is in Sector 27C, Faridabad, Haryana; the machine is dispatched from Haldwani and Majkhali near Ranikhet. See <a href="/why-rbe/">what you can expect from RBE</a>.',
       },
     ],
   },

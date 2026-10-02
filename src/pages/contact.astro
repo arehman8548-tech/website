@@ -37,6 +37,7 @@ const description =
             <Icon name="mail" />
             <span><b>General contact</b><span class="mono">{site.contactEmail}</span></span>
           </a>
+          <p class="mono ct__hours"><Icon name="clock" />Enquiry hours · {site.hours}</p>
           <dl class="ct__facts mono">
             <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
             <div><dt>Machine dispatched from</dt><dd>Haldwani · Majkhali (Ranikhet)</dd></div>
@@ -92,8 +93,8 @@ const description =
             <div class="f">
               <label for="f-eq">Required equipment</label>
               <select id="f-eq" name="equipment">
-                <option>Backhoe loader</option>
-                <option>Backhoe loader with rock breaker</option>
+                <option>JCB backhoe loader</option>
+                <option>JCB backhoe loader with rock breaker</option>
                 <option>Not sure — please advise</option>
               </select>
             </div>
@@ -143,6 +144,7 @@ const description =
             </button>
             <p class="mono fm__alt">or <a href={mailto} data-mail>send by email</a></p>
           </div>
+          <p class="mono fm__alt fm__hrs">Enquiry hours: {site.hours}. You can send the form at any time.</p>
           <p class="fm__status" role="status" aria-live="polite" data-status></p>
         </form>
       </div>
@@ -250,6 +252,7 @@ const description =
   .f__h { margin: 0; font-size: .78rem; color: var(--on-light-2); }
   .fm__foot { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; }
   .fm__alt { font-size: .82rem; color: var(--on-light-2); }
+  .fm__hrs { margin: 14px 0 0; }
   .fm__alt a { color: inherit; }
   .fm__status { margin: 16px 0 0; font-weight: 500; min-height: 1.5em; }
   @media (max-width: 960px) {

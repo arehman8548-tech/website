@@ -5,8 +5,10 @@ import { SITE_URL } from './site-url.mjs';
  *
  * Everything here was confirmed by RBE Capital Equip. Nothing is inferred.
  * Not yet supplied (and therefore NOT shown anywhere on the site): fleet size,
- * machine make/model, years in operation, clients, project history,
- * testimonials, certifications, enquiry hours, response times, pricing, GSTIN.
+ * a fixed machine model or its specification (machines are JCB backhoe loaders
+ * across a range of models — never one stated model), years in operation,
+ * client names, project values/dates/quantities, testimonials, certifications,
+ * response times, pricing, GSTIN, Rotoblast Engineering website/history.
  */
 export const site = {
   url: SITE_URL,
@@ -30,6 +32,8 @@ export const site = {
   contactEmail: 'rehman@rbecapitalgroup.in',
   // Optional form endpoint (Formspree / CRM webhook). Empty = WhatsApp + email handoff.
   formEndpoint: '',
+  // Enquiry hours (confirmed). Days of the week were not specified — do not add them.
+  hours: '8:00 AM – 8:00 PM',
 
   headOffice: {
     display: 'Sector 27C, Faridabad, Haryana, India',
@@ -45,6 +49,9 @@ export const site = {
   ],
 
   // Rental terms confirmed by the business.
+  // Confirmed wording: JCB, range of models; never imply more than one machine at a time.
+  machine: 'JCB backhoe loader',
+  machineRange: 'JCB backhoe loaders across a range of models — the model supplied depends on your project requirement and availability',
   terms: {
     minimum: '15 days',
     operator: 'Every rental is supplied with an operator',

@@ -13,7 +13,7 @@ export function organization() {
     url: `${site.url}/`,
     logo: `${site.url}/brand/rbe-mark.png`,
     description:
-      'RBE Capital Equip. rents backhoe loaders, always with an operator and for a minimum of 15 days, to construction and infrastructure projects across the Kumaon region of Uttarakhand, India. The machine is dispatched from Haldwani and from Majkhali near Ranikhet. Head office: Sector 27C, Faridabad, Haryana. It is an enterprise of Rotoblast Engineering.',
+      'RBE Capital Equip. rents JCB backhoe loaders (range of models, depending on project requirement and availability), always with an operator and for a minimum of 15 days, to construction and infrastructure projects across the Kumaon region of Uttarakhand, India. The machine is dispatched from Haldwani and from Majkhali near Ranikhet. Head office: Sector 27C, Faridabad, Haryana. It is an enterprise of Rotoblast Engineering.',
     telephone: site.phoneE164,
     email: site.email,
     address: {
@@ -41,8 +41,8 @@ export function organization() {
       'Construction equipment mobilisation in hilly terrain',
     ],
     contactPoint: [
-      { '@type': 'ContactPoint', telephone: site.phoneE164, email: site.email, contactType: 'sales', areaServed: 'IN', availableLanguage: ['English', 'Hindi'] },
-      { '@type': 'ContactPoint', telephone: `+${site.whatsappE164}`, contactType: 'sales', description: 'WhatsApp', areaServed: 'IN', availableLanguage: ['English', 'Hindi'] },
+      { '@type': 'ContactPoint', telephone: site.phoneE164, email: site.email, contactType: 'sales', areaServed: 'IN', availableLanguage: ['English', 'Hindi'], hoursAvailable: { '@type': 'OpeningHoursSpecification', opens: '08:00', closes: '20:00' } },
+      { '@type': 'ContactPoint', telephone: `+${site.whatsappE164}`, contactType: 'sales', description: 'WhatsApp', areaServed: 'IN', availableLanguage: ['English', 'Hindi'], hoursAvailable: { '@type': 'OpeningHoursSpecification', opens: '08:00', closes: '20:00' } },
       { '@type': 'ContactPoint', email: site.contactEmail, contactType: 'customer service' },
     ],
   };
