@@ -22,7 +22,7 @@ export const site = {
   whatsappDisplay: '+91 78277 28607',
   whatsappDigits: '917827728607', // for wa.me links: country code + number, no "+" or spaces
   email: 'arehman@rotoblasteng.com', // direct contact
-  salesEmail: 'sales@rotoblasteng.com', // rental enquiries and quotes
+  salesEmail: 'sales@rbecapitalgroup.in', // rental enquiries and quotes — the enquiry address on every page and form
 
   deploymentBase: { locality: 'Haldwani', region: 'Uttarakhand', country: 'IN' },
   headOffice: { area: 'Sector 27C', locality: 'Faridabad', region: 'Haryana', country: 'IN' },

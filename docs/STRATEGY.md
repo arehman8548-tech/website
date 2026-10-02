@@ -13,7 +13,7 @@ The site has to answer one buyer question: *"Can these people actually support m
 | Item | On the site |
 |---|---|
 | WhatsApp | +91 78277 28607 (`wa.me/917827728607`) — the primary fast-response route |
-| Email | sales@rotoblasteng.com (sales/quotes) · arehman@rotoblasteng.com (direct) |
+| Email | sales@rbecapitalgroup.in (sales/quotes) · arehman@rotoblasteng.com (direct) |
 | Machine deployment base | Haldwani, Uttarakhand (not an office address) |
 | Head office | Sector 27C, Faridabad, Haryana, India (no street/PIN supplied — none invented) |
 | Phone line | None supplied → no Call buttons, no `telephone` in schema |

@@ -1,0 +1,164 @@
+---
+/**
+ * A pinned, scroll-driven 3D story. Chapters are real HTML (headings, copy,
+ * links) layered over a WebGL scene that scroll progress drives.
+ *
+ * Live (default with JS + motion allowed): the section is tall, the stage is
+ * sticky, chapters cross-fade as the scene progresses.
+ * Static (reduced motion / no WebGL / scene failed / no JS): the same chapters
+ * flow as content, each with a realistic still rendered from the scene.
+ */
+import Icon from './Icon.astro';
+
+export interface Chapter {
+  k: string; // short label, e.g. "Loader end"
+  h: string; // heading
+  p?: string; // copy
+  html?: string; // copy with markup (trusted, authored here)
+  link?: { href: string; t: string };
+  cta?: boolean; // show the enquiry buttons
+  still: string; // /scenes/... rendered still
+  alt: string;
+  span?: number; // relative share of scroll (default 1)
+}
+interface Props {
+  scene: string;
+  id: string;
+  label: string;
+  chapters: Chapter[];
+  len?: number; // vh of scroll per chapter
+  hud?: { k: string; label: string; v: string }[];
+  rail?: boolean;
+  caption?: string;
+  hl?: 'h2' | 'h3';
+  tone?: 'dark' | 'dusk';
+  ctaHref?: string;
+  ctaWa?: string;
+}
+const { scene, id, label, chapters, len = 120, hud = [], rail = true, caption, hl = 'h2', tone = 'dark', ctaHref = '/contact/', ctaWa } = Astro.props;
+const total = chapters.reduce((s, c) => s + (c.span ?? 1), 0);
+let acc = 0;
+const windows = chapters.map((c) => {
+  const a = acc / total;
+  acc += c.span ?? 1;
+  return [a, acc / total] as const;
+});
+const H = hl;
+---
+<section class={`stg stg--${tone}`} id={id} data-stage={scene} aria-label={label} style={`--n:${total};--len:${len}vh`}>
+  <div class="stg__sticky">
+    <img class="stg__poster" src={chapters[0].still} alt="" width="1600" height="1000" loading="lazy" decoding="async" aria-hidden="true" />
+    <canvas class="stg__canvas" data-stage-canvas aria-hidden="true"></canvas>
+    <div class="stg__shade" aria-hidden="true"></div>
+    <slot name="overlay" />
+
+    <div class="stg__copy">
+      {chapters.map((c, i) => (
+        <article class={`stg__chap wrap${i === 0 ? ' is-on' : ''}`} data-chap={i} data-a={windows[i][0]} data-b={i === chapters.length - 1 ? 1.01 : windows[i][1]}>
+          <figure class="stg__still"><img src={c.still} alt={c.alt} width="1600" height="1000" loading="lazy" decoding="async" /></figure>
+          <div class="stg__card">
+            <p class="eyebrow"><span class="idx">{String(i + 1).padStart(2, '0')}</span>{c.k}</p>
+            <H class="stg__h">{c.h}</H>
+            {c.html ? <div class="stg__p" set:html={c.html} /> : c.p && <p class="stg__p">{c.p}</p>}
+            {c.link && <a class="inline stg__link" href={c.link.href}>{c.link.t} →</a>}
+            {c.cta && (
+              <div class="btn-row stg__cta">
+                <a class="btn" href={ctaHref}>Request a rental quote <Icon name="arrow" /></a>
+                {ctaWa && <a class="btn btn--wa" href={ctaWa} rel="noopener"><Icon name="wa" />WhatsApp</a>}
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {hud.length > 0 && (
+      <dl class="stg__hud" aria-hidden="true">
+        {hud.map((h) => <div><dt>{h.label}</dt><dd data-hud={h.k}>{h.v}</dd></div>)}
+      </dl>
+    )}
+    {rail && (
+      <ol class="stg__rail" aria-hidden="true">
+        {chapters.map((c, i) => <li style={`flex:${c.span ?? 1}`}><span>{String(i + 1).padStart(2, '0')}</span>{c.k}</li>)}
+        <span class="stg__bar"><i data-stage-bar></i></span>
+      </ol>
+    )}
+    {caption && <p class="stg__cap mono">{caption}</p>}
+  </div>
+</section>
+
+<script>
+  import { initStages } from '../scripts/stage/runtime';
+  initStages();
+</script>
+
+<style>
+  /* ---------- Static layout (base): stills + text as a sequence ---------- */
+  .stg { position: relative; background: var(--ink); color: var(--on-dark); padding-block: clamp(48px, 7vw, 96px); }
+  .stg--dusk { background: #121619; }
+  .stg__poster, .stg__canvas, .stg__shade, .stg__hud, .stg__rail { display: none; }
+  .stg__copy { display: grid; gap: clamp(40px, 6vw, 80px); }
+  .stg__chap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .stg__still { margin: 0; aspect-ratio: 16 / 10; background: var(--ink-3); overflow: hidden; }
+  .stg__still img { width: 100%; height: 100%; object-fit: cover; }
+  .stg__card { max-width: 460px; }
+  .stg__h { font-size: clamp(1.6rem, 3vw, 2.6rem); margin-bottom: 16px; }
+  .stg__p { color: var(--on-dark-2); }
+  .stg__p :global(p) { margin: 0 0 .8em; }
+  .stg__p :global(ul) { margin: 0; padding-left: 1.1em; }
+  .stg__p :global(li) { margin-bottom: .3em; }
+  .stg__p :global(li::marker) { color: var(--copper-hi); }
+  .stg__link { display: inline-block; margin-top: 10px; font-weight: 500; }
+  .stg__cta { margin-top: 24px; }
+  .stg__cap { margin: 24px var(--gutter) 0; font-size: .7rem; color: var(--on-dark-2); letter-spacing: .04em; }
+  @media (max-width: 860px) { .stg__chap { grid-template-columns: 1fr; } }
+
+  /* ---------- Live layout: pinned cinematic stage ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .stg:not(.is-static) { height: calc(var(--n) * var(--len) + 100vh); padding: 0; }
+    :global(.js) .stg:not(.is-static) .stg__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+    :global(.js) .stg:not(.is-static) :is(.stg__poster, .stg__canvas, .stg__shade) { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+    :global(.js) .stg:not(.is-static) .stg__poster { object-fit: cover; transition: opacity 1s var(--ease); filter: saturate(.9); }
+    :global(.js) .stg:not(.is-static) .stg__canvas { opacity: 0; transition: opacity 1.1s var(--ease); }
+    :global(.js) .stg.is-live .stg__canvas { opacity: 1; }
+    :global(.js) .stg.is-live .stg__poster { opacity: 0; }
+    :global(.js) .stg:not(.is-static) .stg__shade { pointer-events: none; background:
+      linear-gradient(90deg, rgba(14,16,18,.84) 0%, rgba(14,16,18,.5) 30%, rgba(14,16,18,0) 56%),
+      linear-gradient(0deg, rgba(14,16,18,.72) 0%, rgba(14,16,18,0) 24%),
+      linear-gradient(180deg, rgba(14,16,18,.45) 0%, rgba(14,16,18,0) 16%); }
+    :global(.js) .stg:not(.is-static) .stg__copy { position: absolute; inset: 0; display: block; pointer-events: none; }
+    :global(.js) .stg:not(.is-static) .stg__chap { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: var(--header-h);
+      opacity: 0; transform: translateY(26px); transition: opacity .6s var(--ease), transform .8s var(--ease); }
+    :global(.js) .stg:not(.is-static) .stg__chap.is-on { opacity: 1; transform: none; }
+    :global(.js) .stg:not(.is-static) .stg__chap.is-on .stg__card { pointer-events: auto; }
+    :global(.js) .stg:not(.is-static) .stg__still { display: none; }
+    :global(.js) .stg:not(.is-static) .stg__card { padding: 28px 0 28px 28px; border-left: 1px solid var(--copper); max-width: 450px; }
+    :global(.js) .stg:not(.is-static) .stg__chap:not(.is-on) a { visibility: hidden; transition: visibility 0s .6s; }
+
+    :global(.js) .stg:not(.is-static) .stg__hud { display: grid; position: absolute; right: var(--gutter); bottom: 92px; grid-template-columns: repeat(2, auto); gap: 14px 28px; margin: 0; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--on-dark-2); }
+    .stg__hud div { display: grid; gap: 4px; min-width: 116px; }
+    .stg__hud dd { margin: 0; font-weight: 500; color: var(--on-dark); font-size: .82rem; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+    :global(.js) .stg:not(.is-static) .stg__rail { display: flex; position: absolute; left: var(--gutter); right: var(--gutter); bottom: 32px; list-style: none; margin: 0; padding: 0 0 14px; font-family: var(--f-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-2); }
+    .stg__rail li { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 12px; }
+    .stg__rail li span { color: var(--copper-hi); margin-right: 8px; }
+    .stg__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line-d); }
+    .stg__bar i { position: absolute; inset: 0; background: var(--copper); transform-origin: left; transform: scaleX(0); }
+    :global(.js) .stg:not(.is-static) .stg__cap { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 20px); margin: 0; max-width: 38ch; text-align: right; opacity: .8; }
+
+    @media (max-width: 860px) {
+      :global(.js) .stg:not(.is-static) .stg__shade { background: linear-gradient(0deg, rgba(14,16,18,.95) 0%, rgba(14,16,18,.8) 36%, rgba(14,16,18,0) 62%), linear-gradient(180deg, rgba(14,16,18,.5) 0%, rgba(14,16,18,0) 18%); }
+      :global(.js) .stg:not(.is-static) .stg__chap { justify-content: flex-end; padding-bottom: 116px; }
+      :global(.js) .stg:not(.is-static) .stg__card { padding: 0 0 0 16px; }
+      :global(.js) .stg:not(.is-static) .stg__h { font-size: 1.55rem; margin-bottom: 10px; }
+      :global(.js) .stg:not(.is-static) .stg__p { font-size: .94rem; line-height: 1.5; }
+      :global(.js) .stg:not(.is-static) .stg__p :global(ul) { display: none; }
+      :global(.js) .stg:not(.is-static) .stg__hud { display: none; }
+      :global(.js) .stg:not(.is-static) .stg__rail { bottom: 80px; font-size: .56rem; }
+      :global(.js) .stg:not(.is-static) .stg__rail li { padding-right: 6px; }
+      :global(.js) .stg:not(.is-static) .stg__rail li { font-size: 0; }
+      :global(.js) .stg:not(.is-static) .stg__rail li span { font-size: .56rem; }
+      :global(.js) .stg:not(.is-static) .stg__cap { top: auto; bottom: 0; left: var(--gutter); right: auto; text-align: left; font-size: .58rem; opacity: .6; display: none; }
+    }
+  }
+  :global(.capture) .stg :is(.stg__copy, .stg__hud, .stg__rail, .stg__cap, .stg__shade) { display: none !important; }
+</style>

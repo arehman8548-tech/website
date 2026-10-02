@@ -17,9 +17,13 @@ const description =
     <p class="lead">The questions contractors, developers, site engineers and procurement teams actually ask about renting a backhoe loader for a Kumaon project. Direct answer first, detail after.</p>
   </PageHero>
 
-  <div class="kb paper">
+  <div class="kb paper" data-stage="knowledge" data-mode="track" data-min-width="1100">
     <div class="wrap kb__grid">
       <nav class="kb__nav" aria-label="Topics">
+        <figure class="kb__view" aria-hidden="true">
+          <canvas data-stage-canvas></canvas>
+          <figcaption class="mono" data-hud="cap">Hire for a task, a month or the project phase</figcaption>
+        </figure>
         <p class="eyebrow">Topics</p>
         <ol>
           {faq.map((g) => <li><a href={`#${g.id}`}>{g.title}<span class="mono">{g.items.length}</span></a></li>)}
@@ -32,7 +36,7 @@ const description =
       </nav>
       <div class="kb__body">
         {faq.map((g) => (
-          <section class="kb__group" id={g.id} aria-labelledby={`${g.id}-h`}>
+          <section class="kb__group" id={g.id} aria-labelledby={`${g.id}-h`} data-track>
             <header>
               <h2 id={`${g.id}-h`}>{g.title}</h2>
               <p class="muted">{g.intro}</p>
@@ -57,7 +61,17 @@ const description =
   <QuoteBand heading="Have a site and a start date? Check availability now." />
 </Base>
 
+<script>
+  import { initStages } from '../scripts/stage/runtime';
+  initStages();
+</script>
+
 <style>
+  .kb__view { display: none; margin: 0 0 28px; }
+  :global(.kb.is-live) .kb__view { display: block; }
+  .kb__view canvas { display: block; width: 100%; aspect-ratio: 4 / 3; background: var(--ink); opacity: 0; transition: opacity .8s var(--ease); }
+  :global(.kb.is-live) .kb__view canvas { opacity: 1; }
+  .kb__view figcaption { margin-top: 10px; font-size: .7rem; letter-spacing: .03em; color: var(--on-light-2); min-height: 2.6em; }
   .kb { padding-block: clamp(64px, 8vw, 120px); }
   .kb__grid { display: grid; grid-template-columns: 280px 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
   .kb__nav { position: sticky; top: calc(var(--header-h) + 32px); }

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import BackhoeDrawing from '../components/BackhoeDrawing.astro';
+import ScrollStage, { type Chapter } from '../components/ScrollStage.astro';
 import QuoteBand from '../components/QuoteBand.astro';
 import NextSteps from '../components/NextSteps.astro';
 import Icon from '../components/Icon.astro';
@@ -18,6 +18,15 @@ const loaderEnd = ['Loading tippers and trucks', 'Back-filling trenches and behi
 const hoeEnd = ['Drain and utility trenches', 'Footing and column-pit excavation', 'Culvert and chamber pits', 'Cutting road edges and banks', 'Retaining-wall foundations', 'Breaking out soft and weathered rock'];
 const mobility = ['Drives between nearby work fronts on its own wheels', 'Turns and works in narrow hill-road space', 'One machine and one operator instead of two', 'Quick to re-position as work moves along a road'];
 const dig = qa('dig-depth');
+
+const chapters: Chapter[] = [
+  { k: 'The machine', h: 'Two working ends. One operator.', p: 'A backhoe loader — often called a “JCB” in India, after one well-known manufacturer — is a wheeled tractor with a loader bucket at the front and a digging arm at the rear. It drives to the work front on its own wheels.', still: '/scenes/machine-0.jpg', alt: 'A backhoe loader driving along a gravel access track onto a hillside building plot.' },
+  { k: 'Loader end', h: 'Load, carry and fill the tipper.', p: 'The front bucket (typically about 1.0–1.1 m³) crowds into a stockpile, lifts to tipper height and loads it — the same bucket back-fills, levels and clears.', still: '/scenes/machine-1.jpg', alt: 'The loader bucket raised over a tipper truck, dumping soil into its body.' },
+  { k: 'Mobility', h: 'Turns within its own working space.', p: 'On a narrow plot or a single-lane hill road, the machine reverses, turns and re-positions without a second machine or a wide turning area.', still: '/scenes/machine-2.jpg', alt: 'Top-down view of the backhoe loader reversing through a 90-degree turn on a tight plot.' },
+  { k: 'Stabilisers', h: 'Stabilisers down before any digging.', p: 'The stabiliser legs lower onto firm ground and lift the rear slightly, so the backhoe can dig without rocking the machine. The seat turns to face the rear.', still: '/scenes/machine-3.jpg', alt: 'Stabiliser legs lowered onto the ground and the backhoe arm unfolding.' },
+  { k: 'Backhoe end', h: 'Footings, trenches and pits — to line and depth.', p: 'Here: a 2.4 m column footing dug in three passes to 1.8 m, spoil kept beside the pit for back-fill. Maximum dig depth for this class is about 4.5–6 m; practical depth depends on soil and shoring.', still: '/scenes/machine-4.jpg', alt: 'The backhoe bucket digging a square footing pit, with spoil piled beside it.' },
+  { k: 'Your site', h: 'One machine where you would otherwise need two.', p: 'Loading, digging, back-filling and moving between work fronts on one shift. Tell us the scope and we will confirm whether a backhoe loader is the right machine.', cta: true, still: '/scenes/machine-5.jpg', alt: 'Aerial view of the plot with a finished footing pit as the loaded tipper leaves.' },
+];
 ---
 <Base title={title} description={description} schema={[breadcrumbs(crumbs), rentalService()]}>
   <PageHero crumbs={crumbs} eyebrow="Equipment · Backhoe loader">
@@ -30,17 +39,21 @@ const dig = qa('dig-depth');
     </div>
   </PageHero>
 
-  <!-- Anatomy -->
-  <section class="section dark" aria-labelledby="h-anatomy" id="anatomy">
-    <div class="wrap">
-      <div class="head2">
-        <p class="eyebrow"><span class="idx">01</span>The machine</p>
-        <h2 id="h-anatomy">Two working ends. <span class="serif">One operator.</span></h2>
-        <p class="muted measure">A backhoe loader — often called a “JCB” in India, after one well-known manufacturer — is a wheeled tractor with a loader bucket at the front and a digging arm at the rear. The operator’s seat turns to face either end, so one machine handles digging and material handling on the same shift.</p>
-      </div>
-      <BackhoeDrawing />
-    </div>
-  </section>
+  <!-- The machine at work: scroll-driven capability story -->
+  <ScrollStage
+    scene="machine"
+    id="anatomy"
+    label="The backhoe loader at work on a hill site, from arrival to a finished footing pit"
+    chapters={chapters}
+    hud={[
+      { k: 'travel', label: 'Travel', v: '0.0 m' },
+      { k: 'loader', label: 'Loader edge', v: '—' },
+      { k: 'depth', label: 'Pit depth', v: '—' },
+      { k: 'stab', label: 'Stabilisers', v: 'Stowed' },
+    ]}
+    caption="Typical 7–8 t class machine, modelled to scale. Depths and heights read live from the model."
+    ctaWa={wa('Hello RBE Capital Equip., I need a backhoe loader on rent for a project.\nSite location:\nType of work:\nStart date / duration:')}
+  />
 
   <!-- What it does -->
   <section class="section paper" id="what-it-does" aria-labelledby="h-does">

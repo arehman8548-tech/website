@@ -22,7 +22,8 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   Object3D,
-  PCFSoftShadowMap,
+  PCFShadowMap,
+  Vector4,
   PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
@@ -36,7 +37,8 @@ import {
   WebGLRenderer,
 } from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { buildBackhoe, makeMaterials, type Pose } from './model';
+import { buildBackhoe, hoeIK, makeMaterials, type Pose } from './model';
+import { Dust, Excavation, ground, makeForest, makeHeap, withHoles } from '../three/kit';
 
 /* ------------------------------------------------------------------ */
 /* Maths                                                               */
@@ -85,6 +87,8 @@ function fbm(x: number, y: number, o = 4) {
 /* Story timeline                                                      */
 /* ------------------------------------------------------------------ */
 export const SITE_X = 17; // where the machine stops to dig
+const DIG_B = 5.4; // trench centre, metres behind the machine origin
+const DIG_DEPTH = 1.0;
 
 const driveKeys = [[0, 0], [0.36, 0], [0.62, SITE_X], [1, SITE_X]];
 const xAt = (p: number) => track(driveKeys, p)[0];
@@ -100,8 +104,9 @@ export function poseAt(p: number): Pose {
       [0, 0.16, 0.32],
       [0.17, 0.16, 0.32],
       [0.24, 0.0, -0.06],
-      [0.28, 0.0, 0.05],
-      [0.32, 0.48, 0.4],
+      [0.28, 0.0, 0.42],
+      [0.315, 0.5, 0.4],
+      [0.335, 0.5, -0.6],
       [0.36, 0.16, 0.32],
       [1, 0.16, 0.32],
     ],
@@ -111,24 +116,45 @@ export function poseAt(p: number): Pose {
   // Stabilisers deploy on arrival
   const stab = sstep(0.62, 0.67, p);
 
-  // Backhoe: folded travel pose → unfold → dig cycle → dump → rest
-  const [boom, dipper, hoeBucket, swing] = track(
-    [
-      [0, 1.18, -2.72, -1.7, 0],
-      [0.66, 1.18, -2.72, -1.7, 0],
-      [0.7, 0.62, -1.35, -0.55, 0],
-      [0.735, 0.08, -1.5, -0.35, 0],
-      [0.77, 0.12, -2.15, -1.6, 0],
-      [0.795, 0.7, -2.0, -2.0, 0],
-      [0.82, 0.7, -1.8, -2.0, 0.85],
-      [0.845, 0.66, -1.55, -0.45, 0.85],
-      [0.88, 0.5, -1.4, -0.5, 0.2],
-      [1, 0.45, -1.45, -0.6, 0.1],
-    ],
-    p,
-  );
+  // Backhoe: folded travel pose → unfold → two IK-driven passes into the trench → rest
+  const lift = Math.max(0, stab - 0.82) / 0.18 * 0.05;
+  let boom = 1.18, dipper = -2.72, hoeBucket = -1.7, swing = 0, hoeFill = 0;
+  const ready = hoeIK(DIG_B + 1, 1, -1.2, lift);
+  if (p > 0.66) {
+    const u = sstep(0.66, 0.7, p);
+    boom = lerp(1.18, ready.boom, u); dipper = lerp(-2.72, ready.dipper, u); hoeBucket = lerp(-1.7, ready.hoeBucket, u);
+  }
+  if (p > 0.7) {
+    const k = Math.min(1.999, ((Math.min(p, 0.86) - 0.7) / 0.16) * 2), i = Math.floor(k), t = p >= 0.86 ? 1 : k - i;
+    const d1 = ((i + 1) * DIG_DEPTH) / 2, d0 = (i * DIG_DEPTH) / 2;
+    const [back, h, phi, sw, fill] = track([
+      [0.0, DIG_B + 1.0, 1.0, -1.2, 0, 0],
+      [0.16, DIG_B + 1.05, -d0 + 0.05, -1.35, 0, 0],
+      [0.44, DIG_B - 0.85, -d1, -2.45, 0, 0.6],
+      [0.56, DIG_B - 0.7, 0.9, -3.05, 0, 1],
+      [0.7, DIG_B - 0.1, 1.9, -3.05, 0.85, 1],
+      [0.83, DIG_B - 0.1, 1.9, -0.25, 0.85, 0],
+      [1.0, DIG_B + 1.0, 1.0, -1.2, 0, 0],
+    ], t);
+    ({ boom, dipper, hoeBucket } = hoeIK(back, h, phi, lift));
+    swing = sw; hoeFill = fill;
+  }
+  const rest = sstep(0.88, 0.95, p);
+  if (rest > 0) {
+    const r = hoeIK(DIG_B - 0.6, 1.6, -2.6, lift);
+    boom = lerp(boom, r.boom, rest); dipper = lerp(dipper, r.dipper, rest); hoeBucket = lerp(hoeBucket, r.hoeBucket, rest); swing = lerp(swing, 0.1, rest);
+  }
+  const loaderFill = sstep(0.27, 0.29, p) * (1 - sstep(0.325, 0.34, p));
 
-  return { x, loaderLift, bucketWorld, boom, dipper, hoeBucket, swing, stab, pitch: clamp(-acc * 0.00004, -0.02, 0.02) };
+  return { x, loaderLift, bucketWorld, loaderFill, boom, dipper, hoeBucket, swing, hoeFill, stab, pitch: clamp(-acc * 0.00004, -0.02, 0.02) };
+}
+
+/** Trench depth reached by pass i at progress p (the pit is exactly where the bucket has been). */
+export function trenchDepth(p: number) {
+  if (p <= 0.7) return 0;
+  if (p >= 0.86) return DIG_DEPTH;
+  const k = ((p - 0.7) / 0.16) * 2, i = Math.floor(k), t = k - i;
+  return lerp((i * DIG_DEPTH) / 2, ((i + 1) * DIG_DEPTH) / 2, sstep(0.16, 0.44, t));
 }
 
 interface Cam { az: number; el: number; dist: number; ty: number; tx: number }
@@ -201,14 +227,17 @@ function makeGround(quality: number) {
   }
   g.setAttribute('color', new BufferAttribute(col, 3));
   g.computeVertexNormals();
-  const m = new Mesh(g, new MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
+  const m = new Mesh(g, ground([TRENCH_HOLE]));
   m.receiveShadow = true;
   return m;
 }
 
+/** Opening cut in the ground and road for the trench; sized when digging starts. */
+const TRENCH_HOLE = new Vector4(SITE_X - DIG_B, 0, -1, -1);
+
 function makeRoad() {
   const grp = new Group();
-  const road = new Mesh(new PlaneGeometry(220, 6.2, 1, 1), new MeshStandardMaterial({ color: '#3d3b38', roughness: 0.95 }));
+  const road = new Mesh(new PlaneGeometry(220, 6.2, 1, 1), withHoles(new MeshStandardMaterial({ color: '#3d3b38', roughness: 0.95 }), [TRENCH_HOLE]));
   road.rotation.x = -Math.PI / 2;
   road.position.set(40, 0.004, 0);
   road.receiveShadow = true;
@@ -236,32 +265,6 @@ function makeRoad() {
   par.receiveShadow = true;
   grp.add(par);
   return grp;
-}
-
-function makeTrees(count: number) {
-  const g = new ConeGeometry(0.9, 4.6, 6);
-  g.translate(0, 2.3, 0);
-  const m = new MeshStandardMaterial({ color: '#1f2b24', roughness: 1, flatShading: true });
-  const inst = new InstancedMesh(g, m, count);
-  const o = new Object3D();
-  let k = 0, tries = 0;
-  while (k < count && tries < count * 20) {
-    tries++;
-    const x = -50 + hash(tries, 3) * 200;
-    const z = -9.5 - hash(tries, 7) * 45;
-    const density = fbm(x * 0.05, z * 0.05) + sstep(-10, 20, x) * 0.25;
-    if (density < 0.5) continue;
-    const s = 0.7 + hash(tries, 11) * 0.9;
-    o.position.set(x, heightAt(x, z) - 0.2, z);
-    o.scale.set(s, s * (0.9 + hash(tries, 13) * 0.5), s);
-    o.rotation.y = hash(tries, 17) * 6;
-    o.updateMatrix();
-    inst.setMatrixAt(k++, o.matrix);
-  }
-  inst.count = k;
-  inst.castShadow = true;
-  inst.receiveShadow = true;
-  return inst;
 }
 
 /** Distant Kumaon ridgelines as layered silhouettes (atmospheric perspective). */
@@ -415,7 +418,7 @@ export async function createScene(canvas: HTMLCanvasElement, opts: { mobile: boo
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.02;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = PCFSoftShadowMap;
+  renderer.shadowMap.type = PCFShadowMap;
 
   const scene = new Scene();
   scene.background = new Color('#14181b');
@@ -452,34 +455,35 @@ export async function createScene(canvas: HTMLCanvasElement, opts: { mobile: boo
   scene.add(makeGround(quality));
   scene.add(makeRoad());
   await yieldToMain();
-  scene.add(makeTrees(mobile ? 320 : 900));
+  scene.add(makeForest(mobile ? 320 : 900, (i) => {
+    const x = -50 + hash(i, 3) * 200, z = -9.5 - hash(i, 7) * 45;
+    if (fbm(x * 0.05, z * 0.05) + sstep(-10, 20, x) * 0.25 < 0.5) return null;
+    return [x, heightAt(x, z), z, 1.1 + hash(i, 11) * 1.3];
+  }, { broad: 0.12 }));
   scene.add(makeSiteProps());
   await yieldToMain();
 
-  // Trench + spoil pile grow as the backhoe works
-  const trench = new Mesh(new PlaneGeometry(1, 0.8), new MeshStandardMaterial({ color: '#1c1712', roughness: 1 }));
-  trench.rotation.x = -Math.PI / 2;
-  trench.position.set(SITE_X - 5.6, 0.012, 0);
-  trench.receiveShadow = true;
-  scene.add(trench);
-  const spoilG = new SphereGeometry(1, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2);
-  {
-    const pos = spoilG.attributes.position as BufferAttribute;
-    for (let i = 0; i < pos.count; i++) {
-      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
-      const n = 0.85 + fbm(x * 3 + 5, z * 3) * 0.35;
-      pos.setXYZ(i, x * n, y * n * 0.55, z * n);
-    }
-    spoilG.computeVertexNormals();
-  }
-  const spoil = new Mesh(spoilG, new MeshStandardMaterial({ color: '#6a5442', roughness: 1, flatShading: true }));
-  spoil.castShadow = true;
-  spoil.receiveShadow = true;
+  // Trench + spoil pile grow as the backhoe works; a stockpile for the loader
+  const trench = new Excavation(2.4, 0.8, DIG_DEPTH, '#6e5643', '#4b3c2e');
+  trench.grp.position.set(SITE_X - DIG_B, 0, 0);
+  scene.add(trench.grp);
+  const spoil = makeHeap('#6a5442', 3, 0.6);
   scene.add(spoil);
+  const stock = makeHeap('#6d5441', 2, 0.55);
+  scene.add(stock);
+  const dust = new Dust(mobile ? 120 : 200);
+  scene.add(dust.points);
 
   const mats = makeMaterials();
   const machine = buildBackhoe(mats);
   scene.add(machine.root);
+  // place the stockpile at the lowered loader bucket, the spoil where the backhoe dumps
+  machine.apply(poseAt(0.26));
+  const edge = machine.loaderEdge();
+  stock.position.set(edge.x + 1.15, 0, 0);
+  machine.apply({ ...poseAt(0.83), ...hoeIK(DIG_B - 0.1, 1.9, -0.25, 0.05), swing: 0.85 });
+  const dumpAt = machine.hoeTip();
+  spoil.position.set(dumpAt.x, 0, dumpAt.z);
   await yieldToMain();
 
   const hazeCol = new Color('#46505a');
@@ -490,6 +494,7 @@ export async function createScene(canvas: HTMLCanvasElement, opts: { mobile: boo
   let last = performance.now();
   const t0 = last;
   let dirty = true;
+  let lastDust = performance.now(), lastP = -1, lastDepth = 0;
   const tmp = new Vector3();
   const api: HeroScene = {
     setProgress(p) { target = clamp(p); dirty = true; },
@@ -527,15 +532,28 @@ export async function createScene(canvas: HTMLCanvasElement, opts: { mobile: boo
     const pose = poseAt(p);
     machine.apply(pose);
 
-    // trench & spoil: grow with the dig cycle
-    const dig = sstep(0.72, 0.86, p);
-    trench.scale.set(0.01 + dig * 2.6, 1, 1);
-    trench.position.x = SITE_X - 5.5 - dig * 1.1;
-    trench.visible = dig > 0.01;
-    const pile = sstep(0.83, 0.88, p);
-    spoil.scale.setScalar(0.01 + pile * 0.95);
-    spoil.position.set(SITE_X - 4.2, 0, -2.6);
-    spoil.visible = pile > 0.01;
+    // trench & spoil follow the bucket; stockpile is crowded then topped back up
+    const depth = trenchDepth(p);
+    trench.set(depth);
+    TRENCH_HOLE.z = depth > 0.004 ? 1.2 : -1; TRENCH_HOLE.w = depth > 0.004 ? 0.4 : -1;
+    const f = depth / DIG_DEPTH;
+    spoil.visible = f > 0.03;
+    spoil.scale.set(0.5 + f * 0.9, 0.35 + f * 0.5, 0.5 + f * 0.8);
+    const sp = 1 - sstep(0.25, 0.28, p) * 0.18 + sstep(0.335, 0.35, p) * 0.18;
+    stock.scale.set(1.5 * sp, 0.9 * sp, 1.6 * sp);
+    stock.visible = p < 0.62;
+    // dust where the bucket bites or dumps
+    const dtS = Math.min(0.05, (now - lastDust) / 1000);
+    lastDust = now;
+    if (Math.abs(p - lastP) > 1e-5) {
+      const tp = machine.hoeTip();
+      if (depth > lastDepth + 1e-4) dust.emit(tp.x, 0.05, tp.z, 2, 0.5, 0.5, 1.0);
+      if (p > 0.325 && p < 0.345) { const e = machine.loaderEdge(); dust.emit(e.x, 1.4, e.z, 3, 0.9, -0.2, 1.4); }
+      if (p > 0.25 && p < 0.28) { const e = machine.loaderEdge(); dust.emit(e.x + 0.3, 0.2, e.z, 2, 0.7, 0.4, 1.2); }
+    }
+    lastP = p; lastDepth = depth;
+    dust.step(dtS);
+    if (dust.alive > 0) dirty = true;
 
     // atmosphere: from a dark studio moment to open hill country
     const reveal = sstep(0.3, 0.6, p);

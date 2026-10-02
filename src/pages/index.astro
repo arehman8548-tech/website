@@ -3,8 +3,6 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
 import QuoteBand from '../components/QuoteBand.astro';
-import KumaonMap from '../components/KumaonMap.astro';
-import ProjectDiagram from '../components/ProjectDiagram.astro';
 import { projects } from '../data/projects';
 import { belts } from '../data/geo';
 import { qa } from '../data/faq';
@@ -85,7 +83,7 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost', 'based'].map(qa)
       {projects.map((p, i) => (
         <a class="proj__card" href={`/project-solutions/#${p.id}`}>
           <span class="mono proj__i">{String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
-          <div class="proj__fig"><ProjectDiagram kind={p.kind} label={`Cross-section: ${p.title}`} /></div>
+          <div class="proj__fig"><img src={`/scenes/projects-${i}.jpg`} alt="" width="1600" height="1000" loading="lazy" decoding="async" /></div>
           <h3>{p.title}</h3>
           <p class="muted">{p.short}</p>
           <span class="proj__go">See tasks and limits <Icon name="arrow" /></span>
@@ -108,7 +106,10 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost', 'based'].map(qa)
         </dl>
         <a class="btn btn--ghost" href="/kumaon-service-area/">Locations and deployment planning <Icon name="arrow" /></a>
       </div>
-      <div class="geo__map rv"><KumaonMap /></div>
+      <a class="geo__map rv" href="/kumaon-service-area/#network" aria-label="Explore the 3D Kumaon service-area model">
+        <img src="/scenes/kumaon-home.jpg" alt="Terrain model of Kumaon with corridors from the Haldwani deployment base to the towns served, from Rudrapur in the plains to Berinag in the inner hills." width="1600" height="1000" loading="lazy" decoding="async" />
+        <span class="geo__cta mono">Explore the terrain model →</span>
+      </a>
     </div>
   </section>
 
@@ -196,7 +197,13 @@ const answers = ['hill-roads', 'how-quickly', 'remote', 'cost', 'based'].map(qa)
   .proj__card { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; padding: 24px; background: var(--stone); text-decoration: none; border: 1px solid transparent; transition: border-color .3s var(--ease), background .3s var(--ease); }
   .proj__card:hover { border-color: var(--copper); background: var(--stone-2); }
   .proj__i { color: var(--on-light-2); font-size: .7rem; }
-  .proj__fig { color: var(--on-light); padding: 8px 0 12px; border-bottom: 1px solid var(--line-l); }
+  .proj__fig { margin: 4px 0 6px; aspect-ratio: 16 / 10; overflow: hidden; background: var(--ink-3); }
+  .proj__fig img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .proj__card:hover .proj__fig img { transform: scale(1.04); }
+  .geo__map { position: relative; display: block; aspect-ratio: 16 / 11; overflow: hidden; background: var(--ink-3); text-decoration: none; }
+  .geo__map img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+  .geo__map:hover img { transform: scale(1.03); }
+  .geo__cta { position: absolute; left: 0; bottom: 0; padding: 10px 14px; background: rgba(14,16,18,.72); color: var(--on-dark); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
   .proj__card h3 { font-size: 1.3rem; }
   .proj__card p { font-size: .95rem; flex: 1; }
   .proj__go { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: .92rem; }

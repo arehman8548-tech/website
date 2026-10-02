@@ -166,8 +166,8 @@ export const faq: FaqGroup[] = [
       {
         id: 'based',
         q: 'Where is RBE Capital Equip. based?',
-        a: 'Machines are deployed from Haldwani, Uttarakhand, for project sites across Kumaon. The head office is in Sector 27C, Faridabad, Haryana. Enquiries are handled on WhatsApp (+91 78277 28607) and by email (sales@rotoblasteng.com).',
-        html: 'Machines are deployed from Haldwani, Uttarakhand, for project sites across Kumaon. The head office is in Sector 27C, Faridabad, Haryana. Enquiries are handled on WhatsApp (+91 78277 28607) and by email (sales@rotoblasteng.com) — see <a href="/contact/">contact</a>.',
+        a: 'Machines are deployed from Haldwani, Uttarakhand, for project sites across Kumaon. The head office is in Sector 27C, Faridabad, Haryana. Enquiries are handled on WhatsApp (+91 78277 28607) and by email (sales@rbecapitalgroup.in).',
+        html: 'Machines are deployed from Haldwani, Uttarakhand, for project sites across Kumaon. The head office is in Sector 27C, Faridabad, Haryana. Enquiries are handled on WhatsApp (+91 78277 28607) and by email (sales@rbecapitalgroup.in) — see <a href="/contact/">contact</a>.',
       },
       {
         id: 'where',
