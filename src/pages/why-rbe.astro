@@ -7,19 +7,21 @@ import Wordmark from '../components/Wordmark.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbs } from '../data/schema';
 import { qa } from '../data/faq';
+import { site, tel, wa, mailto, mailtoContact } from '../data/site';
 
 const crumbs = [{ name: 'Why RBE', href: '/why-rbe/' }];
 const title = 'Why Contractors Choose RBE Capital Equip. — An Enterprise of Rotoblast Engineering';
 const description =
-  'What you can expect when you rent a backhoe loader from RBE Capital Equip.: confirmed availability, machines checked before dispatch, planned mobilisation and breakdown support agreed before work starts.';
+  'What you get when you rent a backhoe loader from RBE Capital Equip.: operator always included, terms in writing, machine checked before dispatch, breakdown handling agreed up front and one point of contact. An enterprise of Rotoblast Engineering.';
 
 const rows = [
-  ['Availability', '“Should be free” on the phone.', 'Confirmed for your dates, in writing, before you commit.'],
+  ['Terms', 'Agreed on a phone call.', 'Period, hours, operator, diesel, mobilisation, idle-time and breakdown terms — in writing.'],
+  ['Availability', '“Should be free.”', 'Confirmed for your dates before you commit.'],
   ['Machine condition', 'Arrives as it is.', 'Checked before it is dispatched to your site.'],
-  ['Getting to site', 'Route worked out on the day.', 'Route, travel method and arrival planned in advance.'],
-  ['Breakdowns', 'You chase the owner.', 'Reporting, attendance and next steps agreed up front.'],
-  ['Communication', 'Whoever answers.', 'One point of contact for your project.'],
-  ['Machine fit', 'Whatever is available.', 'An honest view on whether a backhoe loader is right.'],
+  ['Operator', 'Sometimes; sometimes not.', 'Always supplied with the machine.'],
+  ['Breakdowns', 'Sorted out while your site waits.', 'How it is reported, who attends and what happens if repair runs long — agreed up front.'],
+  ['Communication', 'Whoever answers.', 'One named point of contact for your project.'],
+  ['Commitment', 'Hourly, between other jobs.', '15-day minimum — set up for project work.'],
 ];
 const breakdown = qa('breakdown');
 ---
@@ -34,11 +36,12 @@ const breakdown = qa('breakdown');
       <div class="dhead">
         <p class="eyebrow"><span class="idx">01</span>The difference</p>
         <h2 id="h-diff">The same machine. A very different rental.</h2>
+        <p class="muted" style="margin-top:20px;max-width:60ch">Left: the risks a project team usually carries with informal machine hire. Right: what RBE commits to on every rental.</p>
       </div>
       <div class="cmp" role="table" aria-label="Comparison: a machine on hire versus an equipment partner">
         <div class="cmp__row cmp__row--h" role="row">
           <span role="columnheader"></span>
-          <span role="columnheader">A machine on hire</span>
+          <span role="columnheader">Informal machine hire</span>
           <span role="columnheader">RBE Capital Equip.</span>
         </div>
         {rows.map(([k, a, b]) => (
@@ -63,9 +66,9 @@ const breakdown = qa('breakdown');
         </div>
       </div>
       <ol class="phase">
-        <li><span class="mono">Before work</span><b>Agree the support plan</b><p>Who you call, who attends, expected repair times, servicing schedule and what happens if a repair runs long.</p></li>
+        <li><span class="mono">Before work</span><b>Agree the support plan</b><p>Who you call, who attends, and what happens if a repair runs long — written into your terms before dispatch.</p></li>
         <li><span class="mono">Dispatch</span><b>Check the machine</b><p>Inspected before it leaves for your site, so problems are found in the yard, not on your project.</p></li>
-        <li><span class="mono">On site</span><b>Planned servicing</b><p>Routine servicing timed around your working hours. Consumables planned in advance for remote sites.</p></li>
+        <li><span class="mono">On site</span><b>One point of contact</b><p>A named person at RBE for daily coordination, extension and anything that goes wrong. The operator comes with the machine.</p></li>
         <li><span class="mono">If it stops</span><b>Follow the agreed plan</b><p>No renegotiating while your site waits — the steps were settled at the start.</p></li>
       </ol>
     </div>
@@ -75,12 +78,20 @@ const breakdown = qa('breakdown');
     <div class="wrap roto">
       <div class="roto__mark"><Wordmark size="xl" href={null} tone="dark" /></div>
       <div>
-        <p class="eyebrow"><span class="idx">03</span>Heritage</p>
-        <h2 id="h-roto">Backed by Rotoblast Engineering.</h2>
+        <p class="eyebrow"><span class="idx">03</span>The company</p>
+        <h2 id="h-roto">An enterprise of Rotoblast Engineering.</h2>
         <div class="prose" style="margin-top:24px">
-          <p>RBE Capital Equip. is an enterprise of Rotoblast Engineering, created to bring an engineering organisation’s way of working to equipment rental.</p>
-          <p>For you, it means the business renting you a machine is part of an engineering organisation rather than an individual owner — with the accountability, maintenance discipline and continuity a project needs from a supplier over months, not days.</p>
+          <p>RBE Capital Equip. is an enterprise of Rotoblast Engineering. You are renting from a company with a head office, written terms and a named contact — not from an individual owner with one phone number.</p>
         </div>
+        <dl class="spec" style="margin-top:28px">
+          <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
+          <div><dt>Deployment bases</dt><dd>Haldwani · Majkhali (Ranikhet)</dd></div>
+          <div><dt>Calls</dt><dd><a href={tel}>{site.phoneDisplay}</a></dd></div>
+          <div><dt>WhatsApp</dt><dd><a href={wa()} rel="noopener">{site.whatsappDisplay}</a></dd></div>
+          <div><dt>Sales</dt><dd><a href={mailto}>{site.email}</a></dd></div>
+          <div><dt>General</dt><dd><a href={mailtoContact}>{site.contactEmail}</a></dd></div>
+          <div><dt>Billing</dt><dd>GST invoice on request</dd></div>
+        </dl>
       </div>
     </div>
   </section>
@@ -93,6 +104,7 @@ const breakdown = qa('breakdown');
         <ul class="xlist">
           <li>Promise a date we can’t meet to win the order.</li>
           <li>Send a backhoe loader to a job that needs an excavator.</li>
+          <li>Send a machine without an operator.</li>
           <li>Leave idle-time, diesel or mobilisation terms vague.</li>
           <li>Disappear after the machine is delivered.</li>
         </ul>
@@ -138,6 +150,7 @@ const breakdown = qa('breakdown');
   .phase p { color: var(--on-dark-2); margin: 0; }
   .roto { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
   .roto__mark { padding: clamp(32px, 5vw, 72px); border: 1px solid var(--line-l); display: grid; place-items: center; background: var(--paper); }
+  .roto .spec dd a { text-decoration: none; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); }
   .xlist { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--line-l); }
   .xlist li { padding: 16px 0 16px 34px; border-bottom: 1px solid var(--line-l); position: relative; font-size: 1.05rem; }

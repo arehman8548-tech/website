@@ -12,7 +12,7 @@ import { breadcrumbs } from '../data/schema';
 import { wa } from '../data/site';
 
 const crumbs = [{ name: 'Project Solutions', href: '/project-solutions/' }];
-const title = 'Backhoe Loader for Road, Hill Cutting & Site Development Projects | RBE Capital Equip.';
+const title = 'Backhoe Loader for Road Widening, Hill Cutting & Site Development in Kumaon | RBE Capital Equip.';
 const description =
   'How a backhoe loader supports road construction and widening, hill cutting, real-estate site development, bridge and river works, trenching and infrastructure projects in Kumaon — tasks, site realities and limits.';
 const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ?? slug;
@@ -20,7 +20,7 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Project solutions">
     <h1>Built around the project, <span class="serif">not the machine.</span></h1>
-    <p class="lead">Six kinds of project we support across Kumaon. For each: the tasks a backhoe loader takes on, what the terrain changes, and where you need something bigger.</p>
+    <p class="lead">Six kinds of project RBE supports across Kumaon. For each: the tasks a backhoe loader takes on, what the terrain changes, and where you need something bigger. Every rental comes with an operator and runs for 15 days or more.</p>
   </PageHero>
 
   <div class="ps paper">
@@ -66,7 +66,7 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
                 <span class="mono">Related questions</span>
                 <ul>{p.faq.map((id) => <li><a class="inline" href={`/knowledge/#${id}`}>{qa(id).q}</a></li>)}</ul>
               </div>
-              <a class="btn btn--wa pj__cta" href={wa(`Hello RBE Capital Equip., I need a backhoe loader for ${p.title.toLowerCase()} work. Site location: `)} rel="noopener"><Icon name="wa" />Discuss this work on WhatsApp</a>
+              <a class="btn btn--wa pj__cta" href={wa(`Hello RBE Capital Equip., I need a backhoe loader with operator for ${p.title.toLowerCase()} work.\nSite location:\nStart date:\nDuration (15 days minimum):`)} rel="noopener"><Icon name="wa" />Discuss this work on WhatsApp</a>
             </div>
           </article>
         ))}

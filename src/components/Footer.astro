@@ -1,7 +1,7 @@
 ---
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { site, tel, wa, mailto } from '../data/site';
+import { site, tel, wa, mailto, mailtoContact } from '../data/site';
 import { places, districts } from '../data/geo';
 const year = new Date().getFullYear();
 ---
@@ -11,19 +11,23 @@ const year = new Date().getFullYear();
       <div class="ftr__brand">
         <Wordmark size="xl" href={null} />
         <p class="ftr__entity">
-          <strong>RBE Capital Equip.</strong> rents backhoe loaders to contractors, developers and infrastructure
-          companies working on construction projects in the Kumaon region of Uttarakhand. It is an enterprise of
-          Rotoblast Engineering.
+          <strong>RBE Capital Equip.</strong> rents backhoe loaders with operator, for a minimum of 15 days, to
+          contractors, developers and infrastructure companies building in the Kumaon region of Uttarakhand.
+          An enterprise of Rotoblast Engineering.
         </p>
+        <dl class="ftr__facts">
+          <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
+          <div><dt>Machine dispatched from</dt><dd>{site.bases.map((b) => `${b.name} (${b.area})`).join(' · ')}</dd></div>
+        </dl>
       </div>
       <div class="ftr__contact">
         <p class="eyebrow">Talk to us about your site</p>
         <a class="ftr__big" href={tel}>{site.phoneDisplay}</a>
         <div class="btn-row">
-          <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp</a>
+          <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp {site.whatsappDisplay}</a>
           <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.email}</a>
         </div>
-        <p class="mono muted ftr__hours"><Icon name="clock" />{site.hours}</p>
+        <p class="mono muted ftr__hours"><Icon name="mail" />General: <a href={mailtoContact}>{site.contactEmail}</a></p>
       </div>
     </div>
 
@@ -34,7 +38,7 @@ const year = new Date().getFullYear();
           <li><a href="/backhoe-loader-rental/">Backhoe loader rental</a></li>
           <li><a href="/backhoe-loader-rental/#what-it-does">What the machine can do</a></li>
           <li><a href="/backhoe-loader-rental/#when-not">When to choose an excavator</a></li>
-          <li><a href="/backhoe-loader-rental/#rental-terms">Rental durations</a></li>
+          <li><a href="/backhoe-loader-rental/#rental-terms">Rental terms &amp; 15-day minimum</a></li>
         </ul>
       </nav>
       <nav aria-label="Project types">
@@ -65,7 +69,7 @@ const year = new Date().getFullYear();
 
     <div class="ftr__base">
       <span>© {year} RBE Capital Equip. — an enterprise of Rotoblast Engineering.</span>
-      <span>Backhoe loader rental · Kumaon, Uttarakhand, India</span>
+      <span>Backhoe loader rental with operator · Haldwani · Ranikhet · Kumaon, Uttarakhand</span>
     </div>
   </div>
 </footer>
@@ -75,6 +79,10 @@ const year = new Date().getFullYear();
   .ftr__top { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); border-bottom: 1px solid var(--line-d); }
   .ftr__entity { margin-top: 40px; max-width: 46ch; color: var(--on-dark-2); }
   .ftr__entity strong { color: var(--on-dark); font-weight: 600; }
+  .ftr__facts { margin: 28px 0 0; display: grid; gap: 12px; max-width: 52ch; }
+  .ftr__facts dt { font-family: var(--f-mono); font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .14em; color: var(--on-dark-2); }
+  .ftr__facts dd { margin: 2px 0 0; }
+  .ftr__hours a { color: inherit; }
   .ftr__big { display: block; font-family: var(--f-display); font-stretch: 118%; font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: -0.03em; text-decoration: none; margin-bottom: 26px; }
   .ftr__big:hover { color: var(--copper-hi); }
   .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 20px; }

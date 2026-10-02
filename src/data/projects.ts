@@ -16,7 +16,7 @@ export const projects: Project[] = [
     id: 'road-construction',
     kind: 'road',
     title: 'Road construction, widening & highway work',
-    who: 'PWD, PMGSY, state highway and NH contractors',
+    who: 'PWD, PMGSY, state-highway, NH and NHIDCL package contractors',
     short: 'Side drains, shoulders, cut edges, culvert pits and debris clearance — the work that runs alongside every kilometre of road.',
     tasks: [
       'Side-drain and catch-water drain excavation',
@@ -26,9 +26,9 @@ export const projects: Project[] = [
       'Sub-grade preparation and back-filling behind walls',
     ],
     realities:
-      'Hill roads give you one lane of working space, live traffic and long distances between work fronts. A wheeled machine that can drive itself between fronts and do both loading and digging keeps a small crew productive without waiting on a second machine.',
+      'Hill roads give you one lane of working space, live traffic and long distances between work fronts. A wheeled machine that drives itself between fronts and both loads and digs keeps a small crew productive without waiting on a second machine. Road packages also run for months, which is what a 15-day-minimum, operator-included rental is built for.',
     limits:
-      'Hard-rock cutting and large-volume formation cutting are excavator and breaker work. On those packages the backhoe loader is the support machine — drains, loading, clearing — not the main cutter.',
+      'Large-volume formation cutting and high rock faces are tracked-excavator work. On those packages the backhoe loader is the support machine — drains, loading, clearing, with RBE’s rock breaker for rock in drains and edges — not the main cutter.',
     where: ['haldwani', 'bhowali', 'almora', 'bageshwar', 'berinag'],
     faq: ['hill-roads', 'vs-excavator', 'monsoon'],
   },
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     id: 'hill-cutting',
     kind: 'hill',
     title: 'Hill cutting & slope work',
-    who: 'Site-development and road contractors working on slopes',
+    who: 'Hill-cutting, site-development and road contractors working on slopes',
     short: 'Controlled cutting and benching in soil and weathered rock, done to the design — not wherever the bucket reaches.',
     tasks: [
       'Benching and terracing slopes for building platforms',
@@ -48,15 +48,15 @@ export const projects: Project[] = [
     realities:
       'Kumaon slopes are often loose debris over weathered rock. The order of work — drain, cut, retain — matters more than raw digging power, and cutting right before the monsoon without retaining or drainage in place is how slopes fail.',
     limits:
-      'Large rock faces and high cuts need a tracked excavator with a breaker. A backhoe loader works best on controlled cuts of moderate height and on the clean-up, drainage and foundation work around them.',
+      'A backhoe loader works best on controlled cuts of moderate height, and on the drainage, foundation and clean-up work around them. RBE’s hydraulic rock breaker handles rock that turns up in that work. Large rock faces and high cuts need a tracked excavator.',
     where: ['nainital', 'bhimtal', 'ramgarh', 'mukteshwar', 'ranikhet'],
-    faq: ['hill-cutting', 'monsoon', 'vs-excavator'],
+    faq: ['hill-cutting', 'breaker', 'monsoon'],
   },
   {
     id: 'site-development',
     kind: 'site',
     title: 'Real-estate & site development',
-    who: 'Developers, builders and their civil contractors',
+    who: 'Real-estate developers, builders and their civil contractors',
     short: 'From first access road to foundations: clearing, levelling, footings, drainage and back-fill on residential, resort and commercial projects.',
     tasks: [
       'Site clearing and making the first access track',
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     limits:
       'For very large cut-and-fill volumes on township-scale sites, an excavator and tippers should carry the bulk work; the backhoe loader handles footings, services and finishing.',
     where: ['bhimtal', 'ramgarh', 'mukteshwar', 'haldwani', 'rudrapur'],
-    faq: ['quote-info', 'long-term', 'dig-depth'],
+    faq: ['quote-info', 'minimum', 'outside'],
   },
   {
     id: 'dam-bridge',
@@ -88,9 +88,9 @@ export const projects: Project[] = [
     realities:
       'River-side sites in Kumaon are seasonal: work windows close with the monsoon, and access often comes down a steep track to the riverbed. Mobilisation timing and a safe place for the machine above flood level need planning early.',
     limits:
-      'Deep foundation work, cofferdams and large-volume river-bed excavation need bigger equipment. Tell us the scope and we will tell you honestly where a backhoe loader fits.',
+      'Deep foundation work, cofferdams and large-volume river-bed excavation need bigger equipment. RBE rents backhoe loaders only — send the scope and you will get a straight answer on where one fits.',
     where: ['bageshwar', 'almora', 'berinag', 'kathgodam'],
-    faq: ['remote', 'monsoon', 'vs-excavator'],
+    faq: ['remote', 'monsoon', 'ranikhet'],
   },
   {
     id: 'trenching',
@@ -108,9 +108,9 @@ export const projects: Project[] = [
     realities:
       'Utility work moves along a road every day. A machine that drives itself to the next stretch, digs, and back-fills with the front bucket is exactly what linear utility work needs — especially where traffic and space are tight.',
     limits:
-      'Rock along the trench line slows any backhoe; plan for a breaker where rock is expected. Very deep trenches need shoring and may need an excavator with more reach.',
+      'Rock along the trench line slows any backhoe — tell us where you expect it so RBE’s rock breaker is planned in. Very deep trenches need shoring and may need an excavator with more reach.',
     where: ['haldwani', 'rudrapur', 'almora', 'nainital'],
-    faq: ['dig-depth', 'cost', 'how-quickly'],
+    faq: ['dig-depth', 'breaker', 'how-quickly'],
   },
   {
     id: 'infrastructure',
@@ -130,6 +130,6 @@ export const projects: Project[] = [
     limits:
       'Large-area mass grading is faster with dozers, graders and excavators. A backhoe loader is the flexible machine that stays on site for foundations, services and everything in between.',
     where: ['rudrapur', 'pantnagar', 'kashipur', 'haldwani'],
-    faq: ['long-term', 'breakdown', 'servicing'],
+    faq: ['long-term', 'breakdown', 'gst'],
   },
 ];

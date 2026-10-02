@@ -101,4 +101,9 @@ const path = Astro.url.pathname;
     .abar__q { background: var(--copper); color: var(--ink) !important; border: 0 !important; }
     :global(.menu-open) .abar { display: none; }
   }
+  @media (max-width: 520px) {
+    .hdr__in { gap: 12px; }
+    .hdr__act { gap: 10px; }
+    .hdr :global(.wm__sub) { font-size: 7.4px; letter-spacing: .07em; }
+  }
 </style>

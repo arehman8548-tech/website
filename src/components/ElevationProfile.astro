@@ -1,7 +1,7 @@
 ---
 /** Approximate altitude of supported locations, ordered as a climb from the plains into the hills. */
 import { places } from '../data/geo';
-const seq = ['rudrapur', 'haldwani', 'kathgodam', 'bhimtal', 'bhowali', 'nainital', 'mukteshwar', 'almora', 'ranikhet', 'bageshwar', 'berinag'];
+const seq = ['rudrapur', 'haldwani', 'kathgodam', 'bhimtal', 'bhowali', 'nainital', 'mukteshwar', 'almora', 'majkhali', 'ranikhet', 'bageshwar', 'berinag'];
 const pts = seq.map((s) => places.find((p) => p.slug === s)!);
 const W = 1000, H = 300, PADL = 52, PADR = 20, TOP = 36, BOT = 54, MAX = 2500;
 const x = (i: number) => PADL + (i * (W - PADL - PADR)) / (pts.length - 1);

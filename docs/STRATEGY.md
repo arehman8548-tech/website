@@ -8,26 +8,42 @@ How the site was planned: the business, the research, the structure, and what st
 
 The site has to answer one buyer question: *"Can these people actually support my project in difficult terrain?"* It does that by covering, in order: **recognition → problem → capability → suitability → trust → availability → contact**.
 
-### Facts still needed from the business (nothing below has been invented)
+### Confirmed business facts (round 2 — supplied by the owner)
 
-All of these live in `src/data/site.ts` and are marked `CONFIRM`:
+| Fact | Value | Where it appears |
+|---|---|---|
+| Calls | +91 98110 30794 | Header, hero, footer, contact, schema |
+| WhatsApp | +91 78277 28607 | All WhatsApp links, footer, contact, schema |
+| Sales email | sales@rbecapitalgroup.in | Form fallback, footer, contact, schema |
+| General email | rehman@rbecapitalgroup.in | Footer, contact, Why RBE, schema |
+| Head office | Sector 27C, Faridabad, Haryana, India | Footer, contact, Why RBE, home facts, schema `address` |
+| Deployment bases | Haldwani; Majkhali (near Ranikhet, Almora district) | Hero, map, service area, FAQ, schema `location` |
+| Domain | https://rbecapitalequip.in | `src/data/site-url.mjs` |
+| Operator | Always included | Everywhere terms are stated |
+| Minimum rental | 15 days (no hourly / daily hire) | Hero, terms, FAQ, form |
+| GST invoice | On request | Terms, FAQ, form field |
+| Rock breaker | Available (hydraulic) | Machine page, projects, FAQ, form |
+| Commitments | Machine checked before dispatch · terms in writing · breakdown process agreed up front · one point of contact | Why RBE, process, home |
 
-| Item | Status on the site |
-|---|---|
-| Phone / WhatsApp number | Placeholder `+91 00000 00000` — **must replace before launch** |
-| Email | Placeholder `enquiry@rbecapitalequip.com` |
-| Domain | `src/data/site-url.mjs` — assumed `www.rbecapitalequip.com` |
-| Office / yard address | Not shown. Add it to turn on `LocalBusiness` schema and a map |
-| Enquiry hours | Placeholder `Mon–Sat, 8 am – 8 pm` |
-| Form endpoint | Empty → form hands off to WhatsApp / email. Add a Formspree/CRM URL to post directly |
-| Rotoblast Engineering website URL | Empty → omitted from schema |
-| Fleet (models, count, attachments e.g. rock breaker) | Not stated. Specs shown as **typical 7–8 t class ranges** with a note |
-| Operator included as standard | FAQ "Does the rental include an operator?" assumes yes — confirm |
-| Service commitments | "Machine checked before dispatch", "breakdown process agreed up front", "servicing planned around your hours", "one point of contact" — these are written as how RBE works. The owner must be willing to honour every one |
-| Years in business, clients, projects, certifications, testimonials | **Deliberately absent.** Add only real, verifiable ones |
-| Real photographs | None used (no stock). Add real photos of your own machines and sites when available |
+Majkhali location (public sources): Ranikhet tehsil, Almora district, PIN 263652, on the Ranikhet–Almora road ~10 km from Ranikhet, ≈29.68° N 79.51° E, ≈1,720–1,800 m (site uses 1,800 m, rounded).
 
-Research note: public listings show a *Rotoblast Engineering* in Delhi/Faridabad (shot-blasting machinery, operating since ~2000). That was **not** confirmed as the same organisation, so the site states only the relationship ("an enterprise of Rotoblast Engineering"), with no heritage details.
+### Still NOT on the site (not supplied — do not add without real evidence)
+
+Fleet size · machine make/model and real specification · 4WD or 2WD · years in operation · Rotoblast Engineering history/website · past projects · clients · testimonials · certifications · enquiry hours · response time · pricing · GSTIN · machine documents (RC/insurance/fitness) · real photographs.
+
+## 1b. Round-2 re-audit — what the first build got wrong
+
+- **Unusable contact data.** Every call/WhatsApp/email link was a placeholder; the site could not generate a single enquiry. Fixed.
+- **Wrong domain** in canonical/sitemap/schema (`rbecapitalequip.com`). Fixed to `rbecapitalequip.in`.
+- **No home base.** The site said "across Kumaon" but never where the machine actually comes from — the single most useful fact for "JCB rental Haldwani" searches and for any buyer asking "will it reach my site?". Now Haldwani + Majkhali are stated everywhere it matters.
+- **Unconfirmed practices written as promises** (servicing "timed around your hours", machine "maintenance discipline", "heritage"). Removed or replaced with the four owner-confirmed commitments.
+- **Implied fleet.** Copy said "backhoe loaders" as if a fleet existed. Reworded so no fleet size is implied.
+- **No filter against low-value work.** "Short assignment" and "A few days" invited daily jobs. Replaced by the confirmed 15-day minimum and an explicit line pointing hourly needs elsewhere.
+- **Procurement blind spots.** No GST, no head office, no company facts in one place. Added a facts list (home, Why RBE, contact) and GST/role fields on the form.
+- **Disparaging comparison** ("You chase the owner") framed as competitor fact. Reframed as risks of informal hire vs RBE commitments.
+- **Schema issues.** `sameAs` pointed at a wa.me link; Organization lacked an address. Fixed; bases modelled as `location` Places.
+- **Mobile header bug.** Menu button overflowed the viewport at 360–390 px. Fixed.
+- **Research was from memory.** Replaced by live search below.
 
 ## 2. Research summary
 
@@ -39,7 +55,17 @@ Research note: public listings show a *Rotoblast Engineering* in Delhi/Faridabad
 
 **Market context:** active state road programmes (PWD network expansion, rural road upgrades, Rudrapur/Kashipur bypasses, temple-circuit road widening in Kumaon), industrial estates in Udham Singh Nagar, hill real estate around Bhimtal–Ramgarh–Mukteshwar.
 
-**Competitor landscape:** local listings (IndiaMART/aggregators) and generic national rental marketplaces. They compete on price per hour and "JCB on rent". None explains terrain, mobilisation, breakdown handling or machine fit. That gap is RBE's positioning.
+**Live search check (Oct 2026).** Google/Bing/Playwright were blocked by this environment's egress policy, so research used the built-in web search tool; competitor pages themselves could not be opened.
+
+- *JCB rental Haldwani* → Justdial (≈31 listings), Sulekha, an aggregator advertising "JCB backhoe loaders from ₹2,999/day with operator", local firms offering **hourly** hire. Price-led, small-job audience.
+- *Backhoe loader on rent Nainital* → aggregator page (JCB 3DX Plus "from ₹5,000"), national marketplaces. No local specialist.
+- *JCB on rent Rudrapur* → IndiaMART supplier listing ₹75,000/month.
+- *JCB on rent Almora / Ranikhet* → **no dedicated supplier result at all** — only cab and property listings. RBE's Majkhali base is a genuine, unclaimed position.
+- *Hill road backhoe Uttarakhand* → aggregator copy recommending 4WD (JCB 4DX) for hill stretches/NHAI work; hourly ₹1,100–1,200.
+- Rate-card articles: dry hire ₹550–900/hr, ₹90k–1.4L/month; "most require a minimum of 1 month". Buyer questions cluster on per-hour/per-day price, diesel, operator, minimum period.
+- Market activity (public tenders): PWD Almora road reconstruction tenders, an EPC package on SH-62 (Garjiya–Betalghat–Khairna–Mukteshwar), NHIDCL DPR for Bhimtal–Almora, PWD Nainital road widening.
+
+Conclusion: the SERP is directories and day-rate aggregators. RBE should not compete on hourly price; it should be the clear answer for **project-length, operator-included hire with a local base — especially in the hills**.
 
 ## 3. Search-intent map
 
@@ -52,7 +78,9 @@ Research note: public listings show a *Rotoblast Engineering* in Delhi/Faridabad
 | Decision-stage | backhoe loader rental long term · monthly JCB rent · backhoe vs excavator | `/backhoe-loader-rental/#rental-terms`, `#when-not` |
 | Informational | how deep can a JCB dig · what can a backhoe loader do · is JCB a backhoe loader | `/backhoe-loader-rental/#what-it-does`, `/knowledge/` |
 | Conversational / AEO | "Can I get a backhoe loader deployed to a remote Kumaon site?" · "What if it breaks down mid-project?" | `/knowledge/` answer blocks (direct answer first) |
-| Price | JCB rent per hour Haldwani | `/knowledge/#cost` explains the cost basis honestly (no invented rates) |
+| Price | JCB rent per hour Haldwani · monthly JCB rent | `/knowledge/#cost`, `#minimum` explain RBE's period-based basis honestly (no invented rates) |
+| Local base | JCB on rent Haldwani · backhoe near Ranikhet / Almora | `/knowledge/#haldwani`, `#ranikhet`, `/kumaon-service-area/#haldwani`, `#majkhali` |
+| Procurement | GST invoice · operator included · rock breaker | `/knowledge/#gst`, `#operator`, `#breaker`, home facts list |
 
 Deliberately **not** targeted: home/garden digging, agricultural, one-off residential jobs.
 
@@ -64,8 +92,8 @@ Deliberately **not** targeted: home/garden digging, agricultural, one-off reside
 4. **Kumaon Service Area** `/kumaon-service-area/` — map, altitude profile, 3 belts, 14 location cards, deployment factors, guidance for outside contractors.
 5. **Why RBE** `/why-rbe/` — partner vs machine-on-hire, support plan, Rotoblast relationship, what we won't do.
 6. **How Rental Works** `/how-rental-works/` — 6 steps with outcomes; 5 things needed for a fast quote.
-7. **Knowledge** `/knowledge/` — 18 real buyer questions in 5 groups + glossary. The only page with `FAQPage` schema.
-8. **Contact / Book Equipment** `/contact/` — 9-field project form, Call / WhatsApp / Email.
+7. **Knowledge** `/knowledge/` — 23 buyer questions in 5 groups + glossary. The only page with `FAQPage` schema.
+8. **Contact / Book Equipment** `/contact/` — 11-field project form (incl. GST, role), Call / WhatsApp / sales + general email, head office and bases.
 
 Interlinking is contextual: every answer, project and location links onward to the next logical step (question → machine → application → area → trust → enquiry), plus a page-specific "Where to go next" block.
 
@@ -90,11 +118,14 @@ Static HTML (Astro), clean trailing-slash URLs, one H1 per page, canonical, Open
 
 ## 8. Before launch — checklist
 
-- [ ] Replace phone, WhatsApp, email, hours in `src/data/site.ts`
-- [ ] Set the real domain in `src/data/site-url.mjs`
+- [x] Phone, WhatsApp, emails in `src/data/site.ts`
+- [x] Real domain in `src/data/site-url.mjs`
+- [x] Head office address + deployment bases in schema
+- [x] Operator policy and service commitments confirmed
 - [ ] Add form endpoint (or keep WhatsApp handoff)
-- [ ] Add address → enables `LocalBusiness` schema
-- [ ] Confirm operator policy and the service commitments on `/why-rbe/`
+- [ ] Machine make/model + real spec sheet → replace the "typical range" table
+- [ ] Real photos of the machine at Haldwani/Majkhali and on client sites
+- [ ] Google Business Profile — ideally for the Haldwani base (and Majkhali if it is a staffed location) with the same name and numbers
 - [ ] Add real machine/site photos (optional but strongly recommended)
 - [ ] Create a Google Business Profile with the same name, phone and category
 - [ ] Submit `sitemap-index.xml` in Google Search Console

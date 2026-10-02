@@ -10,19 +10,19 @@ import { tel, wa } from '../data/site';
 import { qa } from '../data/faq';
 
 const crumbs = [{ name: 'Backhoe Loader Rental', href: '/backhoe-loader-rental/' }];
-const title = 'Backhoe Loader (JCB) Rental for Projects in Kumaon | RBE Capital Equip.';
+const title = 'Backhoe Loader (JCB) on Rent With Operator — Kumaon Projects | RBE Capital Equip.';
 const description =
-  'Rent a backhoe loader for road work, trenching, foundations and hill-site earthwork in Kumaon. What the machine can do, typical specification, when an excavator is better, and rental durations.';
+  'Backhoe loader on rent with operator for road work, hill cutting, trenching and foundations in Kumaon. What it can do, typical specification, when an excavator is better, rock breaker, 15-day minimum and what every quote states.';
 
 const loaderEnd = ['Loading tippers and trucks', 'Back-filling trenches and behind walls', 'Levelling and grading plots', 'Clearing debris and slips', 'Moving material around the site', 'Spreading sub-base on access roads'];
-const hoeEnd = ['Drain and utility trenches', 'Footing and column-pit excavation', 'Culvert and chamber pits', 'Cutting road edges and banks', 'Retaining-wall foundations', 'Breaking out soft and weathered rock'];
+const hoeEnd = ['Drain and utility trenches', 'Footing and column-pit excavation', 'Culvert and chamber pits', 'Cutting road edges and banks', 'Retaining-wall foundations', 'Breaking rock with the hydraulic breaker'];
 const mobility = ['Drives between nearby work fronts on its own wheels', 'Turns and works in narrow hill-road space', 'One machine and one operator instead of two', 'Quick to re-position as work moves along a road'];
 const dig = qa('dig-depth');
 ---
 <Base title={title} description={description} schema={[breadcrumbs(crumbs), rentalService()]}>
   <PageHero crumbs={crumbs} eyebrow="Equipment · Backhoe loader">
     <h1>Backhoe loader rental for <span class="serif">serious</span> site work in Kumaon.</h1>
-    <p class="lead">One wheeled machine that loads, digs, levels and drives itself to the next work front. The most versatile machine on a hill road or a building site — when it is the right fit for your scope.</p>
+    <p class="lead">One wheeled machine that loads, digs, levels and drives itself to the next work front — supplied with an RBE operator, for 15 days or more, from Haldwani or Majkhali (Ranikhet). The most versatile machine on a hill road or a building site, when it is the right fit for your scope.</p>
     <div class="btn-row">
       <a class="btn" href="/contact/">Check availability <Icon name="arrow" /></a>
       <a class="btn btn--wa" href={wa('Hello, I need a backhoe loader on rent for a project. Can you share availability?')} rel="noopener"><Icon name="wa" />WhatsApp</a>
@@ -54,7 +54,7 @@ const dig = qa('dig-depth');
         <div class="col rv rv-d1"><h3><span class="mono">B</span>Backhoe end</h3><ul>{hoeEnd.map((x) => <li>{x}</li>)}</ul></div>
         <div class="col rv rv-d2"><h3><span class="mono">C</span>Mobility</h3><ul>{mobility.map((x) => <li>{x}</li>)}</ul></div>
       </div>
-      <p class="muted measure note">“Breaking out soft and weathered rock” means with the bucket. Hard rock needs a hydraulic breaker; ask us whether one is available for your dates.</p>
+      <p class="muted measure note">RBE has a hydraulic rock breaker. If your work runs into rock, say so in your enquiry so the breaker and its dates are part of the quote. Large rock faces and continuous rock excavation are still tracked-excavator work.</p>
       <p class="measure" style="margin-top:20px">See these tasks organised by project: <a class="inline" href="/project-solutions/#road-construction">road construction</a>, <a class="inline" href="/project-solutions/#hill-cutting">hill cutting</a>, <a class="inline" href="/project-solutions/#site-development">site development</a>, <a class="inline" href="/project-solutions/#trenching">trenching and utilities</a>.</p>
     </div>
   </section>
@@ -65,7 +65,7 @@ const dig = qa('dig-depth');
       <div>
         <p class="eyebrow"><span class="idx">03</span>Typical specification</p>
         <h2 id="h-spec">What to expect from a 7–8 tonne class machine.</h2>
-        <p class="muted" style="margin-top:20px">These are typical ranges for the backhoe loaders most used on Indian construction sites, so you can plan the work. The exact specification of the machine assigned to your project is shared with your quote.</p>
+        <p class="muted" style="margin-top:20px">These are typical ranges for the 7–8 tonne backhoe loaders most used on Indian construction sites — useful for planning, not a description of one specific machine. The make, model and specification of RBE’s machine are shared with your quote.</p>
         <div class="answer" style="margin-top:28px">
           <h3>{dig.q}</h3>
           <p class="direct">About 4.5 to 6 metres at maximum, depending on the model and dipper.</p>
@@ -91,7 +91,7 @@ const dig = qa('dig-depth');
       <div>
         <p class="eyebrow"><span class="idx">04</span>Honest fit</p>
         <h2 id="h-not">When a backhoe loader is <span class="serif">not</span> the right machine.</h2>
-        <p class="muted" style="margin-top:24px">Sending the wrong machine wastes your schedule and ours. If your scope looks like the right-hand column, a tracked excavator (with a breaker for rock) should be the main machine — a backhoe loader can still support it.</p>
+        <p class="muted" style="margin-top:24px">Sending the wrong machine wastes your schedule and ours. RBE rents backhoe loaders only. If your scope looks like the right-hand column, a tracked excavator should be the main machine — a backhoe loader can still support it.</p>
       </div>
       <div class="vs">
         <div class="vs__col">
@@ -108,7 +108,7 @@ const dig = qa('dig-depth');
           <h3>Choose an excavator</h3>
           <ul>
             <li>Continuous bulk excavation all day</li>
-            <li>Hard-rock cutting with a breaker</li>
+            <li>Continuous hard-rock excavation</li>
             <li>High formation cuts on hill roads</li>
             <li>Deep, large-volume foundation pits</li>
             <li>Heavy lifting of pipes or blocks</li>
@@ -129,7 +129,7 @@ const dig = qa('dig-depth');
         <div class="rv"><h3>Access</h3><p class="muted">Road width, hairpin bends and the last few hundred metres to the plot decide how the machine arrives. We ask for these before confirming a date.</p></div>
         <div class="rv rv-d1"><h3>Ground</h3><p class="muted">Loose debris over rock and soft road shoulders mean the machine must work from stable ground, with stabilisers on firm footing.</p></div>
         <div class="rv rv-d2"><h3>Season</h3><p class="muted">From about June to September, slips and road closures are part of the plan. Mobilise early and keep schedule buffer.</p></div>
-        <div class="rv rv-d3"><h3>Support</h3><p class="muted">At remote sites, servicing, consumables and the operator’s stay are planned before the machine leaves.</p></div>
+        <div class="rv rv-d3"><h3>Support</h3><p class="muted">At remote sites, diesel, the operator’s stay and breakdown handling are agreed before the machine leaves. RBE’s Majkhali base means inner-hill sites are not supported only from the plains.</p></div>
       </div>
       <p class="measure" style="margin-top:40px">More on terrain by area in the <a class="inline" href="/kumaon-service-area/">Kumaon service area</a> guide, and season planning in <a class="inline" href="/knowledge/#monsoon">monsoon working</a>.</p>
     </div>
@@ -140,23 +140,25 @@ const dig = qa('dig-depth');
     <div class="wrap terms">
       <div>
         <p class="eyebrow"><span class="idx">06</span>Rental terms</p>
-        <h2 id="h-terms">Hire for a task, a month or the whole project.</h2>
-        <p class="muted" style="margin-top:20px">Tell us the scope and we will suggest the duration that matches it. Every quote states what is included, so there are no surprises on site.</p>
+        <h2 id="h-terms">Hire for 15 days, a month or the whole project.</h2>
+        <p class="muted" style="margin-top:20px">RBE does not rent by the hour or the day. The minimum is 15 days, and every rental includes an operator. Tell us the scope and we will suggest the period that matches it; everything included is stated in writing before the machine is dispatched.</p>
       </div>
       <div>
         <ol class="dur">
-          <li><b>Short assignment</b><span>A defined task — a set of footings, a trench run, a clearance job — on a project site.</span></li>
-          <li><b>Monthly hire</b><span>A machine on site through a phase of work, with servicing planned around your hours.</span></li>
-          <li><b>Project duration</b><span>Allocated for the length of your contract phase, with support and breakdown handling agreed up front.</span></li>
+          <li><b>15 days — the minimum</b><span>A defined package of work on a project site: a run of side drains, a set of footings, a utility line.</span></li>
+          <li><b>Monthly hire</b><span>The machine and operator on site through a phase of work, extended if your programme runs longer, subject to availability.</span></li>
+          <li><b>Project duration</b><span>Committed to your contract phase, with breakdown handling agreed in writing before mobilisation.</span></li>
         </ol>
         <h3 class="sub">What every quote confirms</h3>
         <ul class="checks">
           <li>Machine and its specification</li>
           <li>Rental period and working hours per day</li>
-          <li>Operator arrangement</li>
+          <li>Operator — shift hours and stay</li>
           <li>Diesel — included or by you</li>
           <li>Mobilisation and return</li>
           <li>Idle-time and breakdown terms</li>
+          <li>Rock breaker, if needed</li>
+          <li>GST invoice, if required</li>
         </ul>
         <a class="btn" style="margin-top:32px" href="/contact/">Request a rental quote <Icon name="arrow" /></a>
       </div>

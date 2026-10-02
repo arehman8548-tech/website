@@ -10,12 +10,12 @@ import { belts, places, districts, type Belt } from '../data/geo';
 import { projects } from '../data/projects';
 import { qa } from '../data/faq';
 import { breadcrumbs } from '../data/schema';
-import { wa } from '../data/site';
+import { wa, site } from '../data/site';
 
 const crumbs = [{ name: 'Kumaon Service Area', href: '/kumaon-service-area/' }];
-const title = 'Backhoe Loader Rental Across Kumaon — Haldwani, Nainital, Almora, Bageshwar | RBE Capital Equip.';
+const title = 'JCB / Backhoe Loader on Rent in Haldwani, Ranikhet, Almora, Nainital & Rudrapur | RBE Capital Equip.';
 const description =
-  'Backhoe loader deployment across Kumaon: Rudrapur, Pantnagar, Haldwani, Bhimtal, Nainital, Ramgarh, Mukteshwar, Ranikhet, Almora, Bageshwar and Berinag. How terrain, access and season change mobilisation.';
+  'Backhoe loader rental with operator across Kumaon, dispatched from Haldwani and Majkhali (Ranikhet). Rudrapur, Kashipur, Bhimtal, Nainital, Mukteshwar, Almora, Bageshwar, Berinag: how terrain, access and season change mobilisation.';
 const order: Belt[] = ['plains', 'midhills', 'innerhills'];
 const projFor = (slug: string) => projects.filter((p) => p.where.includes(slug)).slice(0, 2);
 const remote = qa('remote');
@@ -24,16 +24,16 @@ const selfDrive = qa('self-drive');
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Service area · Kumaon, Uttarakhand">
     <h1>Across Kumaon — from the Terai <span class="serif">to the high ridges.</span></h1>
-    <p class="lead">Rudrapur and Haldwani sit a few hundred metres above sea level. Mukteshwar is over 2,000 m. The same machine works in both — but getting it there, and keeping it working, is planned differently.</p>
+    <p class="lead">Rudrapur and Haldwani sit a few hundred metres above sea level. Mukteshwar is over 2,000 m. The same machine works in both — but getting it there is planned differently. That is why RBE dispatches from two bases: Haldwani at the foot of the hills, and Majkhali near Ranikhet, inside them.</p>
   </PageHero>
 
   <section class="section dark" aria-labelledby="h-map">
     <div class="wrap mapgrid">
       <div>
         <p class="eyebrow"><span class="idx">01</span>Where we deploy</p>
-        <h2 id="h-map">Fourteen anchor locations. <span class="serif">Sites around all of them.</span></h2>
+        <h2 id="h-map">Two deployment bases. <span class="serif">Sites across six districts.</span></h2>
         <div class="prose muted" style="margin-top:24px">
-          <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. Our service area is built around the towns where most project work happens, and the project sites around them.</p>
+          <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. The machine is dispatched from <a href="#haldwani">Haldwani</a> (Nainital district) and <a href="#majkhali">Majkhali</a> (near Ranikhet, Almora district), and works on project sites around the towns below.</p>
           <p>A site does not need to be <em>in</em> one of these towns. If it is a village road above Bageshwar or a resort plot beyond Ramgarh, <a href="/contact/">send the location</a> and we will plan from there.</p>
         </div>
         <ul class="plist" data-plist>
@@ -78,6 +78,7 @@ const selfDrive = qa('self-drive');
           <div class="pcards">
             {ps.map((p) => (
               <article class="pcard" id={p.slug} aria-labelledby={`${p.slug}-h`}>
+                {p.base && <p class="mono pcard__base">RBE deployment base</p>}
                 <div class="pcard__top">
                   <h3 id={`${p.slug}-h`}>{p.name}</h3>
                   <span class="mono">{p.altM.toLocaleString('en-IN')} m</span>
@@ -87,7 +88,7 @@ const selfDrive = qa('self-drive');
                 <p class="pcard__links">
                   {projFor(p.slug).map((pr) => <a class="inline" href={`/project-solutions/#${pr.id}`}>{pr.title.split(' &')[0].split(',')[0]}</a>)}
                 </p>
-                <a class="pcard__wa" href={wa(`Hello RBE Capital Equip., I need a backhoe loader near ${p.name}. Project: `)} rel="noopener"><Icon name="wa" />Backhoe loader near {p.name}</a>
+                <a class="pcard__wa" href={wa(`Hello RBE Capital Equip., I need a backhoe loader with operator near ${p.name}.\nProject / type of work:\nStart date:\nDuration (15 days minimum):`)} rel="noopener"><Icon name="wa" />Backhoe loader near {p.name}</a>
               </article>
             ))}
           </div>
@@ -113,7 +114,7 @@ const selfDrive = qa('self-drive');
       <div>
         <ol class="factors">
           <li><b>Availability on your date</b><span>Confirmed first — before anything else is planned.</span></li>
-          <li><b>Distance and route</b><span>Plains, mid-hill or inner-hill; which road and how long it takes.</span></li>
+          <li><b>Which base, and the route</b><span>From Haldwani or from Majkhali (Ranikhet); which road, and how long it takes.</span></li>
           <li><b>Access road condition</b><span>Width, hairpin bends, gradient and the last-mile surface to the plot.</span></li>
           <li><b>Travel method</b><span>On its own wheels or on a trailer, depending on distance and route.</span></li>
           <li><b>Season</b><span>Monsoon slips and closures mean earlier mobilisation and buffer.</span></li>
@@ -139,9 +140,10 @@ const selfDrive = qa('self-drive');
           <li><strong>The plains are the gateway.</strong> Haldwani and Kathgodam are where the hill roads begin. Plan site visits and mobilisation through them.</li>
           <li><strong>Hill distances are measured in hours, not kilometres.</strong> A move that looks short on a map can take a full day on mountain roads.</li>
           <li><strong>The monsoon reshapes the programme.</strong> From about June to September, slips and closures are normal. Front-load earthwork and drainage before the rains where you can.</li>
-          <li><strong>Arrange equipment before you need it.</strong> Machines available at short notice are rarely available at short notice at a remote site.</li>
+          <li><strong>Arrange equipment before you need it.</strong> A machine that is free at short notice in the plains is rarely free at short notice at a remote hill site.</li>
+          <li><strong>Hourly hire does not travel well.</strong> Hill mobilisation takes time, which is why RBE rents for 15 days or more and always with an operator.</li>
         </ul>
-        <p>Share your work-order scope, site locations and programme, and we will plan machine availability and mobilisation around it. See <a href="/how-rental-works/">how rental works</a>.</p>
+        <p>RBE’s head office is in {site.headOffice.display.replace(', India', '')} — within reach for teams based in Delhi NCR — and the machine is dispatched from Haldwani and Majkhali (Ranikhet). Share your work-order scope, site locations and programme, and RBE confirms availability, mobilisation and terms in writing. See <a href="/how-rental-works/">how rental works</a>.</p>
       </div>
     </div>
   </section>
@@ -188,6 +190,7 @@ const selfDrive = qa('self-drive');
   .stone .pcard { background: var(--paper); }
   .paper .pcard { background: var(--stone); border-color: transparent; }
   .pcard:target { outline: 2px solid var(--copper); }
+  .pcard__base { margin: 0; font-size: .68rem !important; text-transform: uppercase; letter-spacing: .12em; color: var(--copper-lo); }
   .pcard__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
   .pcard__top h3 { font-size: 1.35rem; margin: 0; }
   .pcard__top .mono { color: var(--copper-lo); font-size: .78rem; }

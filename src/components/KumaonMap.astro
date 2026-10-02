@@ -14,16 +14,16 @@ const P = Object.fromEntries(places.map((p) => [p.slug, { ...p, x: px(p.lon), y:
 const links: [string, string][] = [
   ['kashipur', 'rudrapur'], ['rudrapur', 'pantnagar'], ['pantnagar', 'haldwani'], ['rudrapur', 'haldwani'], ['haldwani', 'kathgodam'],
   ['kathgodam', 'bhimtal'], ['kathgodam', 'bhowali'], ['bhowali', 'nainital'], ['bhowali', 'ramgarh'], ['ramgarh', 'mukteshwar'],
-  ['bhowali', 'almora'], ['bhowali', 'ranikhet'], ['ranikhet', 'almora'], ['almora', 'bageshwar'], ['bageshwar', 'berinag'], ['almora', 'berinag'],
+  ['bhowali', 'almora'], ['bhowali', 'ranikhet'], ['ranikhet', 'majkhali'], ['majkhali', 'almora'], ['almora', 'bageshwar'], ['bageshwar', 'berinag'], ['almora', 'berinag'],
 ];
 const beltColor: Record<Belt, string> = { plains: 'var(--steel)', midhills: 'var(--copper-hi)', innerhills: '#e9d3b8' };
-const labelSide: Record<string, 'l' | 'r' | 'b' | 't'> = { kashipur: 'l', rudrapur: 'b', pantnagar: 'r', haldwani: 'l', kathgodam: 'r', bhimtal: 'r', bhowali: 'r', nainital: 'l', ramgarh: 't', mukteshwar: 'r', ranikhet: 'l', almora: 'b', bageshwar: 't', berinag: 'r' };
+const labelSide: Record<string, 'l' | 'r' | 'b' | 't'> = { kashipur: 'l', rudrapur: 'b', pantnagar: 'r', haldwani: 'l', kathgodam: 'r', bhimtal: 'r', bhowali: 'r', nainital: 'l', ramgarh: 't', mukteshwar: 'r', ranikhet: 'l', majkhali: 't', almora: 'b', bageshwar: 't', berinag: 'r' };
 const W = Math.ceil(px(80.25)) , H = Math.ceil(py(28.9));
 const km50 = (50 / 111) * K * COS; // ≈50 km horizontal at this latitude
 ---
 <figure class={`kmap ${compact ? 'kmap--c' : ''}`}>
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="kmap-t">
-    <title id="kmap-t">Schematic map of Kumaon showing supported locations from Kashipur and Rudrapur in the plains to Nainital, Almora, Bageshwar and Berinag in the hills.</title>
+    <title id="kmap-t">Schematic map of Kumaon showing RBE’s two deployment bases, Haldwani and Majkhali near Ranikhet, and supported locations from Kashipur and Rudrapur in the plains to Nainital, Almora, Bageshwar and Berinag in the hills.</title>
     <defs>
       <pattern id="kgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-width=".5" opacity=".14" /></pattern>
       <linearGradient id="kband" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8d949b" stop-opacity=".09" /><stop offset=".45" stop-color="#c4692c" stop-opacity=".07" /><stop offset="1" stop-color="#e9d3b8" stop-opacity=".06" /></linearGradient>
@@ -46,6 +46,7 @@ const km50 = (50 / 111) * K * COS; // ≈50 km horizontal at this latitude
       return (
         <g class="pt" data-place={p.slug}>
           <circle cx={q.x} cy={q.y} r="11" class="halo" />
+          {p.base && <rect x={q.x - 8} y={q.y - 8} width="16" height="16" class="base" />}
           <circle cx={q.x} cy={q.y} r="4.5" fill={beltColor[p.belt]} />
           <text x={q.x + dx} y={q.y + dy} text-anchor={anchor}>{p.name}</text>
         </g>
@@ -64,6 +65,7 @@ const km50 = (50 / 111) * K * COS; // ≈50 km horizontal at this latitude
     <span><i style="background:var(--steel)"></i>{belts.plains.title}</span>
     <span><i style="background:var(--copper-hi)"></i>{belts.midhills.title}</span>
     <span><i style="background:#e9d3b8"></i>{belts.innerhills.title}</span>
+    <span><i class="kmap__b"></i>RBE deployment base</span>
     <span class="kmap__n">Schematic — positions approximate, lines are not road alignments.</span>
   </figcaption>
 </figure>
@@ -75,6 +77,7 @@ const km50 = (50 / 111) * K * COS; // ≈50 km horizontal at this latitude
   .bl { fill: var(--on-dark-2); font-family: var(--f-mono); font-size: 10px; letter-spacing: .16em; opacity: .7; }
   .ln { stroke: var(--on-dark-2); stroke-width: .9; opacity: .45; }
   .pt text { fill: var(--on-dark); font-family: var(--f-ui); font-size: 13px; font-weight: 500; paint-order: stroke; stroke: var(--ink); stroke-width: 4px; stroke-linejoin: round; }
+  .pt .base { fill: none; stroke: var(--copper-hi); stroke-width: 1.5; }
   .pt .halo { fill: var(--copper); opacity: 0; transition: opacity .3s var(--ease); }
   .pt.is-hot .halo { opacity: .35; }
   .pt.is-hot text { fill: var(--copper-hi); }
@@ -84,5 +87,6 @@ const km50 = (50 / 111) * K * COS; // ≈50 km horizontal at this latitude
   figcaption { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 14px; font-size: .7rem; letter-spacing: .06em; color: var(--on-dark-2); }
   figcaption span { display: inline-flex; align-items: center; gap: 8px; }
   figcaption i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  figcaption i.kmap__b { border-radius: 0; background: none; border: 1.5px solid var(--copper-hi); width: 10px; height: 10px; }
   .kmap__n { flex-basis: 100%; opacity: .75; }
 </style>

@@ -11,15 +11,15 @@ import { qa } from '../data/faq';
 const crumbs = [{ name: 'How Rental Works', href: '/how-rental-works/' }];
 const title = 'How Backhoe Loader Rental Works — From Enquiry to Machine on Site | RBE Capital Equip.';
 const description =
-  'The six steps of renting a backhoe loader from RBE Capital Equip. for a Kumaon project: requirement, site information, confirmation, mobilisation, deployment and support — and what to send for a fast quote.';
+  'How renting a backhoe loader with operator from RBE Capital Equip. works for a Kumaon project: six steps from requirement to close-out, written terms, 15-day minimum, and the five things to send for a fast quote.';
 
 const steps = [
-  { t: 'Requirement', who: 'You', d: 'Tell us the site, the type of work, your start date and how long you need the machine. A call or WhatsApp message is enough to begin.', out: 'We reply with availability for your dates.' },
+  { t: 'Requirement', who: 'You', d: 'Tell us the site, the type of work, your start date and how long you need the machine — 15 days is the minimum. A call or WhatsApp message is enough to begin.', out: 'RBE replies with availability for your dates.' },
   { t: 'Site information', who: 'You + RBE', d: 'Share a map pin and the access route: road width, sharp bends, last-mile surface and where the machine will work and park. Photos help for hill sites.', out: 'We know how the machine will reach and work on the site.' },
-  { t: 'Machine & terms', who: 'RBE', d: 'We confirm the machine, rental period, working hours, operator arrangement, diesel, mobilisation, idle-time and breakdown terms — in writing.', out: 'A quote you can approve without surprises.' },
-  { t: 'Mobilisation', who: 'RBE', d: 'The machine is checked before dispatch. Route, travel method (own wheels or trailer) and arrival date are fixed, with season and road conditions in mind.', out: 'A firm arrival date.' },
-  { t: 'Deployment', who: 'RBE + your site team', d: 'The machine arrives and starts work. Your site contact and our operator agree the daily plan; working hours are recorded and signed off.', out: 'Work underway, hours on record.' },
-  { t: 'Support & close-out', who: 'RBE', d: 'Planned servicing through the rental, the agreed breakdown process if anything stops, and a clean extension or return at the end.', out: 'The machine stays productive until the job is done.' },
+  { t: 'Machine & terms', who: 'RBE', d: 'RBE confirms in writing: the machine, rental period, working hours, operator, diesel, mobilisation, idle-time and breakdown terms — plus the rock breaker and GST invoice if you need them.', out: 'Written terms you can approve before anything moves.' },
+  { t: 'Mobilisation', who: 'RBE', d: 'The machine is checked before dispatch from Haldwani or Majkhali (Ranikhet). Route, travel method (own wheels or trailer) and arrival date are fixed, with season and road conditions in mind.', out: 'A confirmed arrival date.' },
+  { t: 'Deployment', who: 'RBE + your site team', d: 'The machine and its RBE operator arrive and start work. Your site contact and the operator agree the daily plan.', out: 'Work underway.' },
+  { t: 'Support & close-out', who: 'RBE', d: 'One named contact through the rental, the agreed breakdown process if anything stops, and an extension or return at the end.', out: 'One person accountable until the job is done.' },
 ];
 const quoteInfo = qa('quote-info');
 const quick = qa('how-quickly');
@@ -27,7 +27,7 @@ const quick = qa('how-quickly');
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Process">
     <h1>From your first message to a <span class="serif">working machine.</span></h1>
-    <p class="lead">Six steps, each with a clear outcome. Nothing reaches your site until availability, access and terms are settled.</p>
+    <p class="lead">Six steps, each with a clear outcome. Nothing is dispatched to your site until availability, access and terms are settled in writing.</p>
   </PageHero>
 
   <section class="section paper" aria-labelledby="h-steps">
@@ -57,14 +57,14 @@ const quick = qa('how-quickly');
         <p class="muted" style="margin-top:20px">{quoteInfo.a}</p>
         <div class="btn-row" style="margin-top:32px">
           <a class="btn" href="/contact/">Use the enquiry form <Icon name="arrow" /></a>
-          <a class="btn btn--wa" href={wa('Site location:\nType of work:\nStart date:\nDuration:\nWorking hours per day:')} rel="noopener"><Icon name="wa" />WhatsApp the details</a>
+          <a class="btn btn--wa" href={wa('Hello RBE Capital Equip.\nSite location:\nType of work:\nStart date:\nDuration (15 days minimum):\nWorking hours per day:\nGST invoice needed? (yes/no):')} rel="noopener"><Icon name="wa" />WhatsApp the details</a>
         </div>
       </div>
       <ol class="five">
         <li><b>Site location</b><span>Map pin, village / town and district</span></li>
         <li><b>Type of work</b><span>Road, drains, foundations, cutting, trenching…</span></li>
         <li><b>Start date</b><span>When the machine must be working</span></li>
-        <li><b>Duration</b><span>Days, months, or the project phase</span></li>
+        <li><b>Duration</b><span>15 days minimum — or months, or the project phase</span></li>
         <li><b>Working hours</b><span>Per day, and single or double shift</span></li>
       </ol>
     </div>
@@ -78,7 +78,7 @@ const quick = qa('how-quickly');
       </div>
       <div class="prose">
         <p class="lead" style="max-width:none" set:html={quick.html ?? quick.a} />
-        <p class="muted">Speak to us directly: <a href={tel}>{site.phoneDisplay}</a> · {site.hours}</p>
+        <p class="muted">Speak to us directly: call <a href={tel}>{site.phoneDisplay}</a> · WhatsApp <a href={wa()} rel="noopener">{site.whatsappDisplay}</a> · <a href={`mailto:${site.email}`}>{site.email}</a></p>
       </div>
     </div>
   </section>
