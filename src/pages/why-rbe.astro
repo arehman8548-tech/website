@@ -110,9 +110,9 @@ const chapters: Chapter[] = [
         <dl class="spec" style="margin-top:28px">
           <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
           <div><dt>Deployment bases</dt><dd>Haldwani · Majkhali (Ranikhet)</dd></div>
-          <div><dt>Call &amp; WhatsApp</dt><dd><a href={tel}>{site.phoneDisplay}</a> · <a href={wa()} rel="noopener">WhatsApp</a></dd></div>
-          <div><dt>Second line</dt><dd><a href={tel2}>{site.phone2Display}</a></dd></div>
-          <div><dt>Sales</dt><dd><a href={mailto}>{site.email}</a></dd></div>
+          <div><dt>{site.phoneLabel}</dt><dd><a href={tel}>{site.phoneDisplay}</a> · <a href={wa()} rel="noopener">WhatsApp</a></dd></div>
+          <div><dt>{site.phone2Label}</dt><dd><a href={tel2}>{site.phone2Display}</a></dd></div>
+          <div><dt>Sales email</dt><dd><a href={mailto}>{site.email}</a></dd></div>
           <div><dt>General</dt><dd><a href={mailtoContact}>{site.contactEmail}</a></dd></div>
           <div><dt>Billing</dt><dd>GST invoice on request</dd></div>
         </dl>
@@ -148,7 +148,7 @@ const chapters: Chapter[] = [
 
   <NextSteps items={[
     { k: 'Process', t: 'How a rental runs', d: 'Requirement to return, step by step.', href: '/how-rental-works/' },
-    { k: 'Machine', t: 'What the backhoe loader can do', d: 'Capabilities and typical specification.', href: '/backhoe-loader-rental/' },
+    { k: 'Real sites', t: 'Projects RBE has supplied', d: 'Ranikhet–Majkhali resort and Padampuri road widening.', href: '/developers/#resorts' },
     { k: 'Contact', t: 'Check availability now', d: 'Call, WhatsApp or send the project form.', href: '/contact/' },
   ]} />
   <QuoteBand heading="Talk to the people who will actually support your site." />
@@ -175,6 +175,7 @@ const chapters: Chapter[] = [
   .roto { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
   .roto__mark { padding: clamp(32px, 5vw, 72px); border: 1px solid var(--line-l); display: grid; place-items: center; background: var(--paper); }
   .roto .spec dd a { text-decoration: none; }
+  @media (max-width: 420px) { .roto .spec dt { padding-right: 12px; letter-spacing: .02em; } .roto .spec dd { overflow-wrap: anywhere; } }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); }
   .xlist { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--line-l); }
   .xlist li { padding: 16px 0 16px 34px; border-bottom: 1px solid var(--line-l); position: relative; font-size: 1.05rem; }

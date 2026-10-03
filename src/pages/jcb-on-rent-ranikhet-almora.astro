@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Evidence from '../components/Evidence.astro';
+import TownCard from '../components/TownCard.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs, serviceNode } from '../data/schema';
+import { site, tel, tel2, wa } from '../data/site';
+import { cases } from '../data/cases';
+import { photos } from '../data/media';
+import { qa } from '../data/faq';
+import '../styles/content.css';
+
+const crumbs = [
+  { name: 'Kumaon Service Area', href: '/kumaon-service-area/' },
+  { name: 'Ranikhet & Almora', href: '/jcb-on-rent-ranikhet-almora/' },
+];
+const title = 'JCB on Rent in Ranikhet, Almora, Bageshwar & Pithoragarh | RBE';
+const description =
+  'JCB backhoe loader on rent with operator from RBE’s Majkhali base near Ranikhet, for sites in Ranikhet, Almora, Bageshwar and Pithoragarh district.';
+const resort = cases.find((c) => c.id === 'ranikhet-majkhali')!;
+const rk = qa('ranikhet');
+const remote = qa('remote');
+---
+<Base title={title} description={description} intent="location" loc="ranikhet-almora" schema={[breadcrumbs(crumbs), serviceNode({
+  path: '/jcb-on-rent-ranikhet-almora/',
+  name: 'JCB backhoe loader on rent — Majkhali base (Ranikhet)',
+  serviceType: 'JCB backhoe loader rental with operator',
+  audience: 'Contractors, developers and project teams',
+  places: ['Ranikhet', 'Majkhali', 'Almora', 'Bageshwar', 'Berinag, Pithoragarh district'],
+  description: 'JCB backhoe loader rental with operator, dispatched from RBE’s Majkhali base on the Ranikhet–Almora road to sites in Almora, Bageshwar and Pithoragarh districts. Minimum rental 15 days; GST invoice on request.',
+})]}>
+  <PageHero crumbs={crumbs} eyebrow="Majkhali base · Almora, Bageshwar & Pithoragarh">
+    <h1>JCB on rent in Ranikhet, Almora <span class="serif">and the inner hills.</span></h1>
+    <p class="lead">RBE’s second base is at Majkhali, about 10 km from Ranikhet on the Ranikhet–Almora road. For sites around Ranikhet and Almora — and further in, towards Bageshwar and Pithoragarh district — the machine starts already in the hills instead of climbing up from the plains.</p>
+    <div class="btn-row">
+      <a class="btn" href="/contact/">Check JCB availability <Icon name="arrow" /></a>
+      <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., I want to check JCB backhoe loader availability from your Majkhali (Ranikhet) base.\nSite location:\nType of work:\nStart date / duration:')} rel="noopener"><Icon name="wa" />WhatsApp</a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel}</a>
+    </div>
+    <dl class="kf">
+      <div><dt>Base</dt><dd>Majkhali, near Ranikhet (Almora district)</dd></div>
+      <div><dt>Machine</dt><dd>JCB backhoe loader, with operator</dd></div>
+      <div><dt>Hire</dt><dd>15 days minimum · monthly · project</dd></div>
+      <div><dt>Plains &amp; lake district</dt><dd><a href="/jcb-on-rent-haldwani/">Haldwani base →</a></dd></div>
+    </dl>
+    <ul class="jump" aria-label="Areas">
+      <li><a href="#ranikhet-area">Ranikhet &amp; Majkhali</a></li>
+      <li><a href="#almora-area">Almora</a></li>
+      <li><a href="#beyond">Bageshwar &amp; Pithoragarh</a></li>
+    </ul>
+  </PageHero>
+
+  <section class="section paper" aria-label="Areas served from Majkhali">
+    <div class="wrap">
+      <article class="seg" id="ranikhet-area" aria-labelledby="h-rk">
+        <div>
+          <p class="seg__k">01 · The base</p>
+          <h2 id="h-rk">Ranikhet &amp; Majkhali</h2>
+          <p class="seg__lead muted">Ridge terrain around the cantonment town, with resort, cottage and road work on sloping ground. This is where RBE has worked on a resort development — and where the machine is closest.</p>
+          <div class="hb__ev"><Evidence photo={photos.resortSnow} ratio="3 / 2" sizes="(max-width: 960px) 100vw, 40vw" /></div>
+          <div class="proof">
+            <p class="proof__k">Real project · {resort.district} district</p>
+            <p><b>{resort.name} — {resort.work.toLowerCase()}.</b> RBE supplied a {resort.supplied}. Work: {resort.scope.join(' and ').toLowerCase()}.</p>
+            <a class="inline" href="/developers/#resorts">Resort and hotel site development →</a>
+          </div>
+        </div>
+        <div class="hb__towns">
+          <TownCard slug="majkhali" work="RBE’s inner-hill deployment base. Nearby resort, building and road sites are the shortest move." />
+          <TownCard slug="ranikhet" work="Resort and cottage platforms, retaining-wall footings, access roads and hill-road drains." />
+          <div class="answer hb__q"><h3>{rk.q}</h3><div class="prose muted" set:html={rk.html ?? rk.a} /></div>
+        </div>
+      </article>
+
+      <article class="seg" id="almora-area" aria-labelledby="h-alm">
+        <div>
+          <p class="seg__k">02 · District headquarters</p>
+          <h2 id="h-alm">Almora</h2>
+          <p class="seg__lead muted">A ridge-top district headquarters with urban works, link roads and institutional buildings around it. From Majkhali, the machine travels along the Ranikhet–Almora road rather than up from the plains.</p>
+          <div class="links"><a class="inline" href="/project-solutions/#road-construction">Road construction &amp; widening</a><a class="inline" href="/project-solutions/#trenching">Trenching &amp; utilities</a></div>
+        </div>
+        <div class="hb__towns">
+          <TownCard slug="almora" work="Link-road formation and widening, side drains, utility lines and building-plot excavation." />
+        </div>
+      </article>
+
+      <article class="seg" id="beyond" aria-labelledby="h-bey">
+        <div>
+          <p class="seg__k">03 · Further in</p>
+          <h2 id="h-bey">Bageshwar &amp; Pithoragarh district</h2>
+          <p class="seg__lead muted">Mobilisation beyond Almora is still long. The route, timing, the operator’s stay, diesel and servicing are planned before the start date, not on the road — and monsoon closures need buffer in the programme.</p>
+          <div class="answer"><h3>{remote.q}</h3><div class="prose muted" set:html={remote.html ?? remote.a} /></div>
+        </div>
+        <div class="hb__towns">
+          <TownCard slug="bageshwar" work="Road, river-protection and civic works around the confluence town; culvert and small-bridge approaches." />
+          <TownCard slug="berinag" work="Remote ridge sites in Pithoragarh district — link roads, drains and project site preparation, planned in advance." />
+          <div class="hb__em">
+            <p class="seg__k">Road blocked by a slip?</p>
+            <p>Landslide, slip and boulder clearance is handled by <a class="inline" href={tel2}>{site.phone2Label} · {site.phone2Display}</a>.</p>
+            <a class="inline" href="/emergency-earthwork/">Emergency earthwork &amp; road clearance →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section--tight stone" aria-labelledby="h-reach">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">04</span>Planning a hill site</p>
+        <h2 id="h-reach">Send the location and <span class="serif">the last stretch of road.</span></h2>
+        <p class="muted">Road width, bends, gradient and where the machine parks overnight decide how it reaches an inner-hill site.</p>
+      </div>
+      <div class="links">
+        <a class="inline" href="/kumaon-service-area/#belt-innerhills">The inner hills belt</a>
+        <a class="inline" href="/kumaon-service-area/#deployment">Deployment planning</a>
+        <a class="inline" href="/jcb-rental-rates/">How the rental is priced</a>
+        <a class="inline" href="/developers/">For developers</a>
+        <a class="inline" href="/contractors/">For contractors</a>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Plains & lake district', t: 'Haldwani, Rudrapur & Nainital', d: 'Sites served from the Haldwani base.', href: '/jcb-on-rent-haldwani/' },
+    { k: 'Developers', t: 'Resort & hotel sites', d: 'The Ranikhet–Majkhali project and what the machine does.', href: '/developers/#resorts' },
+    { k: 'Emergency', t: 'Slip and road clearance', d: 'Call Site Coordination for urgent work.', href: '/emergency-earthwork/' },
+  ]} />
+  <QuoteBand heading="Site near Ranikhet, Almora or beyond? Check JCB availability." cta="Check JCB availability" waText="Hello RBE Capital Equip., I want to check JCB backhoe loader availability from your Majkhali (Ranikhet) base." />
+</Base>
+
+<style>
+  .hb__towns { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; align-content: start; }
+  .hb__ev { margin-top: 28px; }
+  .hb__em { padding: 22px; border: 1px solid var(--copper); display: grid; gap: 8px; align-content: start; }
+  .hb__em p { margin: 0; }
+  .hb__q { grid-column: 1 / -1; }
+  .seg .answer { margin-top: 24px; }
+</style>

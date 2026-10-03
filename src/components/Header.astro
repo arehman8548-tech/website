@@ -1,8 +1,12 @@
 ---
 import Wordmark from './Wordmark.astro';
 import Icon from './Icon.astro';
-import { nav, site, tel, wa } from '../data/site';
+import { nav, navFull, site, tel, tel2, wa } from '../data/site';
+interface Props { callLine?: 'sales' | 'site' }
+const { callLine = 'sales' } = Astro.props;
 const path = Astro.url.pathname;
+const barTel = callLine === 'site' ? tel2 : tel;
+const barLabel = callLine === 'site' ? 'Site Coord.' : site.phoneLabel;
 ---
 <header class="hdr" data-hdr>
   <div class="hdr__in wrap">
@@ -13,7 +17,7 @@ const path = Astro.url.pathname;
       </ul>
     </nav>
     <div class="hdr__act">
-      <a class="hdr__tel" href={tel}><Icon name="phone" /><span>{site.phoneDisplay}</span></a>
+      <a class="hdr__tel" href={tel} aria-label={`Call ${site.phoneLabel}: ${site.phoneDisplay}`} title={`${site.phoneLabel} · ${site.phoneDisplay}`}><Icon name="phone" /><span><em>{site.phoneLabel}</em>{site.phoneDisplay}</span></a>
       <a class="btn hdr__cta" href="/contact/">Check availability</a>
       <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="mnav" data-menu-btn>
         <span class="sr-only">Menu</span><i></i><i></i>
@@ -23,19 +27,20 @@ const path = Astro.url.pathname;
   <div class="mnav" id="mnav" data-menu hidden>
     <nav aria-label="Mobile">
       <ul>
-        {nav.map((n, i) => <li><a href={n.href}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{n.label}</a></li>)}
-        <li><a href="/contact/"><span class="mono">07</span>Book equipment</a></li>
+        {navFull.map((n, i) => <li><a href={n.href}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{n.label}</a></li>)}
+        <li><a href="/contact/"><span class="mono">{String(navFull.length + 1).padStart(2, '0')}</span>Project enquiry</a></li>
       </ul>
     </nav>
     <div class="mnav__foot">
-      <a class="btn" href={tel}><Icon name="phone" />Call {site.phoneDisplay}</a>
+      <a class="btn" href={tel}><Icon name="phone" />Call {site.phoneLabel} · {site.phoneDisplay}</a>
+      <a class="btn btn--ghost" href={tel2}><Icon name="phone" />{site.phone2Label} · {site.phone2Display}</a>
       <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp us</a>
     </div>
   </div>
 </header>
 
 <nav class="abar" aria-label="Quick contact">
-  <a href={tel}><Icon name="phone" /><span>Call</span></a>
+  <a href={barTel} aria-label={`Call ${callLine === 'site' ? site.phone2Label : site.phoneLabel}`}><Icon name="phone" /><span>{barLabel}</span></a>
   <a href={wa()} rel="noopener"><Icon name="wa" /><span>WhatsApp</span></a>
   <a href="/contact/" class="abar__q"><span>Get a quote</span><Icon name="arrow" /></a>
 </nav>
@@ -68,6 +73,7 @@ const path = Astro.url.pathname;
   .hdr__act { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
   .hdr__tel { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--f-mono); font-size: .82rem; color: var(--on-dark); white-space: nowrap; }
   .hdr__tel :global(svg) { width: 16px; height: 16px; color: var(--copper-hi); }
+  .hdr__tel em { font-style: normal; font-family: var(--f-ui); font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--on-dark-2); margin-right: 8px; }
   .hdr__cta { white-space: nowrap; min-height: 42px; padding: 0 16px; font-size: .88rem; }
   .hdr__menu { display: none; width: 44px; height: 44px; border: 1px solid var(--line-d); background: transparent; cursor: pointer; position: relative; border-radius: var(--radius); }
   .hdr__menu i { position: absolute; left: 12px; right: 12px; height: 1.5px; background: var(--on-dark); transition: transform .3s var(--ease), top .3s var(--ease); }
@@ -83,10 +89,11 @@ const path = Astro.url.pathname;
   .mnav li .mono { font-size: .7rem; color: var(--copper-hi); }
   .mnav__foot { display: grid; gap: 10px; margin-top: 28px; }
   .mnav__foot .btn { justify-content: center; }
+  .mnav__foot .btn--ghost { --fg: var(--on-dark); border-color: rgba(238,235,229,.28); }
 
   .abar { display: none; }
 
-  @media (max-width: 1380px) { .hdr__tel span { display: none; } }
+  @media (max-width: 1500px) { .hdr__tel span { display: none; } }
   @media (max-width: 1240px) { .hdr__nav ul { gap: 16px; } .hdr__nav a { font-size: .85rem; } }
   @media (max-width: 1040px) {
     .hdr__nav, .hdr__cta { display: none; }

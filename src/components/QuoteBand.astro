@@ -1,27 +1,36 @@
 ---
 import Icon from './Icon.astro';
-import { site, tel, wa } from '../data/site';
-interface Props { heading?: string; text?: string; waText?: string }
+import { site, tel, tel2, wa } from '../data/site';
+interface Props { heading?: string; text?: string; waText?: string; cta?: string; ctaHref?: string; eyebrow?: string; line?: 'sales' | 'site' }
 const {
   heading = 'Tell us where the site is and when you need to start.',
   text = 'Send the project location, type of work, start date and how long you need the machine (15 days minimum). RBE confirms availability, how the machine reaches your site and the full terms in writing — operator included.',
   waText,
+  cta = 'Request a rental quote',
+  ctaHref = '/contact/',
+  eyebrow = 'Check availability',
+  line = 'sales',
 } = Astro.props;
+// Emergency pages lead with Site Coordination; everything else with Sales. Both numbers are always shown.
+const primary = line === 'site' ? { href: tel2, label: site.phone2Label, num: site.phone2Display } : { href: tel, label: site.phoneLabel, num: site.phoneDisplay };
+const other = line === 'site' ? { href: tel, label: site.phoneLabel, num: site.phoneDisplay } : { href: tel2, label: site.phone2Label, num: site.phone2Display };
 ---
 <section class="qb dark" aria-label="Request a quote">
   <div class="wrap qb__in">
     <div>
-      <p class="eyebrow"><span class="idx">→</span> Check availability</p>
+      <p class="eyebrow"><span class="idx">→</span> {eyebrow}</p>
       <h2 class="qb__h">{heading}</h2>
     </div>
     <div class="qb__r">
       <p class="muted">{text}</p>
       <div class="btn-row">
-        <a class="btn" href="/contact/">Request a rental quote <Icon name="arrow" /></a>
+        {line === 'site' && <a class="btn" href={primary.href}><Icon name="phone" />Call {primary.label}</a>}
+        {line !== 'site' && <a class="btn" href={ctaHref}>{cta} <Icon name="arrow" /></a>}
         <a class="btn btn--wa" href={wa(waText)} rel="noopener"><Icon name="wa" />WhatsApp</a>
-        <a class="btn btn--ghost" href={tel}><Icon name="phone" />{site.phoneDisplay}</a>
+        {line === 'site' ? <a class="btn btn--ghost" href={ctaHref}>{cta}</a> : <a class="btn btn--ghost" href={primary.href}><Icon name="phone" />Call {primary.label}</a>}
       </div>
-      <p class="mono qb__hrs"><Icon name="clock" />Enquiry hours · {site.hours}</p>
+      <p class="mono qb__hrs"><Icon name="phone" />{primary.label} <a href={primary.href}>{primary.num}</a> · {other.label} <a href={other.href}>{other.num}</a></p>
+      <p class="mono qb__hrs qb__hrs--2"><Icon name="clock" />Enquiry hours · {site.hours}</p>
     </div>
   </div>
 </section>
@@ -32,6 +41,10 @@ const {
   .qb__h { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 18ch; }
   .qb__r p { margin-bottom: 28px; max-width: 46ch; }
   .qb__hrs { display: flex; align-items: center; gap: 8px; margin: 20px 0 0 !important; font-size: .75rem; letter-spacing: .04em; color: var(--on-dark-2); }
-  .qb__hrs :global(svg) { width: 16px; }
+  .qb__hrs :global(svg) { width: 16px; flex: none; }
+  .qb__hrs { flex-wrap: wrap; }
+  .qb__hrs a { color: var(--on-dark); text-decoration: none; }
+  .qb__hrs a:hover { color: var(--copper-hi); }
+  .qb__hrs--2 { margin-top: 8px !important; }
   @media (max-width: 900px) { .qb__in { grid-template-columns: 1fr; } }
 </style>

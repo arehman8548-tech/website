@@ -22,14 +22,16 @@ const year = new Date().getFullYear();
       </div>
       <div class="ftr__contact">
         <p class="eyebrow">Talk to us about your site</p>
+        <p class="ftr__line mono">{site.phoneLabel} — quotes, availability, rental terms</p>
         <a class="ftr__big" href={tel}>{site.phoneDisplay}</a>
+        <p class="ftr__line mono">{site.phone2Label} — machine on site, mobilisation, emergency clearance</p>
+        <a class="ftr__big ftr__big--2" href={tel2}>{site.phone2Display}</a>
         <div class="btn-row">
           <a class="btn btn--wa" href={wa()} rel="noopener"><Icon name="wa" />WhatsApp {site.whatsappDisplay}</a>
           <a class="btn btn--ghost" href={mailto}><Icon name="mail" />{site.email}</a>
         </div>
         <p class="mono muted ftr__hours"><Icon name="clock" />Enquiry hours · {site.hours}</p>
         <p class="mono muted ftr__hours"><Icon name="mail" />General: <a href={mailtoContact}>{site.contactEmail}</a></p>
-        <p class="mono muted ftr__hours"><Icon name="phone" />Second line: <a href={tel2}>{site.phone2Display}</a></p>
       </div>
     </div>
 
@@ -41,6 +43,8 @@ const year = new Date().getFullYear();
           <li><a href="/backhoe-loader-rental/#what-it-does">What the machine can do</a></li>
           <li><a href="/backhoe-loader-rental/#when-not">When to choose an excavator</a></li>
           <li><a href="/backhoe-loader-rental/#rental-terms">Rental terms &amp; 15-day minimum</a></li>
+          <li><a href="/jcb-rental-rates/">JCB rental rates &amp; pricing</a></li>
+          <li><a href="/emergency-earthwork/">Emergency earthwork &amp; road clearance</a></li>
         </ul>
       </nav>
       <nav aria-label="Project types">
@@ -54,16 +58,26 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
       <nav aria-label="Company">
-        <h2 class="ftr__h">Company</h2>
+        <h2 class="ftr__h">Who we work with</h2>
+        <ul>
+          <li><a href="/developers/">Hotel, resort &amp; industrial developers</a></li>
+          <li><a href="/contractors/">Contractors &amp; procurement teams</a></li>
+          <li><a href="/contractors/#procurement">Hiring a JCB for a government work order</a></li>
+        </ul>
+        <h2 class="ftr__h ftr__h--2">Company</h2>
         <ul>
           <li><a href="/why-rbe/">Why RBE</a></li>
           <li><a href="/how-rental-works/">How rental works</a></li>
           <li><a href="/knowledge/">Knowledge &amp; FAQ</a></li>
-          <li><a href="/contact/">Book equipment</a></li>
+          <li><a href="/contact/">Project enquiry</a></li>
         </ul>
       </nav>
       <div>
         <h2 class="ftr__h"><a href="/kumaon-service-area/">Kumaon service area</a></h2>
+        <ul class="ftr__hubs">
+          <li><a href="/jcb-on-rent-haldwani/">JCB on rent — Haldwani, Nainital &amp; Udham Singh Nagar</a></li>
+          <li><a href="/jcb-on-rent-ranikhet-almora/">JCB on rent — Ranikhet, Almora, Bageshwar &amp; Pithoragarh</a></li>
+        </ul>
         <p class="ftr__places">{places.map((p) => p.name).join(' · ')}</p>
         <p class="mono muted ftr__dist">Districts: {districts.join(', ')}</p>
       </div>
@@ -87,6 +101,10 @@ const year = new Date().getFullYear();
   .ftr__hours a { color: inherit; }
   .ftr__big { display: block; font-family: var(--f-display); font-stretch: 118%; font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: -0.03em; text-decoration: none; margin-bottom: 26px; }
   .ftr__big:hover { color: var(--copper-hi); }
+  .ftr__line { margin: 0 0 6px; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--copper-hi); }
+  .ftr__big--2 { font-size: clamp(1.5rem, 2.6vw, 2.2rem); }
+  .ftr__h--2 { margin-top: 32px; }
+  .ftr__hubs { margin-bottom: 18px !important; }
   .ftr__hours { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
   .ftr__hours :global(svg) { width: 16px; }
   .ftr__cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.5fr; gap: 32px; padding-block: 56px; }

@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs } from '../data/schema';
+import { site, tel, wa } from '../data/site';
+import '../styles/content.css';
+
+const crumbs = [{ name: 'JCB Rental Rates', href: '/jcb-rental-rates/' }];
+const title = 'JCB Rent per Month, per Hour & 3DX Price: How It Is Quoted | RBE';
+const description =
+  'How RBE prices JCB backhoe loader rental in Kumaon: monthly and 15-day hire, why there is no hourly rate, 3DX and model choice, and what moves the price.';
+
+const factors = [
+  ['Rental duration', '15 days, monthly or the project phase. Longer, committed periods are planned differently from a short package.', 'Start date and how long you need the machine.'],
+  ['Working hours per day', 'The quote states the hours per day the price covers, and how extra hours are treated.', 'Shift length and whether you work Sundays or nights.'],
+  ['Location & mobilisation', 'Distance and route from the Haldwani or Majkhali base, and the return at the end.', 'Site location — a map pin is best.'],
+  ['Transportation', 'Driven on its own wheels over shorter distances, or moved on a trailer for longer moves.', 'Road width, bends and the last stretch to site.'],
+  ['Machine model', 'JCB backhoe loaders across a range of models; the model depends on the work and availability.', 'Any model or class your contract specifies.'],
+  ['Operator', 'Always included. Shift hours and the operator’s stay at remote sites are part of the quote.', 'Whether accommodation is available near site.'],
+  ['Fuel (diesel)', 'Either included in the rate or supplied by you — stated in the quote.', 'Which you prefer.'],
+  ['Idle time', 'Days the machine is on site but not working — weather, approvals, waiting on other trades.', 'Known holds in your programme.'],
+  ['Rock breaker', 'The hydraulic rock breaker is quoted when rock is expected.', 'Where you expect rock.'],
+  ['Project requirements', 'Scope, ground, access and season change how the machine is deployed.', 'Type of work and site conditions.'],
+  ['GST invoice', 'Available on request.', 'GST details, if required.'],
+];
+---
+<Base title={title} description={description} intent="pricing" schema={[breadcrumbs(crumbs)]}>
+  <PageHero crumbs={crumbs} eyebrow="Pricing · JCB backhoe loader rental">
+    <h1>JCB rental rates — <span class="serif">how a quote is built.</span></h1>
+    <p class="lead">RBE does not publish a rate card, because the price of a project rental depends on the period, the site and the terms. This page sets out exactly what goes into a quote, so you can compare it line by line — and get one quickly.</p>
+    <div class="btn-row">
+      <a class="btn" href="/contact/">Request rental pricing <Icon name="arrow" /></a>
+      <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., I need a price for a backhoe loader with operator.\nSite location:\nType of work:\nStart date:\nDuration (15 days minimum):\nWorking hours per day:\nDiesel included? (yes/no):\nGST invoice needed? (yes/no):')} rel="noopener"><Icon name="wa" />WhatsApp for a price</a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel}</a>
+    </div>
+    <ul class="jump" aria-label="On this page">
+      <li><a href="#per-hour">Rent per hour</a></li>
+      <li><a href="#per-month">Rent per month</a></li>
+      <li><a href="#3dx">3DX rent price</a></li>
+      <li><a href="#factors">Price factors</a></li>
+    </ul>
+  </PageHero>
+
+  <section class="section paper" aria-labelledby="h-answers">
+    <div class="wrap rt__ans">
+      <div>
+        <p class="eyebrow"><span class="idx">01</span>Straight answers</p>
+        <h2 id="h-answers">The three price questions <span class="serif">people search.</span></h2>
+      </div>
+      <div>
+        <div class="answer" id="per-hour">
+          <h3>JCB rent per hour</h3>
+          <p class="direct">RBE does not rent by the hour or by the day. The minimum is 15 days.</p>
+          <p class="muted">Hourly rates seen online are for short local jobs. Getting a machine and operator to a Kumaon site — especially in the hills — takes planning, so RBE prices for a period and writes the working hours per day into the quote. If your work order or BOQ counts machine-hours, give the expected hours per day and the quote is built on that.</p>
+        </div>
+        <div class="answer" id="per-month">
+          <h3>JCB rent per month</h3>
+          <p class="direct">Monthly hire is RBE’s standard basis, alongside the 15-day minimum and full project phases.</p>
+          <p class="muted">The monthly figure depends on the factors below — mainly working hours per day, diesel, mobilisation distance and whether the rock breaker is needed. The operator is always included. You receive it in writing before the machine is dispatched.</p>
+        </div>
+        <div class="answer" id="3dx">
+          <h3>3DX rent price</h3>
+          <p class="direct">3DX is one JCB backhoe loader model; many people use the name for any standard backhoe loader.</p>
+          <p class="muted">RBE supplies JCB backhoe loaders across a range of models. The model sent depends on your project and on availability for your dates. If your contract specifies a model or machine class, say so in the enquiry — the quote states the model supplied, and the price follows from it and the factors below.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section stone" id="factors" aria-labelledby="h-factors">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">02</span>What moves the price</p>
+        <h2 id="h-factors">Eleven factors, <span class="serif">all stated in the quote.</span></h2>
+        <p class="muted">The right-hand column is what to send so each line can be priced without a round of questions.</p>
+      </div>
+      <table class="ftab">
+        <thead><tr><th scope="col">Factor</th><th scope="col">How it affects the quote</th><th scope="col">What to tell us</th></tr></thead>
+        <tbody>
+          {factors.map(([f, how, tell]) => <tr><th scope="row">{f}</th><td>{how}</td><td>{tell}</td></tr>)}
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:24px">No rates are published on this website, and none should be inferred from it. Every price is a written quote for a specific site, period and set of terms.</p>
+    </div>
+  </section>
+
+  <section class="section dark" aria-labelledby="h-fast">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">03</span>Get a price</p>
+        <h2 id="h-fast">Five details get a quote <span class="serif">without back-and-forth.</span></h2>
+        <p class="muted">Site location, type of work, start date, duration and working hours per day. Add diesel, rock and GST if you know them.</p>
+      </div>
+      <ol class="steps">
+        <li><b>Website enquiry</b><p>Reaches RBE’s sales team by email, with a reference number on screen.</p><a class="btn" href="/contact/">Request rental pricing <Icon name="arrow" /></a></li>
+        <li><b>Call {site.phoneLabel}</b><p>{site.phoneDisplay} · enquiry hours {site.hours}.</p><a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel}</a></li>
+        <li><b>WhatsApp</b><p>Send the five details as a message, with a map pin.</p><a class="btn btn--wa" href={wa('Hello RBE Capital Equip., price request.\nSite location:\nType of work:\nStart date:\nDuration (15 days minimum):\nWorking hours per day:')} rel="noopener"><Icon name="wa" />WhatsApp</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Terms', t: 'What every quote confirms', d: 'Machine, period, hours, operator, diesel, mobilisation, idle time.', href: '/backhoe-loader-rental/#rental-terms' },
+    { k: 'Procurement', t: 'Hiring for a work order', d: 'What contractors and procurement teams should send.', href: '/contractors/#procurement' },
+    { k: 'Location', t: 'Mobilisation across Kumaon', d: 'Haldwani and Majkhali bases, and the route to your site.', href: '/kumaon-service-area/#deployment' },
+  ]} />
+  <QuoteBand heading="Need a price? Send the site, the work and the period." cta="Request rental pricing" />
+</Base>
+
+<style>
+  .rt__ans { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(32px, 6vw, 96px); }
+  .rt__ans h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+  .rt__ans .answer { scroll-margin-top: calc(var(--header-h) + 16px); }
+  @media (max-width: 860px) { .rt__ans { grid-template-columns: 1fr; } }
+</style>

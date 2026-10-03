@@ -6,29 +6,29 @@ import { breadcrumbs } from '../data/schema';
 import { site, tel, tel2, wa, mailto, mailtoContact } from '../data/site';
 import { projects } from '../data/projects';
 
-const crumbs = [{ name: 'Book Equipment', href: '/contact/' }];
+const crumbs = [{ name: 'Project Enquiry', href: '/contact/' }];
 const title = 'Check JCB Backhoe Availability for Your Site | RBE';
 const description =
-  `Send your site location, work type and start date. Call or WhatsApp ${site.phoneDisplay}, 8 AM–8 PM, and we confirm availability and mobilisation.`;
+  `Send your site location, work type and start date. Sales ${site.phoneDisplay} · Site Coordination ${site.phone2Display} · WhatsApp, 8 AM–8 PM.`;
 ---
-<Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]}>
+<Base title={title} description={description} pageType="ContactPage" schema={[breadcrumbs(crumbs)]} intent="enquiry">
   <section class="ct dark">
     <div class="ct__bg" aria-hidden="true"><img src="/scenes/contact.jpg" alt="" width="1600" height="1000" decoding="async" fetchpriority="low" /></div>
     <div class="wrap ct__grid">
       <div class="ct__side">
         <Breadcrumbs items={crumbs} />
-        <p class="eyebrow"><span class="idx">RBE</span>Book equipment</p>
+        <p class="eyebrow"><span class="idx">RBE</span>Project enquiry</p>
         <h1>Book a backhoe loader <span class="serif">for your dates.</span></h1>
         <p class="lead muted">Two minutes on a phone. RBE replies with availability, how the machine reaches your site and the terms — operator included, 15 days minimum.</p>
 
         <div class="ct__direct">
           <a class="ct__ch" href={tel}>
             <Icon name="phone" />
-            <span><b>Call</b><span class="mono">{site.phoneDisplay}</span></span>
+            <span><b>Call {site.phoneLabel}</b><span class="mono">{site.phoneDisplay} · quotes, availability, rental terms</span></span>
           </a>
           <a class="ct__ch" href={tel2}>
             <Icon name="phone" />
-            <span><b>Call — second line</b><span class="mono">{site.phone2Display}</span></span>
+            <span><b>Call {site.phone2Label}</b><span class="mono">{site.phone2Display} · machine on site, mobilisation, emergency clearance</span></span>
           </a>
           <a class="ct__ch ct__ch--wa" href={wa()} rel="noopener">
             <Icon name="wa" />
@@ -53,17 +53,19 @@ const description =
         <div class="ct__next">
           <h2>What happens next</h2>
           <ol>
+            <li>Your enquiry is emailed to RBE’s sales team with a reference number (shown on screen when it is received).</li>
             <li>RBE confirms whether the machine is available for your start date.</li>
             <li>RBE checks the site location and access, and asks for anything missing.</li>
             <li>You receive the terms in writing — period, hours, operator, diesel, mobilisation, idle-time and breakdown handling.</li>
             <li>One named contact stays with your project from then on.</li>
           </ol>
           <a class="inline" href="/how-rental-works/">The full rental process →</a>
+          <p class="ct__urgent">Road blocked or a slip on site? <a class="inline" href={tel2}>Call {site.phone2Label} on {site.phone2Display}</a> — see <a class="inline" href="/emergency-earthwork/">emergency earthwork &amp; road clearance</a>.</p>
         </div>
       </div>
 
       <div class="ct__formwrap">
-        <form class="fm" data-form data-endpoint={site.formEndpoint} data-wa={site.whatsappE164} data-email={site.email} novalidate>
+        <form class="fm" data-form action={site.formEndpoint} method="post" data-endpoint={site.formEndpoint} data-wa={site.whatsappE164} data-email={site.email} novalidate>
           <div class="fm__head">
             <h2>Project enquiry</h2>
             <p class="mono">Fields marked * are required</p>
@@ -89,6 +91,11 @@ const description =
               <p class="f__h" id="f-phone-h">10-digit mobile number</p>
             </div>
             <div class="f">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="f-email-h" />
+              <p class="f__h" id="f-email-h">Optional — for the written quote</p>
+            </div>
+            <div class="f">
               <label for="f-loc">Project location *</label>
               <input id="f-loc" name="location" type="text" required placeholder="e.g. near Bhowali, Nainital district" aria-describedby="f-loc-h" />
               <p class="f__h" id="f-loc-h">Town, village or a map link</p>
@@ -98,6 +105,7 @@ const description =
               <select id="f-type" name="type">
                 <option value="">Select…</option>
                 {projects.map((p) => <option value={p.title}>{p.title}</option>)}
+                <option value="Emergency earthwork & road clearance">Emergency earthwork &amp; road clearance</option>
                 <option value="Other">Other</option>
               </select>
             </div>
@@ -137,9 +145,10 @@ const description =
               <label for="f-role">Your role</label>
               <select id="f-role" name="role">
                 <option value="">Select…</option>
-                <option>Contractor</option>
-                <option>Developer</option>
-                <option>Project / site engineer</option>
+                <option>Main contractor</option>
+                <option>Subcontractor</option>
+                <option>Developer (hotel, resort, industrial, commercial, real estate)</option>
+                <option>Project manager / site engineer</option>
                 <option>Procurement</option>
                 <option>Other</option>
               </select>
@@ -149,15 +158,39 @@ const description =
               <textarea id="f-det" name="details" rows="4" placeholder="Scope of work, working hours per day, access road (width, bends, last stretch), rock expected?"></textarea>
             </div>
           </div>
+          <div class="fm__hp" aria-hidden="true"><label for="f-web">Leave this empty</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
           <div class="fm__foot">
             <button class="btn" type="submit" data-submit>
-              {site.formEndpoint ? 'Send enquiry' : 'Send enquiry on WhatsApp'} <Icon name="arrow" />
+              <span data-submit-label>Send enquiry</span> <Icon name="arrow" />
             </button>
             <p class="mono fm__alt">or <a href={mailto} data-mail>send by email</a></p>
           </div>
-          <p class="mono fm__alt fm__hrs">Enquiry hours: {site.hours}. You can send the form at any time.</p>
+          <p class="mono fm__alt fm__hrs">Enquiry hours: {site.hours}. You can send the form at any time. Your details are used only to reply to this enquiry.</p>
           <p class="fm__status" role="status" aria-live="polite" data-status></p>
         </form>
+
+        <div class="fm fm__result" data-ok hidden tabindex="-1" aria-labelledby="ok-h">
+          <p class="mono fm__tag">Sent to RBE sales</p>
+          <h2 id="ok-h">Enquiry received</h2>
+          <p class="fm__ref">Reference: <b class="mono" data-ref></b></p>
+          <p>Our team will contact you using the details provided.</p>
+          <div class="btn-row">
+            <a class="btn btn--wa" href={wa()} rel="noopener" data-wa-follow><Icon name="wa" />Also send on WhatsApp</a>
+          </div>
+          <p class="mono fm__alt fm__lines">{site.phoneLabel} <a href={tel}>{site.phoneDisplay}</a> · {site.phone2Label} <a href={tel2}>{site.phone2Display}</a></p>
+          <p class="fm__more">While you wait: <a class="inline" href="/how-rental-works/">what happens next</a> · <a class="inline" href="/jcb-rental-rates/">how the rental is priced</a></p>
+        </div>
+
+        <div class="fm fm__result fm__result--err" data-err hidden tabindex="-1" aria-labelledby="err-h">
+          <p class="mono fm__tag">Not sent</p>
+          <h2 id="err-h">Your enquiry could not be submitted.</h2>
+          <p>Nothing was lost — your details are still in the form. Please try again, or reach RBE directly:</p>
+          <div class="btn-row">
+            <button class="btn" type="button" data-retry>Try again <Icon name="arrow" /></button>
+            <a class="btn btn--wa" href={wa()} rel="noopener" data-wa-fallback><Icon name="wa" />Send on WhatsApp</a>
+          </div>
+          <p class="mono fm__alt fm__lines"><a href={tel}>Call {site.phoneLabel} · {site.phoneDisplay}</a><br /><a href={tel2}>Call {site.phone2Label} · {site.phone2Display}</a></p>
+        </div>
       </div>
     </div>
   </section>
@@ -188,27 +221,36 @@ const description =
   const form = document.querySelector<HTMLFormElement>('[data-form]')!;
   const status = form.querySelector<HTMLElement>('[data-status]')!;
   const endpoint = form.dataset.endpoint ?? '';
+  const okBox = document.querySelector<HTMLElement>('[data-ok]')!;
+  const errBox = document.querySelector<HTMLElement>('[data-err]')!;
+  const btn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const btnLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
+  const track = (e: string, p: Record<string, string> = {}) => window.rbeTrack?.(e, { placement: 'contact_form', ...p });
 
-  // Pre-select project type from ?type= (used by project-page links)
+  // Pre-select project type from ?type= (used by project, developer and emergency links)
   const t = new URLSearchParams(location.search).get('type');
   if (t) {
     const sel = form.querySelector<HTMLSelectElement>('#f-type')!;
-    const opt = [...sel.options].find((o) => o.value.toLowerCase().startsWith(t.toLowerCase()));
+    const opt = [...sel.options].find((o) => o.value && o.value.toLowerCase().startsWith(t.toLowerCase()));
     if (opt) sel.value = opt.value;
   }
 
-  const labels: Record<string, string> = { name: 'Name', company: 'Company', phone: 'Phone', location: 'Project location', type: 'Project type', equipment: 'Equipment', duration: 'Duration', start: 'Start date', gst: 'GST invoice', role: 'Role', details: 'Details' };
-  const summary = (fd: FormData) =>
-    ['Backhoe loader enquiry — RBE Capital Equip.', ...[...fd.entries()].filter(([, v]) => String(v).trim()).map(([k, v]) => `${labels[k] ?? k}: ${v}`)].join('\n');
+  let started = false;
+  form.addEventListener('input', () => { if (!started) { started = true; track('form_start'); } });
+
+  const labels: Record<string, string> = { name: 'Name', company: 'Company', phone: 'Phone', email: 'Email', location: 'Project location', type: 'Project type', equipment: 'Equipment', duration: 'Duration', start: 'Start date', gst: 'GST invoice', role: 'Role', details: 'Details' };
+  const summary = (fd: FormData, ref?: string) =>
+    [`Backhoe loader enquiry — RBE Capital Equip.${ref ? ` (website reference ${ref})` : ''}`, ...[...fd.entries()].filter(([k, v]) => labels[k] && String(v).trim()).map(([k, v]) => `${labels[k]}: ${v}`)].join('\n');
+  const waLink = (text: string) => `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(text)}`;
 
   const validate = () => {
     let ok = true;
-    form.querySelectorAll<HTMLInputElement>('input[required], input[pattern]').forEach((el) => {
+    form.querySelectorAll<HTMLInputElement>('input[required], input[pattern], input[type=email]').forEach((el) => {
       const valid = el.checkValidity();
       el.setAttribute('aria-invalid', String(!valid));
       if (!valid && ok) { el.focus(); ok = false; }
     });
-    if (!ok) status.textContent = 'Please fill in your name, a valid phone number and the project location.';
+    if (!ok) { status.textContent = 'Please fill in your name, a valid phone number and the project location.'; track('form_validation_error'); }
     return ok;
   };
 
@@ -216,31 +258,50 @@ const description =
     if (!validate()) { e.preventDefault(); return; }
     const body = summary(new FormData(form));
     (e.currentTarget as HTMLAnchorElement).href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Backhoe loader enquiry')}&body=${encodeURIComponent(body)}`;
+    track('form_email_fallback');
   });
+
+  const show = (box: HTMLElement) => { form.hidden = true; box.hidden = false; box.focus(); box.scrollIntoView({ block: 'start', behavior: 'smooth' }); };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.textContent = '';
     if (!validate()) return;
     const fd = new FormData(form);
-    if (endpoint) {
-      const btn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
-      btn.disabled = true;
-      try {
-        const r = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: fd });
-        if (!r.ok) throw new Error(String(r.status));
-        form.reset();
-        status.textContent = 'Thank you — your enquiry has been sent. We will contact you shortly.';
-      } catch {
-        status.textContent = 'Sending failed. Please call us or use WhatsApp instead.';
-      } finally {
-        btn.disabled = false;
+    track('form_submit', { label: String(fd.get('type') || 'unspecified').slice(0, 80) });
+    btn.disabled = true;
+    btnLabel.textContent = 'Sending…';
+    try {
+      const payload: Record<string, string> = {};
+      fd.forEach((v, k) => { payload[k] = String(v); });
+      const attr = window.rbeAttribution?.() ?? {};
+      for (const [k, v] of Object.entries(attr)) if (v) payload[k] = v;
+      const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok || !res.ok) throw new Error(res.error === 'validation' ? 'validation' : `http_${r.status}`);
+      const ref = String(res.ref || '');
+      okBox.querySelector<HTMLElement>('[data-ref]')!.textContent = ref;
+      okBox.querySelector<HTMLAnchorElement>('[data-wa-follow]')!.href = waLink(summary(fd, ref));
+      track('form_success', { enquiry_ref: ref });
+      show(okBox);
+      form.reset();
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : 'network';
+      track('form_error', { reason: reason === 'Failed to fetch' ? 'network' : reason.slice(0, 40) });
+      if (reason === 'validation') { status.textContent = 'Please check your name, phone number and project location, then try again.'; }
+      else {
+        errBox.querySelector<HTMLAnchorElement>('[data-wa-fallback]')!.href = waLink(summary(fd));
+        show(errBox);
       }
-      return;
+    } finally {
+      btn.disabled = false;
+      btnLabel.textContent = 'Send enquiry';
     }
-    window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(summary(fd))}`, '_blank', 'noopener');
-    status.textContent = 'WhatsApp has opened with your enquiry filled in — press send there.';
   });
+
+  okBox.querySelector('[data-wa-follow]')!.addEventListener('click', () => track('form_whatsapp_followup'));
+  errBox.querySelector('[data-wa-fallback]')!.addEventListener('click', () => track('form_whatsapp_fallback'));
+  errBox.querySelector('[data-retry]')!.addEventListener('click', () => { errBox.hidden = true; form.hidden = false; btn.focus(); });
 </script>
 
 <style>
@@ -300,6 +361,22 @@ const description =
   .fm__hrs { margin: 14px 0 0; }
   .fm__alt a { color: inherit; }
   .fm__status { margin: 16px 0 0; font-weight: 500; min-height: 1.5em; }
+  .fm__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .fm__result h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); margin-bottom: 16px; }
+  .fm__result p { margin-bottom: 14px; }
+  .fm__result .btn-row { margin: 22px 0 18px; }
+  .fm__result:focus { outline: none; }
+  .fm__tag { margin: 0 0 10px !important; font-size: .72rem; text-transform: uppercase; letter-spacing: .14em; color: var(--copper-lo); }
+  .fm__result--err .fm__tag { color: #b3261e; }
+  .fm__ref { font-size: 1.05rem; }
+  .fm__ref b { font-size: 1.05rem; color: var(--copper-lo); }
+  .fm__lines a { color: inherit; }
+  .fm__more { font-size: .92rem; color: var(--on-light-2); }
+  .ct__urgent { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line-d); color: var(--on-dark-2); font-size: .95rem; }
+  .fm { position: relative; }
+  /* The form panels are light inside a dark section: keep their links dark. */
+  .ct .fm a:not(.btn) { color: var(--on-light); }
+  .ct .fm a.inline:hover { color: var(--copper-lo); }
   @media (max-width: 960px) {
     .ct__grid { grid-template-columns: 1fr; }
     .ct__formwrap { position: static; }

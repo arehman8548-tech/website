@@ -28,6 +28,16 @@ const stillAlt = [
   '3D illustration of a backhoe loader levelling ground on an industrial plot while a steel portal-frame shed is erected.',
 ];
 const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ?? slug;
+// Buyer pages and contextual enquiry for each project type.
+const related: Record<string, { href: string; t: string }[]> = {
+  'road-construction': [{ href: '/contractors/', t: 'For road & PWD contractors' }, { href: '/emergency-earthwork/#road-blockage', t: 'Emergency road clearance' }],
+  'hill-cutting': [{ href: '/emergency-earthwork/#landslide', t: 'Landslide & slip clearance' }, { href: '/developers/#resorts', t: 'Resort sites on slopes' }],
+  'site-development': [{ href: '/developers/', t: 'For hotel, resort & real-estate developers' }, { href: '/jcb-on-rent-ranikhet-almora/', t: 'Ranikhet & Almora' }],
+  'dam-bridge': [{ href: '/contractors/', t: 'For bridge & river-works contractors' }, { href: '/emergency-earthwork/#flood', t: 'Flood & drainage emergencies' }],
+  trenching: [{ href: '/contractors/', t: 'For utility contractors' }, { href: '/jcb-on-rent-haldwani/', t: 'Haldwani & the plains' }],
+  infrastructure: [{ href: '/developers/#industrial', t: 'For industrial developers' }, { href: '/jcb-on-rent-haldwani/#udham-singh-nagar', t: 'Rudrapur, Pantnagar & Kashipur' }],
+};
+const typeParam: Record<string, string> = { 'road-construction': 'road', 'hill-cutting': 'hill', 'site-development': 'real-estate', 'dam-bridge': 'dam', trenching: 'excavation', infrastructure: 'industrial' };
 ---
 <Base title={title} description={description} schema={[breadcrumbs(crumbs)]}>
   <PageHero crumbs={crumbs} eyebrow="Project solutions">
@@ -94,6 +104,11 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
                 <span class="mono">Related questions</span>
                 <ul>{p.faq.map((id) => <li><a class="inline" href={`/knowledge/#${id}`}>{qa(id).q}</a></li>)}</ul>
               </div>
+              <div class="pj__rel">
+                <span class="mono">Who this is for</span>
+                <p>{related[p.id]?.map((r) => <a class="inline" href={r.href}>{r.t}</a>)}</p>
+              </div>
+              <a class="btn pj__cta" href={`/contact/?type=${typeParam[p.id]}`}>Discuss your project <Icon name="arrow" /></a>
               <a class="btn btn--wa pj__cta" href={wa(`Hello RBE Capital Equip., I need a backhoe loader with operator for ${p.title.toLowerCase()} work.\nSite location:\nStart date:\nDuration (15 days minimum):`)} rel="noopener"><Icon name="wa" />Discuss this work on WhatsApp</a>
             </div>
           </article>
@@ -104,7 +119,8 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
 
   <NextSteps items={[
     { k: 'Machine', t: 'The backhoe loader in detail', d: 'Capabilities, typical specification and rental terms.', href: '/backhoe-loader-rental/' },
-    { k: 'Process', t: 'From enquiry to machine on site', d: 'The six steps and what we need from you.', href: '/how-rental-works/' },
+    { k: 'Developers', t: 'Hotel, resort & industrial sites', d: 'Site development by type of developer.', href: '/developers/' },
+    { k: 'Contractors', t: 'Hiring for a work order', d: 'What procurement teams send for a quotation.', href: '/contractors/' },
     { k: 'Geography', t: 'Sites across Kumaon', d: 'Plains, mid-hills and inner hills — what changes.', href: '/kumaon-service-area/' },
   ]} />
   <QuoteBand heading="Tell us the scope. We’ll tell you where a backhoe loader fits." />
@@ -155,6 +171,7 @@ const placeName = (slug: string) => places.find((p) => p.slug === slug)?.name ??
   .pj__where a:hover { border-color: var(--copper); background: var(--stone); }
   .pj__faq ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   .pj__cta { justify-self: start; }
+  .pj__rel p { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; font-size: .95rem; }
 
   /* live: a sticky cinematic viewport beside the reading column */
   @media (prefers-reduced-motion: no-preference) {

@@ -13,8 +13,14 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   preloadHero?: boolean;
+  /** Measurement context, read by src/scripts/track.ts (never customer data). */
+  intent?: string;
+  loc?: string;
+  equipment?: string;
+  /** Which number the mobile call button rings: Sales (default) or Site Coordination (emergency pages). */
+  callLine?: 'sales' | 'site';
 }
-const { title, description, schema = [], pageType = 'WebPage', ogImage = '/og/rbe-capital-equip.png', noindex = false } = Astro.props;
+const { title, description, schema = [], pageType = 'WebPage', ogImage = '/og/rbe-capital-equip.png', noindex = false, intent, loc, equipment = 'backhoe-loader', callLine = 'sales' } = Astro.props;
 const path = Astro.url.pathname;
 const canonical = new URL(path, site.url).href;
 const ld = graph(organization(), website(), webpage(path, title, description, pageType), ...schema);
@@ -48,11 +54,14 @@ const ld = graph(organization(), website(), webpage(path, title, description, pa
   <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   <slot name="head" />
 </head>
-<body>
+<body data-intent={intent} data-loc={loc} data-equipment={equipment}>
   <a class="skip" href="#main">Skip to content</a>
-  <Header />
+  <Header callLine={callLine} />
   <main id="main"><slot /></main>
   <Footer />
+  <script>
+    import '../scripts/track';
+  </script>
   <script>
     // Progressive reveal: content is fully visible without JS; this only adds polish.
     const els = document.querySelectorAll('.rv');

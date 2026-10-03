@@ -35,9 +35,9 @@ const chapters: Chapter[] = [
     <h1>Backhoe loader rental for <span class="serif">serious</span> site work in Kumaon.</h1>
     <p class="lead">One wheeled machine that loads, digs, levels and drives itself to the next work front. RBE supplies a JCB backhoe loader — from a range of models, depending on your project and what is available — with an RBE operator, for 15 days or more, from Haldwani or Majkhali (Ranikhet). The most versatile machine on a hill road or a building site, when it is the right fit for your scope.</p>
     <div class="btn-row">
-      <a class="btn" href="/contact/">Check availability <Icon name="arrow" /></a>
+      <a class="btn" href="/contact/">Request JCB rental <Icon name="arrow" /></a>
       <a class="btn btn--wa" href={wa('Hello, I need a backhoe loader on rent for a project. Can you share availability?')} rel="noopener"><Icon name="wa" />WhatsApp</a>
-      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call now</a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call Sales</a>
     </div>
   </PageHero>
 
@@ -70,7 +70,8 @@ const chapters: Chapter[] = [
         <div class="col rv rv-d2"><h3><span class="mono">C</span>Mobility</h3><ul>{mobility.map((x) => <li>{x}</li>)}</ul></div>
       </div>
       <p class="muted measure note">RBE has a hydraulic rock breaker. If your work runs into rock, say so in your enquiry so the breaker and its dates are part of the quote. Large rock faces and continuous rock excavation are still tracked-excavator work.</p>
-      <p class="measure" style="margin-top:20px">See these tasks organised by project: <a class="inline" href="/project-solutions/#road-construction">road construction</a>, <a class="inline" href="/project-solutions/#hill-cutting">hill cutting</a>, <a class="inline" href="/project-solutions/#site-development">site development</a>, <a class="inline" href="/project-solutions/#trenching">trenching and utilities</a>.</p>
+      <p class="measure" style="margin-top:20px">The same machine handles <a class="inline" href="/emergency-earthwork/">emergency earthwork and road clearance</a> — slips, boulders, flood debris and blocked roads.</p>
+      <p class="measure" style="margin-top:12px">See these tasks organised by project: <a class="inline" href="/project-solutions/#road-construction">road construction</a>, <a class="inline" href="/project-solutions/#hill-cutting">hill cutting</a>, <a class="inline" href="/project-solutions/#site-development">site development</a>, <a class="inline" href="/project-solutions/#trenching">trenching and utilities</a>.</p>
     </div>
   </section>
 
@@ -177,7 +178,10 @@ const chapters: Chapter[] = [
           <li>Rock breaker, if needed</li>
           <li>GST invoice, if required</li>
         </ul>
-        <a class="btn" style="margin-top:32px" href="/contact/">Request a rental quote <Icon name="arrow" /></a>
+        <div class="btn-row" style="margin-top:32px">
+          <a class="btn" href="/contact/">Request JCB rental <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href="/jcb-rental-rates/">How the rental is priced</a>
+        </div>
       </div>
     </div>
   </section>
@@ -185,9 +189,10 @@ const chapters: Chapter[] = [
   <NextSteps items={[
     { k: 'By project', t: 'Find your project type', d: 'Road, hill cutting, site development, bridges, utilities.', href: '/project-solutions/' },
     { k: 'Deployment', t: 'Will it reach your site?', d: 'How mobilisation is planned across Kumaon.', href: '/kumaon-service-area/#deployment' },
+    { k: 'Pricing', t: 'JCB rent per month, per hour, 3DX', d: 'What moves the price, and how to get a quote fast.', href: '/jcb-rental-rates/' },
     { k: 'Knowledge', t: 'Backhoe or excavator?', d: 'Straight answers to common hiring questions.', href: '/knowledge/#vs-excavator' },
   ]} />
-  <QuoteBand heading="Need a backhoe loader on site? Check availability for your dates." />
+  <QuoteBand heading="Need a backhoe loader on site? Check availability for your dates." cta="Request JCB rental" />
 </Base>
 
 <style>

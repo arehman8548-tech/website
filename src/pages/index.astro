@@ -9,11 +9,11 @@ import ProjectDiagram from '../components/ProjectDiagram.astro';
 import { projects } from '../data/projects';
 import { belts } from '../data/geo';
 import { qa } from '../data/faq';
-import { site, tel, wa, mailto } from '../data/site';
+import { site, tel, tel2, wa, mailto } from '../data/site';
 
-const title = 'JCB Backhoe Loader Hire for Kumaon Projects | RBE Capital Equip.';
+const title = 'JCB Backhoe Loader Rental in Kumaon, Uttarakhand | RBE Capital Equip.';
 const description =
-  'Need a JCB backhoe loader in Kumaon? RBE Capital Equip. rents one with operator from Haldwani and Majkhali for road, hill-cutting and site work. WhatsApp for dates.';
+  'JCB backhoe loader on rent with operator for contractors and developers in Kumaon, Uttarakhand, from Haldwani and Majkhali (Ranikhet).';
 
 const concerns = [
   { q: 'Will the machine actually reach my site?', a: 'It starts from Haldwani or from Majkhali near Ranikhet — one base at the foot of the hills, one inside them. Route, travel method and arrival date are fixed before you commit, including narrow hill roads and the last stretch to site.', href: '/kumaon-service-area/#deployment', l: 'How deployment is planned' },
@@ -22,12 +22,12 @@ const concerns = [
   { q: 'Is a backhoe loader right for this job?', a: 'Often, but not always. RBE has a rock breaker for rock in drains and edges. If your scope really needs a tracked excavator, you will hear that before any machine is sent.', href: '/backhoe-loader-rental/#when-not', l: 'When to choose an excavator' },
 ];
 
+// Buyer segments: each one leads to the page written for it.
 const audiences = [
-  { t: 'PWD & government contractors', d: 'Road, drain and building packages with fixed completion dates, measurement and inspection.' },
-  { t: 'Road, highway & hill-cutting contractors', d: 'Widening, cut edges, side drains, culverts and slip clearance spread over many kilometres of hill road.' },
-  { t: 'Real-estate developers', d: 'Hillside villas, resorts, group housing and plotted development — from first access track to foundations.' },
-  { t: 'Bridge, dam & EPC contractors', d: 'Abutments, approaches, water supply, power and institutional works on a long programme.' },
-  { t: 'Contractors new to Kumaon', d: 'Teams from Delhi NCR and beyond who need a machine in the hills. RBE’s head office is in Faridabad.' },
+  { t: 'Contractors', items: ['PWD & public-works', 'Road & highway', 'Civil & building', 'Infrastructure & EPC', 'Utility', 'Bridge & river works'], href: '/contractors/', l: 'Send project requirement' },
+  { t: 'Developers', items: ['Hotels', 'Resorts', 'Industrial developments', 'Commercial developments', 'Real-estate developments'], href: '/developers/', l: 'Discuss site development' },
+  { t: 'Project teams', items: ['Site engineers', 'Procurement managers', 'Project managers', 'Main contractors', 'Subcontractors'], href: '/contractors/#teams', l: 'What each role needs' },
+  { t: 'Emergency work', items: ['Landslide & slip clearance', 'Boulder & rock clearance', 'Flood & drainage earthwork', 'Road-blockage clearance'], href: '/emergency-earthwork/', l: 'Call Site Coordination' },
 ];
 
 const answers = ['haldwani', 'ranikhet', 'minimum', 'cost', 'hill-roads'].map(qa);
@@ -46,6 +46,20 @@ const photos: Record<string, string> = {
 <Base title={title} description={description}>
   <Hero />
   <RealSites />
+
+  <!-- At a glance: who, what, where, which projects, how to enquire -->
+  <section class="glance dark-2" aria-labelledby="h-glance">
+    <div class="wrap">
+      <h2 id="h-glance" class="sr-only">RBE Capital Equip. at a glance</h2>
+      <dl class="glance__grid">
+        <div><dt>Who we serve</dt><dd><a href="/contractors/">Contractors</a>, <a href="/developers/">developers</a> and project teams building in Kumaon</dd></div>
+        <div><dt>What we provide</dt><dd><a href="/backhoe-loader-rental/">JCB backhoe loader</a> with operator · 15-day minimum · rock breaker available</dd></div>
+        <div><dt>Where</dt><dd>Kumaon, Uttarakhand — from <a href="/jcb-on-rent-haldwani/">Haldwani</a> and <a href="/jcb-on-rent-ranikhet-almora/">Majkhali (Ranikhet)</a></dd></div>
+        <div><dt>Projects</dt><dd><a href="/project-solutions/">Roads, hill cutting, site development, utilities, bridges</a> · <a href="/emergency-earthwork/">emergency clearance</a></dd></div>
+        <div><dt>Enquire</dt><dd>{site.phoneLabel} <a href={tel}>{site.phoneDisplay}</a><br />{site.phone2Label} <a href={tel2}>{site.phone2Display}</a><br /><a href="/contact/">Project enquiry form</a></dd></div>
+      </dl>
+    </div>
+  </section>
 
   <!-- Problem → answer -->
   <section class="section paper" aria-labelledby="h-concerns">
@@ -78,12 +92,17 @@ const photos: Record<string, string> = {
       <div class="aud__head">
         <p class="eyebrow"><span class="idx">02</span>Who we work with</p>
         <h2 id="h-aud" class="rv">Equipment for project teams, <span class="serif">not one-off jobs.</span></h2>
-        <p class="muted rv aud__lead">Minimum hire is 15 days. If you need a machine for a few hours, a local hourly operator will suit you better.</p>
+        <p class="muted rv aud__lead">Minimum hire is 15 days. If you need a machine for a few hours, a local hourly operator will suit you better. Teams from Delhi NCR and beyond are welcome — RBE’s head office is in Faridabad.</p>
       </div>
       <ul class="aud__list">
-        {audiences.map((a) => <li class="rv"><h3>{a.t}</h3><p class="muted">{a.d}</p></li>)}
+        {audiences.map((a) => (
+          <li class="rv">
+            <h3><a href={a.href}>{a.t}</a></h3>
+            <ul class="aud__items">{a.items.map((x) => <li>{x}</li>)}</ul>
+            <a class="inline aud__go" href={a.href}>{a.l} →</a>
+          </li>
+        ))}
       </ul>
-      <p class="aud__roles mono">Project managers · Site engineers · Construction managers · Procurement · Equipment coordinators</p>
     </div>
   </section>
 
@@ -127,6 +146,7 @@ const photos: Record<string, string> = {
             <div class="rv"><dt>{b.title}</dt><dd><span class="mono">{b.short}</span>{b.realities[0]}</dd></div>
           ))}
         </dl>
+        <p class="geo__hubs"><a class="inline" href="/jcb-on-rent-haldwani/">JCB on rent from Haldwani</a> — Haldwani, Rudrapur, Kashipur, Bhimtal, Bhowali, Nainital<br /><a class="inline" href="/jcb-on-rent-ranikhet-almora/">JCB on rent from Majkhali</a> — Ranikhet, Almora, Bageshwar, Pithoragarh</p>
         <a class="btn btn--ghost" href="/kumaon-service-area/">Locations and deployment planning <Icon name="arrow" /></a>
       </div>
       <div class="geo__map rv"><KumaonMap /></div>
@@ -175,7 +195,8 @@ const photos: Record<string, string> = {
         <div><dt>GST invoice</dt><dd>On request</dd></div>
         <div><dt>Dispatched from</dt><dd>Haldwani · Majkhali (Ranikhet)</dd></div>
         <div><dt>Head office</dt><dd>{site.headOffice.display}</dd></div>
-        <div><dt>Call &amp; WhatsApp</dt><dd><a href={tel}>{site.phoneDisplay}</a> · <a href={wa()} rel="noopener">WhatsApp</a></dd></div>
+        <div><dt>{site.phoneLabel}</dt><dd><a href={tel}>{site.phoneDisplay}</a> · <a href={wa()} rel="noopener">WhatsApp</a></dd></div>
+        <div><dt>{site.phone2Label}</dt><dd><a href={tel2}>{site.phone2Display}</a></dd></div>
         <div><dt>Email</dt><dd><a href={mailto}>{site.email}</a></dd></div>
       </dl>
       </div>
@@ -215,13 +236,25 @@ const photos: Record<string, string> = {
 
   .aud__head { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: end; margin-bottom: 56px; }
   .aud__head h2 { font-size: clamp(1.8rem, 3.6vw, 3.2rem); }
-  .aud__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line-d); }
-  .aud__list li { padding: 28px 24px 28px 0; border-right: 1px solid var(--line-d); }
-  .aud__list li + li { padding-left: 24px; }
-  .aud__list li:last-child { border-right: 0; }
+  .aud__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-d); }
+  .aud__list h3 a { text-decoration: none; } .aud__list h3 a:hover { color: var(--copper-hi); }
+  .aud__items { list-style: none; margin: 0 0 16px; padding: 0; color: var(--on-dark-2); font-size: .92rem; }
+  .aud__items li { padding: 5px 0; border-bottom: 1px dashed var(--line-d); }
+  .aud__go { font-size: .92rem; font-weight: 500; }
+  .glance { padding-block: clamp(36px, 4vw, 56px); border-top: 1px solid var(--line-d); }
+  .glance__grid { display: grid; grid-template-columns: repeat(5, 1fr); margin: 0; }
+  .glance__grid div { padding: 4px 20px 4px 0; }
+  .glance__grid div + div { padding-left: 20px; border-left: 1px solid var(--line-d); }
+  .glance dt { font-family: var(--f-mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--copper-hi); margin-bottom: 8px; }
+  .glance dd { margin: 0; font-size: .95rem; color: var(--on-dark-2); }
+  .glance dd a { color: var(--on-dark); text-decoration-color: var(--copper); text-underline-offset: .2em; }
+  .glance dd a:hover { color: var(--copper-hi); }
+  .geo__hubs { margin: -16px 0 32px; font-size: .95rem; color: var(--on-dark-2); line-height: 1.9; }
+  .aud__list > li { padding: 28px 24px 28px 0; border-right: 1px solid var(--line-d); }
+  .aud__list > li + li { padding-left: 24px; }
+  .aud__list > li:last-child { border-right: 0; }
   .aud__list h3 { font-size: 1.08rem; margin-bottom: 12px; }
   .aud__list p { font-size: .92rem; }
-  .aud__roles { margin-top: 40px; color: var(--on-dark-2); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
 
   .proj__head { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: end; margin-bottom: 48px; }
   .proj__intro { max-width: 42ch; }
@@ -270,7 +303,9 @@ const photos: Record<string, string> = {
 
   @media (max-width: 1100px) {
     .aud__list { grid-template-columns: 1fr 1fr; }
-    .aud__list li, .aud__list li + li { padding: 24px 20px 24px 0; border-right: 0; border-bottom: 1px solid var(--line-d); }
+    .glance__grid { grid-template-columns: 1fr 1fr; gap: 20px 0; }
+    .glance__grid div:nth-child(odd) { padding-left: 0; border-left: 0; }
+    .aud__list > li, .aud__list > li + li { padding: 24px 20px 24px 0; border-right: 0; border-bottom: 1px solid var(--line-d); }
     .proc { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
   }
   @media (max-width: 860px) {
@@ -278,6 +313,8 @@ const photos: Record<string, string> = {
     .split__l { position: static; }
     .concerns li { grid-template-columns: 40px 1fr; }
     .aud__list { grid-template-columns: 1fr; }
+    .glance__grid { grid-template-columns: 1fr; }
+    .glance__grid div, .glance__grid div + div { padding: 0 0 16px; border-left: 0; border-bottom: 1px solid var(--line-d); }
     .proc { grid-template-columns: 1fr; row-gap: 0; }
     .proc::before { left: 11px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
     .proc li { padding: 0 0 28px 48px; }

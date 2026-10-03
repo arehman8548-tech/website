@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Evidence from '../components/Evidence.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs, serviceNode } from '../data/schema';
+import { site, tel, wa } from '../data/site';
+import { cases } from '../data/cases';
+import { photos } from '../data/media';
+import '../styles/content.css';
+
+const crumbs = [{ name: 'For Developers', href: '/developers/' }];
+const title = 'JCB Rental for Resort, Hotel & Industrial Site Development | RBE';
+const description =
+  'JCB backhoe loader with operator for hotel, resort, industrial, commercial and real-estate site development in Kumaon: levelling, access, foundations.';
+const resort = cases.find((c) => c.id === 'ranikhet-majkhali')!;
+
+const phases = [
+  ['Access', 'First access track and clearing so men and material can reach the plot.'],
+  ['Platform', 'Cutting and levelling building platforms; benching sloping plots.'],
+  ['Foundations', 'Footing, raft and column-pit excavation; retaining-wall foundation trenches.'],
+  ['Drainage & services', 'Storm-water drains, septic, tank and service trenches.'],
+  ['Back-fill & grading', 'Back-filling behind walls and footings, grading roads and yards.'],
+];
+---
+<Base title={title} description={description} intent="developer" schema={[breadcrumbs(crumbs), serviceNode({
+  path: '/developers/',
+  name: 'Backhoe loader rental for site development',
+  serviceType: 'JCB backhoe loader with operator for site development — cutting, levelling, access, excavation, foundations and drainage',
+  audience: 'Hotel, resort, industrial, commercial and real-estate developers and their civil contractors',
+  description: 'JCB backhoe loader rental with operator (15-day minimum) for developers building in Kumaon, Uttarakhand: site cutting and levelling, access tracks, foundation excavation, drainage and back-fill. Dispatched from Haldwani and Majkhali (Ranikhet).',
+})]}>
+  <PageHero crumbs={crumbs} eyebrow="For developers · Kumaon">
+    <h1>Site development for <span class="serif">developers.</span></h1>
+    <p class="lead">For hotel, resort, industrial, commercial and real-estate developers — and the civil contractors building for them. A JCB backhoe loader with an RBE operator for cutting, levelling, access, foundations and drainage, rented for 15 days, monthly or a full phase, from Haldwani or Majkhali.</p>
+    <div class="btn-row">
+      <a class="btn" href="/contact/?type=real-estate">Discuss site development <Icon name="arrow" /></a>
+      <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., I am developing a site in Kumaon and need a backhoe loader with operator.\nProject type (hotel / resort / industrial / commercial / residential):\nSite location:\nPhase of work:\nStart date / duration:')} rel="noopener"><Icon name="wa" />WhatsApp</a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel}</a>
+    </div>
+    <ul class="jump" aria-label="Developer types">
+      <li><a href="#resorts">Hotels &amp; resorts</a></li>
+      <li><a href="#industrial">Industrial</a></li>
+      <li><a href="#commercial">Commercial</a></li>
+      <li><a href="#real-estate">Real estate</a></li>
+    </ul>
+  </PageHero>
+
+  <section class="section--tight stone" aria-labelledby="h-phases">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">01</span>Where the machine fits</p>
+        <h2 id="h-phases">Five phases of a site, <span class="serif">one machine on hire.</span></h2>
+        <p class="muted">The same backhoe loader can stay through several phases, so the hire can follow your programme rather than a single task. Bulk cut-and-fill on very large sites is excavator and dozer work; the backhoe loader handles everything around it.</p>
+      </div>
+      <ol class="steps dv__phases">
+        {phases.map(([t, d]) => <li><b>{t}</b><p>{d}</p></li>)}
+      </ol>
+      <p class="links"><a class="inline" href="/project-solutions/#site-development">Real-estate &amp; site development tasks</a><a class="inline" href="/project-solutions/#hill-cutting">Hill cutting &amp; slope work</a><a class="inline" href="/backhoe-loader-rental/#when-not">When to choose an excavator</a></p>
+    </div>
+  </section>
+
+  <section class="section paper" aria-label="Developer types">
+    <div class="wrap">
+      <article class="seg" id="resorts" aria-labelledby="h-resorts">
+        <div>
+          <p class="seg__k">01 · Hotels &amp; resorts</p>
+          <h2 id="h-resorts">Resort and hotel sites <span class="serif">on hill ground.</span></h2>
+          <p class="seg__lead muted">Cottages, blocks and access roads on sloping plots in the Ranikhet–Almora hills and the lake district. The building platform has to be cut and levelled before anything else can start, often with little room to stage equipment.</p>
+          <div class="dv__ev"><Evidence photo={photos.resortPortrait} ratio="4 / 5" sizes="(max-width: 960px) 100vw, 40vw" /></div>
+        </div>
+        <div>
+          <div class="proof">
+            <p class="proof__k">Real project · {resort.district} district</p>
+            <p><b>{resort.name} — {resort.work.toLowerCase()}.</b> RBE supplied a {resort.supplied}. Work: {resort.scope.join(' and ').toLowerCase()}.</p>
+            <p class="muted">Client name, dates and quantities are not published.</p>
+          </div>
+          <h4>Typical backhoe loader work on resort and hotel sites</h4>
+          <ul class="ticks">
+            <li>Site levelling and cutting of building platforms</li>
+            <li>Excavation for cottage footings and column pits</li>
+            <li>Access tracks and internal roads</li>
+            <li>Earthwork for terraces and landscaped levels</li>
+            <li>Drainage and service trenches</li>
+            <li>Retaining-wall foundation trenches and back-fill</li>
+          </ul>
+          <p class="note" style="margin-top:14px">The first two items are the work RBE did on the Ranikhet–Majkhali project; the rest is what the same machine typically does on such sites.</p>
+          <div class="links">
+            <a class="inline" href="/jcb-on-rent-ranikhet-almora/">Ranikhet, Almora &amp; the Majkhali base</a>
+            <a class="inline" href="/kumaon-service-area/#belt-midhills">Bhimtal, Ramgarh &amp; Mukteshwar</a>
+          </div>
+          <div class="btn-row"><a class="btn" href="/contact/?type=real-estate">Discuss your resort site <Icon name="arrow" /></a></div>
+        </div>
+      </article>
+
+      <article class="seg" id="industrial" aria-labelledby="h-ind">
+        <div>
+          <p class="seg__k">02 · Industrial developments</p>
+          <h2 id="h-ind">Factories, warehouses and <span class="serif">industrial plots.</span></h2>
+          <p class="seg__lead muted">The industrial estates around Pantnagar and Rudrapur in Udham Singh Nagar district — including the SIDCUL estate at Pantnagar — and the industrial areas around Kashipur. Flat, open ground close to RBE’s Haldwani base, where the priority is a machine that stays reliably through a long build.</p>
+          <div class="proof proof--none">
+            <p class="proof__k">Service availability — not past-project proof</p>
+            <p>The project photographs on this website are from hill sites: a resort and a road. RBE has not published an industrial-estate project here. What this section states is that the machine is available for industrial sites in the plains, dispatched from Haldwani, and what it does on them.</p>
+          </div>
+        </div>
+        <div>
+          <h4>Typical backhoe loader work on industrial sites</h4>
+          <ul class="ticks">
+            <li>Site preparation, grading and levelling for sheds, yards and hardstands</li>
+            <li>Foundation and plinth-beam excavation</li>
+            <li>Internal roads, kerbs, access and drains</li>
+            <li>Utility and service trenches between buildings</li>
+            <li>Loading tippers and moving material through the build</li>
+          </ul>
+          <h4>Where it stops</h4>
+          <p class="muted">Large-area mass grading is faster with dozers, graders and excavators. The backhoe loader is the flexible machine that stays on for foundations, services and the work around them, from site preparation to handover.</p>
+          <div class="links">
+            <a class="inline" href="/project-solutions/#infrastructure">Industrial &amp; institutional infrastructure</a>
+            <a class="inline" href="/jcb-on-rent-haldwani/#udham-singh-nagar">Rudrapur, Pantnagar &amp; Kashipur</a>
+          </div>
+          <div class="btn-row"><a class="btn" href="/contact/?type=industrial">Send industrial site requirement <Icon name="arrow" /></a></div>
+        </div>
+      </article>
+
+      <article class="seg" id="commercial" aria-labelledby="h-com">
+        <div>
+          <p class="seg__k">03 · Commercial developments</p>
+          <h2 id="h-com">Showrooms, offices, hospitals <span class="serif">and schools.</span></h2>
+          <p class="seg__lead muted">Commercial and institutional buildings in and around Haldwani, Kumaon’s largest commercial centre, and in the towns of the hills. Tight urban plots, neighbouring buildings and roads that cannot be blocked for long.</p>
+        </div>
+        <div>
+          <h4>Typical backhoe loader work</h4>
+          <ul class="ticks">
+            <li>Plot clearing and levelling</li>
+            <li>Footing and column-pit excavation</li>
+            <li>Service, drainage and sewer connection trenches</li>
+            <li>Back-fill, grading for parking and approach roads</li>
+          </ul>
+          <h4>Where it stops</h4>
+          <p class="muted">Deep basements and large-volume excavation need an excavator; a backhoe loader supports it with loading, trenching and back-fill.</p>
+          <div class="links">
+            <a class="inline" href="/jcb-on-rent-haldwani/">JCB on rent from Haldwani</a>
+            <a class="inline" href="/project-solutions/#trenching">Excavation, trenching &amp; utilities</a>
+          </div>
+          <div class="btn-row"><a class="btn" href="/contact/?type=real-estate">Discuss your project <Icon name="arrow" /></a></div>
+        </div>
+      </article>
+
+      <article class="seg" id="real-estate" aria-labelledby="h-re">
+        <div>
+          <p class="seg__k">04 · Real-estate developments</p>
+          <h2 id="h-re">Villas, plotted development <span class="serif">and group housing.</span></h2>
+          <p class="seg__lead muted">Hillside villas and cottages around Bhimtal, Ramgarh and Mukteshwar, where plots are stepped and retaining walls and drainage come first; plotted developments and housing in the plains around Haldwani and Rudrapur, where the same machine moves quickly between plots.</p>
+        </div>
+        <div>
+          <h4>Typical backhoe loader work</h4>
+          <ul class="ticks">
+            <li>First access track and site clearing</li>
+            <li>Cutting and levelling stepped building platforms</li>
+            <li>Footings, retaining-wall and breast-wall foundations</li>
+            <li>Internal roads, drainage and plot services</li>
+            <li>Back-filling and moving material within the site</li>
+          </ul>
+          <div class="links">
+            <a class="inline" href="/project-solutions/#site-development">Site development in detail</a>
+            <a class="inline" href="/jcb-on-rent-haldwani/#lake-district">Bhimtal, Bhowali &amp; Nainital</a>
+          </div>
+          <div class="btn-row"><a class="btn" href="/contact/?type=real-estate">Discuss site development <Icon name="arrow" /></a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section dark" aria-labelledby="h-settle">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">02</span>Before mobilisation</p>
+        <h2 id="h-settle">What a developer’s team should <span class="serif">settle first.</span></h2>
+        <p class="muted">These go into the written quote, so the machine arrives for the right phase and nothing is renegotiated on site.</p>
+      </div>
+      <div class="cg">
+        <div><h3>Which phase, how long</h3><p class="muted">15 days minimum, monthly or the full phase. Tell us the programme and the hire can follow it.</p></div>
+        <div><h3>Access for the machine</h3><p class="muted">Road width, bends and the last stretch to the plot decide how the machine arrives.</p><a class="inline" href="/kumaon-service-area/#deployment">Deployment planning →</a></div>
+        <div><h3>Who directs the operator</h3><p class="muted">The operator comes with every rental. Your site engineer or contractor sets the daily plan.</p></div>
+        <div><h3>Rock and season</h3><p class="muted">Rock expected? The hydraulic breaker goes into the quote. In the hills, plan earthwork before the monsoon.</p></div>
+        <div><h3>Billing</h3><p class="muted">GST invoice on request — say so at enquiry stage.</p><a class="inline" href="/jcb-rental-rates/">How the rental is priced →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Proof', t: 'Real sites RBE has worked on', d: 'The Ranikhet–Majkhali resort and Padampuri road widening.', href: '/project-solutions/#site-development' },
+    { k: 'Machine', t: 'What the backhoe loader can do', d: 'Capabilities, typical specification and limits.', href: '/backhoe-loader-rental/' },
+    { k: 'Service area', t: 'Will it reach your site?', d: 'From Haldwani and Majkhali across Kumaon.', href: '/kumaon-service-area/' },
+  ]} />
+  <QuoteBand heading="Developing a site in Kumaon? Discuss the phases with RBE." text="Send the site location, the type of development, the phase of work and your start date. RBE confirms availability, how the machine reaches the plot and the full terms in writing — operator included." cta="Discuss site development" ctaHref="/contact/?type=real-estate" waText="Hello RBE Capital Equip., I want to discuss a backhoe loader for site development in Kumaon." />
+</Base>
+
+<style>
+  .dv__phases { grid-template-columns: repeat(5, 1fr); }
+  .dv__ev { margin-top: 28px; max-width: 420px; }
+  @media (max-width: 1100px) { .dv__phases { grid-template-columns: 1fr 1fr 1fr; } }
+  @media (max-width: 960px) { .dv__phases { grid-template-columns: 1fr; } }
+</style>

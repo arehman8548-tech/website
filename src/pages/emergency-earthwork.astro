@@ -1,0 +1,228 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs, serviceNode } from '../data/schema';
+import { site, tel, tel2, wa } from '../data/site';
+import { qa } from '../data/faq';
+import '../styles/content.css';
+
+const crumbs = [{ name: 'Emergency Earthwork', href: '/emergency-earthwork/' }];
+const title = 'Landslide, Slip & Boulder Clearance JCB in Kumaon | RBE';
+const description =
+  'JCB with operator for landslide and slip clearance, boulder removal, flood debris and blocked roads in Kumaon. Call Site Coordination +91 98110 30794.';
+
+const waUrgent = wa('URGENT — RBE Site Coordination\nLocation (map pin below):\nRoad / nearest village or km stone:\nWhat is blocking (slip debris / boulders / water & silt):\nApproach open from:\nSite in-charge name & number:\nPhotos attached:');
+
+const services = [
+  {
+    id: 'landslide',
+    k: '01',
+    t: 'Landslide & slip clearance',
+    d: 'Debris from a slip across a road, a site access or a drain line.',
+    does: [
+      'Loader bucket pushes, lifts and loads slip debris into tippers',
+      'Backhoe pulls loose material down from the toe in controlled passes',
+      'Reopens side drains and catch-water drains choked by the slip',
+      'Clears and levels a lane so traffic or site vehicles can pass',
+    ],
+    limit: 'Large slides, high or still-moving faces and bulk removal need a tracked excavator and the road or site authority’s go-ahead. The machine works only from stable ground.',
+  },
+  {
+    id: 'boulder',
+    k: '02',
+    t: 'Boulder & rock clearance',
+    d: 'Rock fall on the carriageway, in a drain or across a site.',
+    does: [
+      'Moves and loads boulders the buckets can handle',
+      'Hydraulic rock breaker for boulders too big to lift whole',
+      'Clears broken rock and fines from the road surface and drains',
+    ],
+    limit: 'Rock faces that need blasting or scaling, and boulders beyond what a breaker can reduce, are outside what a backhoe loader should attempt.',
+  },
+  {
+    id: 'flood',
+    k: '03',
+    t: 'Flood & drainage emergency earthwork',
+    d: 'Silt, debris and water where they should not be after heavy rain.',
+    does: [
+      'Clears silt and debris from drains, culvert mouths and scuppers',
+      'Cuts temporary channels to lead water away from a road or site',
+      'Back-fills washouts and places material for temporary access',
+      'Clears debris at river-side sites once water levels drop',
+    ],
+    limit: 'Work in flowing water, deep river-bed excavation and river-training at scale need larger equipment and a planned method.',
+  },
+  {
+    id: 'road-blockage',
+    k: '04',
+    t: 'Road blockage & emergency road clearance',
+    d: 'A road or approach closed by fallen material, debris or a washout.',
+    does: [
+      'Clears fallen material to reopen a lane, then widens the opening',
+      'Loads spoil into tippers for disposal away from the road',
+      'Grades the surface so vehicles can pass safely',
+      'Reopens roadside drains so the next rain does not close it again',
+    ],
+    limit: 'Traffic control, permission to work and spoil-disposal sites are arranged by the road authority or the contractor in charge.',
+  },
+];
+
+const tell = [
+  ['Exact location', 'A map pin, the road name and the nearest village or km stone.'],
+  ['What is blocking it', 'Slip debris, boulders (rough size), silt and water — and how long the blocked stretch is.'],
+  ['Photos', 'Two or three from each side, if it is safe to take them.'],
+  ['Approach', 'Which side a wheeled machine can reach from, and whether that road is open.'],
+  ['Who is in charge', 'Name and number of the site in-charge, contractor or official on the spot.'],
+  ['Tippers & permissions', 'Whether tippers are available for the spoil and whether the authority has cleared the work. RBE rents backhoe loaders only.'],
+];
+
+const landslide = qa('landslide');
+---
+<Base title={title} description={description} intent="emergency" callLine="site" schema={[breadcrumbs(crumbs), serviceNode({
+  path: '/emergency-earthwork/',
+  name: 'Emergency earthwork and road clearance',
+  serviceType: 'Landslide and slip clearance, boulder and rock clearance, flood and drainage emergency earthwork, road-blockage clearance with a JCB backhoe loader and operator',
+  audience: 'Road contractors, site and project teams, developers and road-maintenance contractors',
+  description: 'JCB backhoe loader with operator for landslide and slip clearance, boulder and rock clearance (hydraulic rock breaker available), flood and drainage emergency earthwork and road-blockage clearance in Kumaon, Uttarakhand. Dispatched from Haldwani and Majkhali (Ranikhet); availability and arrival confirmed on the call.',
+})]}>
+  <PageHero crumbs={crumbs} eyebrow="Emergency earthwork · Kumaon">
+    <h1>Emergency earthwork &amp; <span class="serif">road clearance.</span></h1>
+    <p class="lead">A slip across the road, boulders on the carriageway, a culvert choked with flood debris. RBE can put a JCB backhoe loader with an operator on it — from Haldwani or from Majkhali near Ranikhet. Call Site Coordination with the location and what is blocking it.</p>
+    <div class="btn-row">
+      <a class="btn" href={tel2}><Icon name="phone" />Call {site.phone2Label} · {site.phone2Display}</a>
+      <a class="btn btn--wa" href={waUrgent} rel="noopener"><Icon name="wa" />WhatsApp photos &amp; map pin</a>
+      <a class="btn btn--ghost" href="/contact/?type=emergency">Send an enquiry</a>
+    </div>
+    <p class="em__honest mono">Availability and arrival depend on where the machine is working, the route and whether approach roads are open. RBE confirms both on the call — no arrival time is promised before that. Enquiry hours {site.hours}.</p>
+    <ul class="jump" aria-label="On this page">
+      {services.map((s) => <li><a href={`#${s.id}`}>{s.t}</a></li>)}
+      <li><a href="#request">How to request</a></li>
+    </ul>
+  </PageHero>
+
+  <section class="section paper" aria-labelledby="h-handles">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">01</span>What RBE handles</p>
+        <h2 id="h-handles">Four kinds of emergency work, <span class="serif">one machine.</span></h2>
+        <p class="muted">A backhoe loader is a loader and a digger on wheels, so it drives to the blockage, clears it, loads it out and reopens the drain behind it. Where it stops being the right machine is stated plainly below.</p>
+      </div>
+      {services.map((s) => (
+        <article class="seg" id={s.id} aria-labelledby={`${s.id}-h`}>
+          <div>
+            <p class="seg__k">{s.k} · Emergency</p>
+            <h2 id={`${s.id}-h`}>{s.t}</h2>
+            <p class="seg__lead muted">{s.d}</p>
+            <div class="btn-row">
+              <a class="btn" href={tel2}><Icon name="phone" />Call {site.phone2Label}</a>
+            </div>
+          </div>
+          <div>
+            <h4>What the machine does</h4>
+            <ul class="ticks">{s.does.map((x) => <li>{x}</li>)}</ul>
+            <h4>Where it stops</h4>
+            <p class="muted">{s.limit}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section dark" id="request" aria-labelledby="h-req">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">02</span>How to request urgent assistance</p>
+        <h2 id="h-req">Call first. <span class="serif">Then send the pin.</span></h2>
+        <p class="muted">The fastest route is a call to Site Coordination, followed by photos and a map pin on WhatsApp. Use the website form when you need a written record or the work can be planned.</p>
+      </div>
+      <ol class="steps">
+        <li><b>Call {site.phone2Label}</b><p>{site.phone2Display}. Say where the blockage is and what it is. RBE tells you whether a machine can be released, which base it comes from and the route.</p><a class="btn" href={tel2}><Icon name="phone" />Call {site.phone2Display}</a></li>
+        <li><b>WhatsApp photos &amp; map pin</b><p>Send them to {site.whatsappDisplay} so the operator knows what to expect and where to stop.</p><a class="btn btn--wa" href={waUrgent} rel="noopener"><Icon name="wa" />Open WhatsApp</a></li>
+        <li><b>Website enquiry</b><p>For a written record, or for clearance that can be scheduled. Your enquiry reaches RBE’s sales team with a reference number.</p><a class="btn btn--ghost" href="/contact/?type=emergency">Emergency enquiry form</a></li>
+      </ol>
+      <p class="note" style="margin-top:36px">Every RBE machine comes with an operator. The hire period and terms for emergency work are confirmed on the call; project rentals have a 15-day minimum. For quotes and planned rentals, call {site.phoneLabel} on <a href={tel}>{site.phoneDisplay}</a>.</p>
+    </div>
+  </section>
+
+  <section class="section stone" aria-labelledby="h-tell">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">03</span>What to tell us</p>
+        <h2 id="h-tell">Six details that decide <span class="serif">whether and how</span> a machine goes.</h2>
+        <p class="muted">Missing details cost time on the road. If you do not know one, say so — Site Coordination will ask.</p>
+      </div>
+      <div class="cg">
+        {tell.map(([t, d]) => <div><h3>{t}</h3><p class="muted">{d}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper" aria-labelledby="h-where">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">04</span>Where</p>
+        <h2 id="h-where">Two bases. <span class="serif">Roads that close.</span></h2>
+        <p class="muted">The machine starts from Haldwani, at the foot of the hills, or from Majkhali on the Ranikhet–Almora road. In the monsoon the route itself may be blocked; that is part of the first call.</p>
+      </div>
+      <div class="cg">
+        <div>
+          <h3>Haldwani base</h3>
+          <p class="muted">Haldwani and Kathgodam, the plains of Nainital and Udham Singh Nagar districts, and the lake-district roads around Bhimtal, Bhowali and Nainital.</p>
+          <a class="inline" href="/jcb-on-rent-haldwani/">JCB on rent from Haldwani →</a>
+        </div>
+        <div>
+          <h3>Majkhali base, near Ranikhet</h3>
+          <p class="muted">Ranikhet and Almora, with routes on towards Bageshwar and Pithoragarh district. The machine is already in the hills, so it does not have to climb from the plains.</p>
+          <a class="inline" href="/jcb-on-rent-ranikhet-almora/">JCB on rent in Ranikhet &amp; Almora →</a>
+        </div>
+        <div>
+          <h3>Monsoon working</h3>
+          <p class="muted">From about June to September slips close hill roads, soft ground limits where a machine can stand and drainage becomes urgent.</p>
+          <a class="inline" href="/knowledge/#monsoon">Kumaon monsoon planning →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight stone" aria-labelledby="h-plan">
+    <div class="wrap em__plan">
+      <div>
+        <p class="eyebrow"><span class="idx">05</span>Before the next emergency</p>
+        <h2 id="h-plan">Road and site teams can plan for the season.</h2>
+      </div>
+      <div>
+        <p>Contractors with drain clearing, slip clearance or road maintenance on their package can keep a machine on the stretch through the monsoon — rented for 15 days, monthly or the season, with the operator included. That is ordinary project hire, quoted in advance.</p>
+        <div class="links">
+          <a class="inline" href="/project-solutions/#road-construction">Road construction &amp; widening</a>
+          <a class="inline" href="/project-solutions/#hill-cutting">Hill cutting &amp; slope work</a>
+          <a class="inline" href="/contractors/">For contractors</a>
+          <a class="inline" href="/backhoe-loader-rental/#what-it-does">What the backhoe loader does</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight paper" aria-labelledby="h-faq">
+    <div class="wrap em__faq">
+      <div><p class="eyebrow"><span class="idx">06</span>Straight answer</p><h2 id="h-faq">{landslide.q}</h2></div>
+      <div class="prose" set:html={landslide.html} />
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Machine', t: 'The backhoe loader in detail', d: 'Loader end, backhoe end, rock breaker and limits.', href: '/backhoe-loader-rental/' },
+    { k: 'Location', t: 'Kumaon service area', d: 'Plains, mid-hills and inner hills — what changes.', href: '/kumaon-service-area/' },
+    { k: 'Planned work', t: 'Hire for the monsoon season', d: 'How project rentals are priced.', href: '/jcb-rental-rates/' },
+  ]} />
+  <QuoteBand line="site" eyebrow="Emergency" heading="Slip, boulder or blocked road? Call Site Coordination." text="Give the location and what is blocking it. RBE confirms whether a machine can be released, the route and the terms on the call — then WhatsApp the photos and map pin." cta="Send an enquiry" ctaHref="/contact/?type=emergency" waText="URGENT — RBE Site Coordination. Location (map pin below), what is blocking the road/site, photos attached:" />
+</Base>
+
+<style>
+  .em__honest { margin-top: 22px; max-width: 70ch; font-size: .78rem; color: var(--on-dark-2); }
+  .em__plan, .em__faq { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .em__plan h2, .em__faq h2 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); }
+  @media (max-width: 960px) { .em__plan, .em__faq { grid-template-columns: 1fr; } }
+</style>

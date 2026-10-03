@@ -12,8 +12,8 @@ The site has to answer one buyer question: *"Can these people actually support m
 
 | Fact | Value | Where it appears |
 |---|---|---|
-| Primary (calls + WhatsApp) | +91 78277 28607 | Header, hero, every Call button, all WhatsApp links, footer, contact, schema |
-| Secondary call line | +91 98110 30794 | Contact page, footer, Why RBE company details, schema |
+| Phone 1 — **Sales** (calls + WhatsApp) | +91 78277 28607 | Header, hero, Call Sales buttons, all WhatsApp links, footer, contact, schema |
+| Phone 2 — **Site Coordination** | +91 98110 30794 | Contact, footer, mobile menu, emergency page (primary call), quote bands, Why RBE, schema |
 | Sales email | sales@rbecapitalgroup.in | Form fallback, footer, contact, schema |
 | General email | rehman@rbecapitalgroup.in | Footer, contact, Why RBE, schema |
 | Head office | Plot No 71A, Sector 27C, Faridabad, Haryana, India | Footer, contact, Why RBE, home facts, schema `address` |
@@ -139,10 +139,25 @@ Static HTML (Astro), clean trailing-slash URLs, one H1 per page, canonical, Open
 - [x] Real domain in `src/data/site-url.mjs`
 - [x] Head office address + deployment bases in schema
 - [x] Operator policy and service commitments confirmed
-- [ ] Add form endpoint (or keep WhatsApp handoff)
+- [x] Form endpoint: `/api/enquiry` on the site's Worker → Resend → sales@ (set the `RESEND_API_KEY` secret)
 - [ ] Machine make/model + real spec sheet → replace the "typical range" table
 - [ ] Real photos of the machine at Haldwani/Majkhali and on client sites
 - [ ] Google Business Profile — ideally for the Haldwani base (and Majkhali if it is a staffed location) with the same name and numbers
 - [ ] Add real machine/site photos (optional but strongly recommended)
 - [ ] Create a Google Business Profile with the same name, phone and category
 - [ ] Submit `sitemap-index.xml` in Google Search Console
+
+## 9. Round 4 — buyer, location, emergency and measurement layer (Oct 2026)
+
+New pages, each mapped to one intent so they do not compete with existing pages:
+
+| Page | Intent | Not duplicated by |
+|---|---|---|
+| `/developers/` | Developer type → project → equipment → proof (hotel, resort, industrial, commercial, real estate) | `/project-solutions/` is organised by work type, not by buyer |
+| `/contractors/` | Contractor types, project-team roles, procurement for public work orders (no tender listing, no registration claim) | `/how-rental-works/` is the process |
+| `/emergency-earthwork/` | Landslide/slip, boulder/rock, flood/drainage and road-blockage clearance; Site Coordination first | — |
+| `/jcb-rental-rates/` | "JCB rent per hour / per month", "3DX rent price": pricing factors, no invented rates | `/knowledge/#cost` is the short answer and links here |
+| `/jcb-on-rent-haldwani/` | Local intent served from the Haldwani base: Haldwani, Rudrapur, Pantnagar, Kashipur, Bhimtal, Bhowali, Nainital | `/kumaon-service-area/` is the whole-region overview |
+| `/jcb-on-rent-ranikhet-almora/` | Local intent served from the Majkhali base: Ranikhet, Almora, Bageshwar, Pithoragarh | as above |
+
+Two base pages instead of ten town pages: each base has its own facts and its own project evidence; separate town pages would only swap names. Industrial sections state service availability and say plainly that no industrial project is published.

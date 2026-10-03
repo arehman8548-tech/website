@@ -1,0 +1,36 @@
+---
+/** One town on a base page: terrain facts, the work found there, and a town-specific enquiry. */
+import Icon from './Icon.astro';
+import { allPlaces } from '../data/geo';
+import { projects } from '../data/projects';
+import { wa } from '../data/site';
+interface Props { slug: string; work: string }
+const { slug, work } = Astro.props;
+const p = allPlaces.find((x) => x.slug === slug)!;
+const proj = projects.filter((x) => x.where.includes(slug)).slice(0, 2);
+---
+<article class="town" id={`town-${p.slug}`} aria-labelledby={`town-${p.slug}-h`}>
+  <div class="town__top">
+    <h3 id={`town-${p.slug}-h`}>{p.name}</h3>
+    <span class="mono">≈ {p.altM.toLocaleString('en-IN')} m</span>
+  </div>
+  <p class="mono town__d">{p.district} district{p.base ? ' · RBE deployment base' : ''}</p>
+  <p>{p.note}</p>
+  <p class="muted">{work}</p>
+  {proj.length > 0 && <p class="town__links">{proj.map((x) => <a class="inline" href={`/project-solutions/#${x.id}`}>{x.title.split(' &')[0].split(',')[0]}</a>)}</p>}
+  <a class="town__wa" href={wa(`Hello RBE Capital Equip., I want to check JCB backhoe loader availability near ${p.name} (${p.district} district).\nType of work:\nStart date:\nDuration (15 days minimum):`)} rel="noopener"><Icon name="wa" />Check JCB availability near {p.name}</a>
+</article>
+<style>
+  .town { background: var(--stone); padding: 22px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .stone .town { background: var(--paper); }
+  .town:target { outline: 2px solid var(--copper); }
+  .town__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .town__top h3 { font-size: 1.35rem; }
+  .town__top .mono { color: var(--copper-lo); font-size: .78rem; }
+  .town__d { margin: 0; font-size: .72rem !important; text-transform: uppercase; letter-spacing: .08em; color: var(--on-light-2); }
+  .town p { margin: 0; font-size: .95rem; }
+  .town__links { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .88rem !important; }
+  .town__wa { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-l); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: .88rem; font-weight: 600; color: #1f7a4d; }
+  .town__wa :global(svg) { width: 16px; flex: none; }
+  .town__wa:hover { color: #23905a; }
+</style>

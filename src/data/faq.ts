@@ -40,7 +40,7 @@ export const faq: FaqGroup[] = [
         id: 'cost',
         q: 'How is backhoe loader rental charged?',
         a: 'Online you will mostly see hourly or daily “JCB rent” rates. Those are for short local jobs. RBE rents for a minimum of 15 days, so a quote is for a period — usually monthly or the project phase. What moves the price is the duration, working hours per day, whether diesel is included, mobilisation distance to your site, idle-time terms and whether you need the rock breaker. All of these are stated in writing before the machine is dispatched. GST invoice is available on request.',
-        html: 'Online you will mostly see hourly or daily “JCB rent” rates. Those are for short local jobs. RBE rents for a <a href="/knowledge/#minimum">minimum of 15 days</a>, so a quote is for a period — usually monthly or the project phase. What moves the price is the duration, working hours per day, whether diesel is included, mobilisation distance to your site, idle-time terms and whether you need the rock breaker. All of these are stated in writing before the machine is dispatched. GST invoice is available on request. <a href="/contact/">Request a quote</a>.',
+        html: 'Online you will mostly see hourly or daily “JCB rent” rates. Those are for short local jobs. RBE rents for a <a href="/knowledge/#minimum">minimum of 15 days</a>, so a quote is for a period — usually monthly or the project phase. What moves the price is the duration, working hours per day, whether diesel is included, mobilisation distance to your site, idle-time terms and whether you need the rock breaker. All of these are stated in writing before the machine is dispatched. GST invoice is available on request. See <a href="/jcb-rental-rates/">how JCB rental is priced</a> or <a href="/contact/">request a quote</a>.',
       },
       {
         id: 'gst',
@@ -65,6 +65,24 @@ export const faq: FaqGroup[] = [
         q: 'Can I hire a backhoe loader for the full duration of my project?',
         a: 'Yes — that is the kind of rental RBE is set up for. Hire runs from a 15-day minimum to monthly or the full project phase. For long rentals, how breakdowns are reported and handled is agreed in writing before the machine arrives, so it is not something you negotiate while your site waits.',
         html: 'Yes — that is the kind of rental RBE is set up for. Hire runs from a 15-day minimum to monthly or the full project phase. For long rentals, how breakdowns are reported and handled is agreed in writing before the machine arrives, so it is not something you negotiate while your site waits. See <a href="/backhoe-loader-rental/#rental-terms">rental terms</a>.',
+      },
+      {
+        id: 'per-hour',
+        q: 'Do you rent a JCB per hour or per day?',
+        a: 'No. RBE’s minimum rental is 15 days, priced for the period — 15 days, monthly or the project phase — with the working hours per day written into the quote. Hourly “JCB rent” rates seen online are for short local jobs. If your work order or BOQ counts machine-hours, tell us the expected hours per day and RBE quotes the period on that basis.',
+        html: 'No. RBE’s minimum rental is 15 days, priced for the period — 15 days, monthly or the project phase — with the working hours per day written into the quote. Hourly “JCB rent” rates seen online are for short local jobs. If your work order or BOQ counts machine-hours, tell us the expected hours per day and RBE quotes the period on that basis. See <a href="/jcb-rental-rates/">how JCB rental is priced</a>.',
+      },
+      {
+        id: '3dx',
+        q: 'Can I rent a JCB 3DX?',
+        a: '3DX is the name of one JCB backhoe loader model, and many people use it to mean a standard backhoe loader. RBE supplies JCB backhoe loaders across a range of models; the model sent depends on your project and on availability for your dates. If your contract specifies a model or machine class, say so in the enquiry — the quote states the model supplied.',
+        html: '3DX is the name of one JCB backhoe loader model, and many people use it to mean a standard backhoe loader. RBE supplies JCB backhoe loaders across a range of models; the model sent depends on your project and on availability for your dates. If your contract specifies a model or machine class, say so in the <a href="/contact/">enquiry</a> — the quote states the model supplied. See <a href="/jcb-rental-rates/#3dx">3DX rent price</a>.',
+      },
+      {
+        id: 'pwd',
+        q: 'Can a contractor hire a JCB from RBE for a PWD or government work order?',
+        a: 'Yes — RBE rents a JCB backhoe loader with operator to the contractor executing the work, on the same terms as any project: 15 days minimum, operator included, GST invoice on request. Send the district and site, the scope items that need the machine, the period, working hours per day and start date. This is equipment hire, not a tender listing, and RBE does not claim any government registration or contract; the hire is between RBE and your company.',
+        html: 'Yes — RBE rents a JCB backhoe loader with operator to the contractor executing the work, on the same terms as any project: 15 days minimum, operator included, GST invoice on request. Send the district and site, the scope items that need the machine, the period, working hours per day and start date. This is equipment hire, not a tender listing, and RBE does not claim any government registration or contract; the hire is between RBE and your company. See <a href="/contractors/#procurement">hiring for a government work order</a>.',
       },
       {
         id: 'jcb',
@@ -155,6 +173,25 @@ export const faq: FaqGroup[] = [
         id: 'self-drive',
         q: 'Does a backhoe loader travel to site on its own wheels or on a trailer?',
         a: 'Both are common. A backhoe loader is road-going, so it is often driven over short and moderate distances. For longer moves, or where timing and road conditions make it sensible, it goes on a trailer. Which one applies to your site is confirmed as part of the mobilisation plan.',
+      },
+    ],
+  },
+  {
+    id: 'urgent',
+    title: 'Emergency clearance',
+    intro: 'Slips, boulders, flood debris and blocked roads.',
+    items: [
+      {
+        id: 'landslide',
+        q: 'Can RBE send a JCB for landslide or slip clearance?',
+        a: 'Yes. RBE provides landslide and slip clearance, boulder and rock clearance, flood and drainage emergency earthwork, and road-blockage clearance with a JCB backhoe loader and operator. The loader bucket clears and loads debris, the backhoe pulls loose material down in controlled passes and reopens choked drains, and RBE’s hydraulic rock breaker deals with boulders too big to lift. Large slides and unstable faces need a tracked excavator and the site authority’s go-ahead. Whether a machine can reach you, and when, depends on where it is working and which roads are open — RBE confirms both on the call.',
+        html: 'Yes. RBE provides landslide and slip clearance, boulder and rock clearance, flood and drainage emergency earthwork, and road-blockage clearance with a JCB backhoe loader and operator. The loader bucket clears and loads debris, the backhoe pulls loose material down in controlled passes and reopens choked drains, and RBE’s hydraulic rock breaker deals with boulders too big to lift. Large slides and unstable faces need a tracked excavator and the site authority’s go-ahead. Whether a machine can reach you, and when, depends on where it is working and which roads are open — RBE confirms both on the call. See <a href="/emergency-earthwork/">emergency earthwork &amp; road clearance</a>.',
+      },
+      {
+        id: 'urgent-contact',
+        q: 'Who do I call for urgent road or slip clearance?',
+        a: 'Call Site Coordination on +91 98110 30794 with the location and what is blocking the road or site, then WhatsApp photos and a map pin to +91 78277 28607. Enquiry hours are 8:00 AM to 8:00 PM. RBE confirms machine availability, the route and the terms on the call; no arrival time is promised before that.',
+        html: 'Call Site Coordination on <a href="tel:+919811030794">+91 98110 30794</a> with the location and what is blocking the road or site, then WhatsApp photos and a map pin to +91 78277 28607. Enquiry hours are 8:00 AM to 8:00 PM. RBE confirms machine availability, the route and the terms on the call; no arrival time is promised before that. See <a href="/emergency-earthwork/#request">how to request urgent assistance</a>.',
       },
     ],
   },

@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs, serviceNode } from '../data/schema';
+import { site, tel, tel2, wa } from '../data/site';
+import { qa } from '../data/faq';
+import '../styles/content.css';
+
+const crumbs = [{ name: 'Contractors & Procurement', href: '/contractors/' }];
+const title = 'JCB Hire for PWD, Road & Civil Contractors in Uttarakhand | RBE';
+const description =
+  'JCB backhoe loader with operator for PWD, road, civil, infrastructure, utility and bridge contractors in Kumaon — and what to send for a quotation.';
+
+const contractors = [
+  { t: 'PWD & public-works contractors', d: 'Road, drain and building packages with fixed completion dates, measurement and inspection.', href: '#procurement', l: 'Hiring for a government work order' },
+  { t: 'Road & highway contractors', d: 'Side drains, shoulders, cut edges, culvert pits and slip clearance along many kilometres of hill road.', href: '/project-solutions/#road-construction', l: 'Road construction & widening' },
+  { t: 'Civil & building contractors', d: 'Footings, column pits, retaining walls, back-fill and site clearing on building projects.', href: '/project-solutions/#site-development', l: 'Site development' },
+  { t: 'Infrastructure & EPC contractors', d: 'Industrial, institutional and public infrastructure on a long programme.', href: '/project-solutions/#infrastructure', l: 'Industrial & institutional work' },
+  { t: 'Utility contractors', d: 'Water-supply, sewer, power and telecom trenches dug, laid and back-filled along a road.', href: '/project-solutions/#trenching', l: 'Trenching & utilities' },
+  { t: 'Bridge & river-works contractors', d: 'Abutment and wing-wall excavation, approach fills and debris clearing after high water.', href: '/project-solutions/#dam-bridge', l: 'Dam, bridge & river works' },
+];
+
+const teams = [
+  { t: 'Site engineers', d: 'Share the scope, working hours per day and the access road. The quote states the machine, operator shift and what the site provides.', href: '/how-rental-works/#fast-quote', l: 'The five details for a quote' },
+  { t: 'Procurement managers', d: 'Period, hours, operator, diesel, mobilisation, idle time and breakdown terms come in writing, with a GST invoice on request.', href: '/jcb-rental-rates/', l: 'How the rental is priced' },
+  { t: 'Project managers', d: 'Programme, monsoon buffer and mobilisation from Haldwani or Majkhali are planned before the start date.', href: '/kumaon-service-area/#deployment', l: 'Deployment planning' },
+  { t: 'Main contractors', d: 'One machine with operator through a whole phase — 15 days, monthly or the project duration.', href: '/backhoe-loader-rental/#rental-terms', l: 'Rental terms' },
+  { t: 'Subcontractors', d: 'A machine with operator for your part of the package, rented to your company on the same terms.', href: '/contact/?type=road', l: 'Send your requirement' },
+];
+
+const send = [
+  ['Work order or package', 'Name or number of the package, the district and the department or main contractor it is for (optional, but it helps plan).'],
+  ['Site and stretch', 'Location, chainage or stretch of road, and the nearest town. A map pin is best.'],
+  ['Scope that needs the machine', 'For example side drains, retaining-wall footings, culvert pits, debris and slip clearance, back-fill.'],
+  ['Period and hours', 'Start date, how long, and working hours per day. If your BOQ counts machine-hours, say so.'],
+  ['Mobilisation deadline', 'The date the machine must be working on site, and any access constraints on the way.'],
+  ['Billing and documents', 'GST details for the invoice, and any documents your contract needs from an equipment supplier — RBE confirms what it can provide.'],
+];
+const pwd = qa('pwd');
+---
+<Base title={title} description={description} intent="contractor" schema={[breadcrumbs(crumbs), serviceNode({
+  path: '/contractors/',
+  name: 'Backhoe loader rental for contractors',
+  serviceType: 'JCB backhoe loader with operator on hire to contractors and subcontractors',
+  audience: 'PWD, road, civil, infrastructure, utility and bridge contractors; procurement, project and site teams',
+  description: 'JCB backhoe loader rental with operator for contractors working in Kumaon, Uttarakhand: 15-day minimum, monthly or project duration, GST invoice on request, dispatched from Haldwani and Majkhali (Ranikhet). Quotation on the details of the work order.',
+})]}>
+  <PageHero crumbs={crumbs} eyebrow="Contractors & procurement">
+    <h1>Machine hire for <span class="serif">contractors</span> and project teams.</h1>
+    <p class="lead">A JCB backhoe loader with an RBE operator, rented to the company executing the work — main contractor or subcontractor — for 15 days, monthly or the project phase. Send the requirement; the quotation comes back with every term in writing.</p>
+    <div class="btn-row">
+      <a class="btn" href="#procurement">Send project requirement <Icon name="arrow" /></a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel}</a>
+      <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., project requirement for a backhoe loader with operator.\nCompany:\nWork order / package & district:\nSite / stretch:\nScope:\nStart date & period:\nWorking hours per day:\nGST invoice needed? (yes/no):')} rel="noopener"><Icon name="wa" />WhatsApp</a>
+    </div>
+    <ul class="jump" aria-label="On this page">
+      <li><a href="#types">Contractor types</a></li>
+      <li><a href="#teams">Project teams</a></li>
+      <li><a href="#procurement">Government work orders</a></li>
+    </ul>
+  </PageHero>
+
+  <section class="section paper" id="types" aria-labelledby="h-types">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">01</span>Contractors</p>
+        <h2 id="h-types">Six kinds of contractor, <span class="serif">one rental model.</span></h2>
+        <p class="muted">Same terms for each: operator always included, 15-day minimum, monthly or the project duration, rock breaker available, GST invoice on request.</p>
+      </div>
+      <div class="cg">
+        {contractors.map((c) => <div><h3>{c.t}</h3><p class="muted">{c.d}</p><a class="inline" href={c.href}>{c.l} →</a></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section stone" id="teams" aria-labelledby="h-teams">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">02</span>Project teams</p>
+        <h2 id="h-teams">What each person on the team <span class="serif">needs from a rental.</span></h2>
+        <p class="muted">The people who specify, buy and run the machine ask different questions. Each one is answered somewhere specific.</p>
+      </div>
+      <div class="cg">
+        {teams.map((c) => <div><h3>{c.t}</h3><p class="muted">{c.d}</p><a class="inline" href={c.href}>{c.l} →</a></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="procurement" aria-labelledby="h-proc">
+    <div class="wrap">
+      <article class="seg">
+        <div>
+          <p class="seg__k">03 · Procurement</p>
+          <h2 id="h-proc">Hiring a JCB for a PWD or <span class="serif">government work order.</span></h2>
+          <p class="seg__lead muted">If your company is executing a PWD, PMGSY or other public work in Kumaon and the package needs a backhoe loader, RBE can rent one with an operator to your company. The hire is between RBE and the contractor, on RBE’s normal project terms.</p>
+          <div class="proof">
+            <p class="proof__k">What this page is — and is not</p>
+            <p>This is equipment hire for work you are executing. It is not a tender listing, and RBE does not claim any government registration, empanelment or contract.</p>
+          </div>
+        </div>
+        <div>
+          <h4>Send these for a quotation</h4>
+          <ul class="ticks">{send.map(([t, d]) => <li><b>{t}.</b> {d}</li>)}</ul>
+          <p class="muted" style="margin-top:20px">RBE quotes by period — 15 days, monthly or the project phase — with the working hours per day stated. Operator always included; diesel, mobilisation, idle time and breakdown terms set out in the quote.</p>
+          <div class="btn-row">
+            <a class="btn" href="/contact/?type=road">Send project requirement <Icon name="arrow" /></a>
+            <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel} · {site.phoneDisplay}</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section--tight paper" aria-labelledby="h-pwd-q">
+    <div class="wrap ct2">
+      <div>
+        <p class="eyebrow"><span class="idx">04</span>Straight answers</p>
+        <h2 id="h-pwd-q">Before a contractor commits.</h2>
+      </div>
+      <div>
+        <div class="answer"><h3>{pwd.q}</h3><div class="prose muted" set:html={pwd.a} /></div>
+        <div class="answer"><h3>Is the operator included?</h3><p class="muted">Yes, on every rental. Shift hours and the operator’s stay at remote sites are written into the quote.</p></div>
+        <div class="answer"><h3>What if the road or site gets blocked mid-contract?</h3><p class="muted">For slips, boulders and flood debris, call {site.phone2Label} on <a class="inline" href={tel2}>{site.phone2Display}</a>. See <a class="inline" href="/emergency-earthwork/">emergency earthwork &amp; road clearance</a>.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Pricing', t: 'How a JCB rental is priced', d: 'Per month, per hour, 3DX — and what moves the price.', href: '/jcb-rental-rates/' },
+    { k: 'Projects', t: 'Find your project type', d: 'Road, hill cutting, site development, bridges, utilities.', href: '/project-solutions/' },
+    { k: 'Process', t: 'From requirement to machine on site', d: 'The six steps and what RBE needs from you.', href: '/how-rental-works/' },
+  ]} />
+  <QuoteBand heading="Send the project requirement. Get the terms in writing." text="Work order or package, site and stretch, scope, period, working hours per day and start date. RBE replies with availability, mobilisation and the full terms — operator included." cta="Send project requirement" ctaHref="/contact/?type=road" waText="Hello RBE Capital Equip., project requirement for a backhoe loader with operator (work order, site, scope, period):" />
+</Base>
+
+<style>
+  .ct2 { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(32px, 6vw, 96px); }
+  .ct2 h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+  #procurement .ticks b { font-weight: 600; }
+  @media (max-width: 860px) { .ct2 { grid-template-columns: 1fr; } }
+</style>

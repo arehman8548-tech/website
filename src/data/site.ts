@@ -21,19 +21,22 @@ export const site = {
   },
   tagline: 'Backhoe loader rental with operator for construction and infrastructure projects across Kumaon',
 
-  // Primary number: every Call button and every WhatsApp link.
+  // Phone number 1 — labelled "Sales". Quotes, availability, rental terms. Also the WhatsApp number.
+  phoneLabel: 'Sales',
   phoneDisplay: '+91 78277 28607',
   phoneE164: '+917827728607',
   whatsappDisplay: '+91 78277 28607',
   whatsappE164: '917827728607', // digits only, no "+", for wa.me links
-  // Secondary call line, listed only beside full contact details.
+  // Phone number 2 — labelled "Site Coordination". Machine on site, mobilisation and emergency clearance calls.
+  phone2Label: 'Site Coordination',
   phone2Display: '+91 98110 30794',
   phone2E164: '+919811030794',
   // Enquiries go to sales; general correspondence to the contact address.
   email: 'sales@rbecapitalgroup.in',
   contactEmail: 'rehman@rbecapitalgroup.in',
-  // Optional form endpoint (Formspree / CRM webhook). Empty = WhatsApp + email handoff.
-  formEndpoint: '',
+  // Enquiry form endpoint: handled by this site's own Cloudflare Worker (worker/index.js),
+  // which sends the enquiry to sales@ through Resend. RESEND_API_KEY lives only in the Worker.
+  formEndpoint: '/api/enquiry',
   // Enquiry hours (confirmed). Days of the week were not specified — do not add them.
   hours: '8:00 AM – 8:00 PM',
 
@@ -71,10 +74,26 @@ export function wa(text = 'Hello RBE Capital Equip., I want to check backhoe loa
   return `https://wa.me/${site.whatsappE164}?text=${encodeURIComponent(text)}`;
 }
 
+/** Desktop header navigation (kept short so it fits beside the phone and CTA). */
 export const nav = [
   { href: '/backhoe-loader-rental/', label: 'Backhoe Loader' },
+  { href: '/project-solutions/', label: 'Projects' },
+  { href: '/developers/', label: 'Developers' },
+  { href: '/contractors/', label: 'Contractors' },
+  { href: '/kumaon-service-area/', label: 'Service Area' },
+  { href: '/emergency-earthwork/', label: 'Emergency' },
+  { href: '/why-rbe/', label: 'Why RBE' },
+] as const;
+
+/** Full menu (mobile) — every top-level page. */
+export const navFull = [
+  { href: '/backhoe-loader-rental/', label: 'Backhoe Loader' },
   { href: '/project-solutions/', label: 'Project Solutions' },
+  { href: '/developers/', label: 'For Developers' },
+  { href: '/contractors/', label: 'Contractors & Procurement' },
   { href: '/kumaon-service-area/', label: 'Kumaon Service Area' },
+  { href: '/emergency-earthwork/', label: 'Emergency Earthwork' },
+  { href: '/jcb-rental-rates/', label: 'Rental Rates' },
   { href: '/how-rental-works/', label: 'How It Works' },
   { href: '/why-rbe/', label: 'Why RBE' },
   { href: '/knowledge/', label: 'Knowledge' },

@@ -41,8 +41,8 @@ export function organization() {
       'Construction equipment mobilisation in hilly terrain',
     ],
     contactPoint: [
-      { '@type': 'ContactPoint', telephone: site.phoneE164, email: site.email, contactType: 'sales', description: 'Calls and WhatsApp', areaServed: 'IN', availableLanguage: ['English', 'Hindi'], hoursAvailable: { '@type': 'OpeningHoursSpecification', opens: '08:00', closes: '20:00' } },
-      { '@type': 'ContactPoint', telephone: site.phone2E164, contactType: 'sales', description: 'Secondary call line', areaServed: 'IN', availableLanguage: ['English', 'Hindi'], hoursAvailable: { '@type': 'OpeningHoursSpecification', opens: '08:00', closes: '20:00' } },
+      { '@type': 'ContactPoint', telephone: site.phoneE164, email: site.email, contactType: 'sales', description: 'Sales — quotes, availability and rental terms. Calls and WhatsApp.', areaServed: 'IN', availableLanguage: ['English', 'Hindi'], hoursAvailable: { '@type': 'OpeningHoursSpecification', opens: '08:00', closes: '20:00' } },
+      { '@type': 'ContactPoint', telephone: site.phone2E164, contactType: 'site coordination', description: 'Site Coordination — machine on site, mobilisation and emergency clearance requests.', areaServed: 'IN', availableLanguage: ['English', 'Hindi'], hoursAvailable: { '@type': 'OpeningHoursSpecification', opens: '08:00', closes: '20:00' } },
       { '@type': 'ContactPoint', email: site.contactEmail, contactType: 'customer service' },
     ],
   };
@@ -75,6 +75,22 @@ export function rentalService() {
     audience: { '@type': 'BusinessAudience', audienceType: 'Contractors, real-estate developers, infrastructure and EPC companies' },
     description:
       'Backhoe loader rental for road construction and widening, hill cutting, site development, trenching and infrastructure works in Kumaon. Always supplied with an operator; minimum rental 15 days, monthly or for the project duration; hydraulic rock breaker available; GST invoice on request. Dispatched from Haldwani and Majkhali (Ranikhet).',
+  };
+}
+
+/** A Service node for a buyer-, emergency- or location-specific page. Facts only; no prices or ratings. */
+export function serviceNode(o: { path: string; name: string; serviceType: string; description: string; audience?: string; places?: string[] }) {
+  return {
+    '@type': 'Service',
+    '@id': `${site.url}${o.path}#service`,
+    name: o.name,
+    serviceType: o.serviceType,
+    provider: { '@id': ORG_ID },
+    areaServed: o.places?.length
+      ? o.places.map((name) => ({ '@type': 'Place', name: `${name}, Uttarakhand` }))
+      : { '@type': 'AdministrativeArea', name: 'Kumaon division, Uttarakhand, India' },
+    ...(o.audience ? { audience: { '@type': 'BusinessAudience', audienceType: o.audience } } : {}),
+    description: o.description,
   };
 }
 

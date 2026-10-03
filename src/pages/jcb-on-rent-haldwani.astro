@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import NextSteps from '../components/NextSteps.astro';
+import Evidence from '../components/Evidence.astro';
+import TownCard from '../components/TownCard.astro';
+import Icon from '../components/Icon.astro';
+import { breadcrumbs, serviceNode } from '../data/schema';
+import { site, tel, tel2, wa } from '../data/site';
+import { cases } from '../data/cases';
+import { photos } from '../data/media';
+import { qa } from '../data/faq';
+import '../styles/content.css';
+
+const crumbs = [
+  { name: 'Kumaon Service Area', href: '/kumaon-service-area/' },
+  { name: 'Haldwani', href: '/jcb-on-rent-haldwani/' },
+];
+const title = 'JCB on Rent in Haldwani, Rudrapur, Kashipur & Nainital | RBE';
+const description =
+  'JCB backhoe loader on rent with operator from RBE’s Haldwani base: Haldwani, Rudrapur, Pantnagar, Kashipur, Bhimtal, Bhowali and Nainital. 15-day minimum.';
+const pad = cases.find((c) => c.id === 'padampuri')!;
+const hq = qa('haldwani');
+---
+<Base title={title} description={description} intent="location" loc="haldwani" schema={[breadcrumbs(crumbs), serviceNode({
+  path: '/jcb-on-rent-haldwani/',
+  name: 'JCB backhoe loader on rent — Haldwani base',
+  serviceType: 'JCB backhoe loader rental with operator',
+  audience: 'Contractors, developers and project teams',
+  places: ['Haldwani', 'Kathgodam', 'Rudrapur', 'Pantnagar', 'Kashipur', 'Bhimtal', 'Bhowali', 'Nainital'],
+  description: 'JCB backhoe loader rental with operator, dispatched from RBE’s Haldwani deployment base to sites in the plains of Nainital and Udham Singh Nagar districts and the Nainital lake district. Minimum rental 15 days; GST invoice on request.',
+})]}>
+  <PageHero crumbs={crumbs} eyebrow="Haldwani base · Nainital & Udham Singh Nagar">
+    <h1>JCB on rent from <span class="serif">Haldwani.</span></h1>
+    <p class="lead">Haldwani is RBE’s deployment base at the foot of the Kumaon hills. A JCB backhoe loader with an RBE operator starts here for sites across Haldwani and Kathgodam, the industrial plains around Rudrapur, Pantnagar and Kashipur, and the lake district around Bhimtal, Bhowali and Nainital.</p>
+    <div class="btn-row">
+      <a class="btn" href="/contact/">Check JCB availability <Icon name="arrow" /></a>
+      <a class="btn btn--wa" href={wa('Hello RBE Capital Equip., I want to check JCB backhoe loader availability from your Haldwani base.\nSite location:\nType of work:\nStart date / duration:')} rel="noopener"><Icon name="wa" />WhatsApp</a>
+      <a class="btn btn--ghost" href={tel}><Icon name="phone" />Call {site.phoneLabel}</a>
+    </div>
+    <dl class="kf">
+      <div><dt>Base</dt><dd>Haldwani, Nainital district</dd></div>
+      <div><dt>Machine</dt><dd>JCB backhoe loader, with operator</dd></div>
+      <div><dt>Hire</dt><dd>15 days minimum · monthly · project</dd></div>
+      <div><dt>Inner hills</dt><dd><a href="/jcb-on-rent-ranikhet-almora/">Majkhali base, near Ranikhet →</a></dd></div>
+    </dl>
+    <ul class="jump" aria-label="Areas">
+      <li><a href="#haldwani-area">Haldwani &amp; Kathgodam</a></li>
+      <li><a href="#udham-singh-nagar">Rudrapur, Pantnagar &amp; Kashipur</a></li>
+      <li><a href="#lake-district">Bhimtal, Bhowali &amp; Nainital</a></li>
+    </ul>
+  </PageHero>
+
+  <section class="section paper" aria-label="Areas served from Haldwani">
+    <div class="wrap">
+      <article class="seg" id="haldwani-area" aria-labelledby="h-hld">
+        <div>
+          <p class="seg__k">01 · The base</p>
+          <h2 id="h-hld">Haldwani &amp; Kathgodam</h2>
+          <p class="seg__lead muted">Kumaon’s largest commercial centre and the railhead where the hill roads begin. Sites here are the shortest move for the machine. If you are looking for earthmovers on rent in Haldwani for a construction project, this is the machine RBE supplies — always with an operator, for 15 days or more.</p>
+          <div class="answer"><h3>{hq.q}</h3><div class="prose muted" set:html={hq.html ?? hq.a} /></div>
+        </div>
+        <div class="hb__towns">
+          <TownCard slug="haldwani" work="Commercial and institutional buildings, plotted development, drains and utility lines in town, and access roads on the edge of the hills." />
+          <TownCard slug="kathgodam" work="Road, drain and retaining-wall work where the plains meet the first slopes." />
+        </div>
+      </article>
+
+      <article class="seg" id="udham-singh-nagar" aria-labelledby="h-usn">
+        <div>
+          <p class="seg__k">02 · Udham Singh Nagar plains</p>
+          <h2 id="h-usn">Rudrapur, Pantnagar &amp; Kashipur</h2>
+          <p class="seg__lead muted">Flat, open ground with industrial estates — including the SIDCUL estate at Pantnagar — warehouses, townships and plotted development. The machine reaches these sites from Haldwani by road. In the monsoon, waterlogging and soft ground decide when and where to excavate.</p>
+          <div class="proof proof--none">
+            <p class="proof__k">Service availability — not past-project proof</p>
+            <p>RBE rents the machine for sites in this area. The project photographs on this website are from hill sites; no industrial-estate project is published here.</p>
+          </div>
+          <div class="links"><a class="inline" href="/developers/#industrial">Industrial site development</a><a class="inline" href="/project-solutions/#infrastructure">Industrial &amp; institutional infrastructure</a></div>
+        </div>
+        <div class="hb__towns">
+          <TownCard slug="rudrapur" work="Industrial units, township and plotted development, bypass and approach roads, drainage and utility trenches." />
+          <TownCard slug="pantnagar" work="Site preparation, levelling, foundations, internal roads and service trenches in and around the industrial estate." />
+          <TownCard slug="kashipur" work="Industrial and urban building sites, drains, utility lines and access roads." />
+        </div>
+      </article>
+
+      <article class="seg" id="lake-district" aria-labelledby="h-lake">
+        <div>
+          <p class="seg__k">03 · Nainital lake district</p>
+          <h2 id="h-lake">Bhimtal, Bhowali &amp; Nainital</h2>
+          <p class="seg__lead muted">Narrow, winding roads with hairpin bends and little room to stage equipment. Plots are cut into slopes, so retaining walls and drainage come first — and a compact, wheeled machine that works from the access road earns its place.</p>
+          <div class="hb__ev"><Evidence photo={photos.padFront} ratio="3 / 2" sizes="(max-width: 960px) 100vw, 40vw" /></div>
+          <div class="proof">
+            <p class="proof__k">Real project · {pad.district} district</p>
+            <p><b>{pad.name} — {pad.work.toLowerCase()}.</b> RBE supplied a {pad.supplied} for the {pad.scope.join(', ').toLowerCase()}.</p>
+          </div>
+        </div>
+        <div class="hb__towns">
+          <TownCard slug="bhimtal" work="Resort, villa and institutional plots: slope cutting, retaining-wall footings, access tracks and drainage." />
+          <TownCard slug="bhowali" work="Road shoulder and side-drain work at the junction of the Almora, Ramgarh and Nainital roads, and building plots around it." />
+          <TownCard slug="nainital" work="Tight, steep sites where the machine’s size and the access route are planned first; hill-road drains and slip clearance." />
+          <div class="hb__em">
+            <p class="seg__k">Slip on a lake-district road?</p>
+            <p>Landslide, slip and boulder clearance is handled by <a class="inline" href={tel2}>{site.phone2Label} · {site.phone2Display}</a>.</p>
+            <a class="inline" href="/emergency-earthwork/">Emergency earthwork &amp; road clearance →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section--tight stone" aria-labelledby="h-reach">
+    <div class="wrap">
+      <div class="sh">
+        <p class="eyebrow"><span class="idx">04</span>Getting the machine there</p>
+        <h2 id="h-reach">What decides how quickly it <span class="serif">reaches your site.</span></h2>
+        <p class="muted">Availability for your dates comes first. Then the route from Haldwani, the access road to the plot, and whether it drives or goes on a trailer.</p>
+      </div>
+      <div class="links">
+        <a class="inline" href="/kumaon-service-area/#deployment">Deployment planning</a>
+        <a class="inline" href="/jcb-rental-rates/">How the rental is priced</a>
+        <a class="inline" href="/backhoe-loader-rental/">The backhoe loader in detail</a>
+        <a class="inline" href="/contractors/">For contractors</a>
+        <a class="inline" href="/developers/">For developers</a>
+      </div>
+    </div>
+  </section>
+
+  <NextSteps items={[
+    { k: 'Inner hills', t: 'Ranikhet, Almora & beyond', d: 'Sites served from the Majkhali base.', href: '/jcb-on-rent-ranikhet-almora/' },
+    { k: 'All of Kumaon', t: 'Kumaon service area', d: 'Three terrain belts, six districts.', href: '/kumaon-service-area/' },
+    { k: 'Emergency', t: 'Slip and road clearance', d: 'Call Site Coordination for urgent work.', href: '/emergency-earthwork/' },
+  ]} />
+  <QuoteBand heading="Site near Haldwani, Rudrapur or Nainital? Check JCB availability." cta="Check JCB availability" waText="Hello RBE Capital Equip., I want to check JCB backhoe loader availability from your Haldwani base." />
+</Base>
+
+<style>
+  .hb__towns { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; align-content: start; }
+  .hb__ev { margin-top: 28px; }
+  .hb__em { padding: 22px; border: 1px solid var(--copper); display: grid; gap: 8px; align-content: start; }
+  .hb__em p { margin: 0; }
+  .seg .answer { margin-top: 24px; }
+</style>

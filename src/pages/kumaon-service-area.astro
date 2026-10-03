@@ -12,9 +12,11 @@ import { breadcrumbs } from '../data/schema';
 import { wa, site } from '../data/site';
 
 const crumbs = [{ name: 'Kumaon Service Area', href: '/kumaon-service-area/' }];
-const title = 'JCB Hire from Haldwani to Nainital, Almora & Bageshwar | RBE';
+const title = 'Backhoe Loader Rental across Kumaon, Uttarakhand: Service Area | RBE';
 const description =
-  'From our Haldwani and Majkhali (Ranikhet) bases to Nainital, Almora and Bageshwar: how terrain, access and season shape getting a backhoe loader to your site.';
+  'Where RBE deploys JCB backhoe loaders in Kumaon, Uttarakhand: two bases, three terrain belts, six districts — and how access and season shape mobilisation.';
+// Each town links to the base page that serves it.
+const hubFor = (belt: Belt) => (belt === 'innerhills' ? { href: '/jcb-on-rent-ranikhet-almora/', t: 'From the Majkhali base' } : { href: '/jcb-on-rent-haldwani/', t: 'From the Haldwani base' });
 const order: Belt[] = ['plains', 'midhills', 'innerhills'];
 const projFor = (slug: string) => projects.filter((p) => p.where.includes(slug)).slice(0, 2);
 const remote = qa('remote');
@@ -44,6 +46,7 @@ const chapters: Chapter[] = [
         <h2 id="h-map">Two deployment bases. <span class="serif">Sites across six districts.</span></h2>
         <div class="prose muted" style="margin-top:24px">
           <p>Kumaon is the eastern division of Uttarakhand, made up of six districts: {districts.join(', ')}. The machine is dispatched from <a href="#haldwani">Haldwani</a> (Nainital district) and <a href="#majkhali">Majkhali</a> (near Ranikhet, Almora district), and works on project sites around the towns below.</p>
+          <p>Base pages: <a href="/jcb-on-rent-haldwani/">JCB on rent from Haldwani</a> (plains and lake district) and <a href="/jcb-on-rent-ranikhet-almora/">from Majkhali near Ranikhet</a> (inner hills).</p>
           <p>A site does not need to be <em>in</em> one of these towns. If it is a village road above Bageshwar or a resort plot beyond Ramgarh, <a href="/contact/">send the location</a> and we will plan from there.</p>
         </div>
       </div>
@@ -104,6 +107,7 @@ const chapters: Chapter[] = [
                 <p class="pcard__links">
                   {projFor(p.slug).map((pr) => <a class="inline" href={`/project-solutions/#${pr.id}`}>{pr.title.split(' &')[0].split(',')[0]}</a>)}
                 </p>
+                <a class="inline pcard__hub" href={`${hubFor(p.belt).href}${['ramgarh', 'mukteshwar'].includes(p.slug) ? '' : `#town-${p.slug}`}`}>{hubFor(p.belt).t} →</a>
                 <a class="pcard__wa" href={wa(`Hello RBE Capital Equip., I need a backhoe loader with operator near ${p.name}.\nProject / type of work:\nStart date:\nDuration (15 days minimum):`)} rel="noopener"><Icon name="wa" />Backhoe loader near {p.name}</a>
               </article>
             ))}
@@ -168,6 +172,7 @@ const chapters: Chapter[] = [
     { k: 'Project types', t: 'What the work looks like', d: 'Roads, slopes, plots, bridges and utilities.', href: '/project-solutions/' },
     { k: 'Machine', t: 'Is a backhoe loader enough?', d: 'Capabilities, limits and when to choose an excavator.', href: '/backhoe-loader-rental/#when-not' },
     { k: 'Support', t: 'What if it breaks down?', d: 'How support is agreed before work starts.', href: '/why-rbe/#support' },
+    { k: 'Emergency', t: 'Slip, boulder or blocked road?', d: 'Emergency earthwork — call Site Coordination.', href: '/emergency-earthwork/' },
   ]} />
   <QuoteBand heading="Send the site location. We’ll plan how the machine gets there." />
 </Base>
@@ -217,6 +222,7 @@ const chapters: Chapter[] = [
   .pcard__top .mono { color: var(--copper-lo); font-size: .78rem; }
   .pcard__d { font-size: .72rem; color: var(--on-light-2); text-transform: uppercase; letter-spacing: .08em; margin: 0; }
   .pcard p { margin: 0; font-size: .95rem; }
+  .pcard__hub { font-size: .88rem; font-weight: 500; }
   .pcard__links { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .88rem !important; }
   .pcard__wa { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-l); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: .88rem; font-weight: 600; color: #1f7a4d; }
   .pcard__wa :global(svg) { width: 16px; }
